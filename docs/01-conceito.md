@@ -194,4 +194,32 @@ minimalista.
 - Tipos e funções dos drones.
 - Categorias definitivas de raridade.
 - Objetivo de longo prazo e encerramento da jornada.
-- Estilo de arte: pixel art, low-poly 3D, 2D estilizado ou outra direção.
+## Direção visual — decisão
+
+**Estilo escolhido: 2D estilizado** (visual ilustrativo, tipo Spiritfarer/Cozy
+Grove), com **low-poly 3D como plano B** caso o custo de produção do 2D
+estilizado se mostre inviável para o orçamento do projeto.
+
+### Requisito técnico decorrente
+A câmera do jogo deve permitir **rotação e zoom livres** ao redor da cena.
+Isso significa que, na prática, a arte precisa ser implementada como
+**modelos 3D com textura/shader pintado à mão** (não ilustração 2D
+tradicional nem imagens pré-renderizadas) — only assim a câmera pode
+girar livremente mantendo a aparência ilustrativa desejada. Referências de
+mercado nesse pipeline: Genshin Impact, Ni no Kuni, World of Warcraft.
+
+### Nível de detalhe
+Alto nível de detalhe visual (não um estilo minimalista/vetorial simples).
+
+### Validação realizada
+Testes visuais comparativos confirmaram que a diferenciação entre biomas
+distintos (ex: bioma tropical vs. bioma de água) funciona bem nos três
+estilos avaliados, reforçando que a escolha pode ser feita com base em
+custo/qualidade sem prejuízo à identidade visual de cada planeta.
+
+### Próximo passo
+Levantar orçamento/viabilidade de produção do 2D estilizado (3D com
+shader pintado) junto à fábrica antes de comprometer definitivamente.
+Caso o custo não seja viável, migrar para low-poly 3D como estilo
+definitivo — decisão de fallback já pré-aprovada, sem necessidade de nova
+rodada de debate.
