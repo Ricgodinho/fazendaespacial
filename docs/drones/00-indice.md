@@ -124,3 +124,10 @@ aplicado ao loop idle (ver `planilhas/planilha_loop_idle.xlsx`).
 categorias) forem debatidas. Decisões específicas de cada drone ficam no
 arquivo próprio da categoria.*
 
+## Variantes ambientais (não são categorias novas)
+
+Alguns planetas introduzem **variantes ambientais** de categorias já
+existentes — mesma função, design/aparência adaptada ao ambiente do
+planeta. Exemplo: o Planeta 3 (água) introduz variantes aquáticas dos
+drones de Plantio e Escavação (visualmente parecidas com um submarino),
+que continuam sendo apenas Plantio e Escavação, não uma 6ª/7ª categoria.

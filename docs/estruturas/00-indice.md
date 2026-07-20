@@ -34,7 +34,7 @@ função de cada estrutura, não o nome definitivo.
 - `planeta-1/00-indice.md` — estruturas do planeta inicial (Planeta 1 de
   planeta) — fechado
 - `planeta-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
-- `tier-3/00-indice.md` — a debater
+- `planeta-3/00-indice.md` — estruturas do terceiro planeta (água) — fechado
 - `tier-4/00-indice.md` — a debater
 - `tier-5/00-indice.md` — a debater
 
