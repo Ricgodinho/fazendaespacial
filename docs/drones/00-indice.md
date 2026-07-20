@@ -1,8 +1,20 @@
-# Drones
+# Drones — Índice
 
-Este documento é construído por subtópicos, debatidos e fechados um a um.
-Cobre: categorias funcionais, evolução por tier, e aplicação da raridade
-(ver `docs/01-conceito.md` para a tabela de raridade já definida).
+Este é o índice do sistema de Drones. Cada categoria de drone tem seu
+próprio arquivo nesta pasta. Este documento cobre as decisões que se
+aplicam a todas as categorias: funções gerais, modelo de progressão,
+crafting e limites de quantidade.
+
+## Arquivos desta pasta
+
+- `colheita.md` — especificação do drone de Colheita (fechado)
+- `plantio.md` — especificação do drone de Plantio (a debater)
+- `transporte.md` — especificação do drone de Transporte/logística (a debater)
+- `escavacao.md` — especificação do drone de Escavação (a debater)
+- `construcao.md` — especificação do drone de Construção/reparo (a debater)
+- `companheiro.md` — especificação do drone companheiro (a debater)
+- `arte/00-indice.md` — referências visuais específicas de drones
+- `audio/00-indice.md` — efeitos sonoros específicos de drones
 
 ## Subtópico 1: Categorias de drones — decisão
 
@@ -103,32 +115,12 @@ estratégico algum.
 Valores de exemplo, a validar em playtest/planilha — mesmo princípio já
 aplicado ao loop idle (ver `planilhas/planilha_loop_idle.xlsx`).
 
-## Subtópico 3: Drone de Colheita — decisão
-
-Cada tier **herda todas as capacidades dos tiers anteriores** e adiciona
-uma nova — nenhuma capacidade é substituída ao subir de tier.
-
-| Tier | Função |
-|---|---|
-| 1 | Colhe 1 tile por vez, precisa estar próximo da estrutura/jogador. Envia ao armazém geral. |
-| 2 | Colhe pequena área (ex: 3x3), ainda precisa estar próximo. Envia ao armazém geral. |
-| 3 | Ganha alcance — opera sem o jogador/nave por perto (mantém a área do Tier 2). Envia ao armazém geral. |
-| 4 | Prioriza automaticamente entre múltiplos cultivos diferentes (mantém alcance do Tier 3 e área do Tier 2). Envia ao armazém geral. |
-| 5 | Área de colheita maior (ex: 5x5), mantendo alcance e priorização dos tiers anteriores. Jogador escolhe o destino do que foi colhido: processamento direto na estrutura ou armazém geral (para vender como matéria-prima ou guardar). |
-
-### Destino do que é colhido (regra geral)
-- **Tiers 1 a 4**: sempre envia ao **armazém geral**. Para processar, o
-  jogador precisa de um drone de Transporte (ou ação manual) para levar
-  do armazém até a estrutura de processamento.
-- **Tier 5**: elimina essa etapa intermediária ao permitir entrega direta
-  na estrutura de processamento, mas mantém a opção de armazém geral como
-  escolha do jogador — preservando o princípio de que decisões de
-  economia/venda continuam na mão do jogador (ver `docs/01-conceito.md`).
-
-## Subtópicos ainda a debater
-- Especificação tier a tier das demais categorias (Plantio, Transporte,
-  Escavação, Construção).
+## Pendências gerais do sistema de Drones
+- Especificação tier a tier das categorias ainda não fechadas (Plantio,
+  Transporte, Escavação, Construção).
 - Aplicação da raridade dentro de cada categoria/tier.
 
-*Este documento será atualizado conforme os subtópicos seguintes forem
-debatidos e fechados.*
+*Este índice é atualizado conforme decisões gerais (aplicáveis a todas as
+categorias) forem debatidas. Decisões específicas de cada drone ficam no
+arquivo próprio da categoria.*
+
