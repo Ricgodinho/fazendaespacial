@@ -1,6 +1,4 @@
-import os
-
-content = """# Protótipo 1 — Loop Ativo
+# Protótipo 1 — Loop Ativo
 
 Este documento define as regras do loop **ativo** (interação direta do
 jogador), a segunda peça do loop híbrido, sem o componente idle ainda
@@ -67,12 +65,3 @@ em `docs/01-conceito.md`), para não gerar retrabalho.
 
 *Este documento deve ser revisado após o playtest do protótipo, antes de
 avançar para o Protótipo 2 (junção dos loops ativo e idle).*
-"""
-
-path = os.path.join("docs", "05-prototipo-1-loop-ativo.md")
-os.makedirs("docs", exist_ok=True)
-
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print(f"Arquivo atualizado: {path}")
