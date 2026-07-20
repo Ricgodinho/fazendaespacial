@@ -23,17 +23,51 @@ Planetas avançados podem depender de materiais, tecnologias e produtos originad
 em diferentes tiers anteriores.
 
 ## Identidade central
-O jogador começa restaurando uma pequena propriedade agrícola parcialmente
-abandonada. Durante explorações e escavações, encontra peças, sementes,
-registros, projetos e tecnologias pertencentes a uma antiga rede agrícola
-interplanetária.
+O jogador herda uma pequena propriedade agrícola parcialmente abandonada de um
+parente distante com quem teve pouco contato. Inicialmente, a propriedade
+representa apenas uma oportunidade de recomeçar a vida em um lugar tranquilo.
 
-A jornada cresce gradualmente: cuidar da primeira fazenda, recuperar tecnologias,
-melhorar a nave, alcançar novos mundos e reconectar os diferentes planetas da rede.
+Durante a restauração da fazenda, o jogador descobre que o antigo proprietário
+era um dos últimos responsáveis por uma rede agrícola interplanetária criada
+para cultivar, preservar e conectar diferentes mundos.
+
+A rede não foi destruída por uma única catástrofe. Ela entrou em decadência
+gradualmente devido a falhas tecnológicas, dificuldades nas rotas de transporte,
+isolamento das comunidades e falta de novos cuidadores. O antigo proprietário
+manteve parte da operação funcionando até perceber que não conseguiria
+reconstruí-la sozinho.
+
+A jornada cresce gradualmente: cuidar da primeira fazenda, compreender o legado
+recebido, recuperar tecnologias, melhorar a nave, alcançar novos mundos e
+reconectar os diferentes planetas da rede.
 
 A motivação principal deve ser descoberta e transformação. O jogador avança para
 levar vida, cuidado e beleza a novos lugares, e não apenas para acumular dinheiro
 ou aumentar números.
+
+## Escavações e descobertas
+Escavações funcionam como uma atividade de exploração e descoberta, e não como
+um sistema baseado em cavar aleatoriamente todo o terreno.
+
+Os locais de escavação são identificados por sinais visuais, mapas, registros,
+sensores ou informações encontradas durante a exploração.
+
+Entre as descobertas possíveis estão:
+
+- peças de máquinas e drones danificados;
+- fragmentos de projetos e tecnologias;
+- sementes e organismos preservados;
+- registros pessoais e históricos;
+- coordenadas e informações sobre outros mundos;
+- objetos decorativos;
+- artefatos de diferentes raridades.
+
+Itens necessários para o avanço principal possuem caminhos previsíveis e não
+dependem exclusivamente de sorte. Descobertas opcionais podem variar em
+localização, conteúdo e raridade.
+
+Tecnologias obtidas em tiers posteriores permitem retornar aos planetas
+anteriores e acessar ruínas, áreas ou camadas de escavação antes inacessíveis.
 
 ## Princípios de progressão
 
@@ -100,8 +134,6 @@ leveza de performance, mas com um visual mais elaborado e atraente do que um idl
 minimalista.
 
 ## Em aberto para debate
-- Origem exata da propriedade inicial.
-- Motivo do abandono da antiga rede agrícola.
 - O que exatamente se planta, cria e produz.
 - Requisitos para melhorar a nave e alcançar cada novo tier.
 - Funcionamento das viagens e rotas entre planetas.
