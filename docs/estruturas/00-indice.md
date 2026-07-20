@@ -13,8 +13,9 @@
 2. **Nível da Estrutura**: o upgrade/evolução de uma estrutura específica
    dentro do mesmo planeta — o mesmo conceito já usado para os drones
    (ver `docs/drones/colheita.md`, onde o drone de Colheita tem 5 níveis).
-   *Exemplo: "Campo de Cultivo Nível 1" vs "Campo de Cultivo Nível 3" —
-   ainda não debatido, ver pendências abaixo.*
+   *Exemplo: "Campo de Cultivo Nível 1" vs "Campo de Cultivo Nível 8" — a
+   regra geral está definida abaixo; os níveis específicos de cada
+   estrutura ainda serão detalhados um a um.*
 
 Cada planeta possui seu próprio conjunto de estruturas, seguindo a mesma
 lógica de progressão significativa já definida em `docs/01-conceito.md`
@@ -44,7 +45,50 @@ função de cada estrutura, não o nome definitivo.
 | Planeta 4 (gelo) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Planeta 5 (origem/núcleo) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 
+## Sistema de Níveis de Estrutura (regra geral) — decisão
+
+Aplica-se a **todas** as estruturas de **todos** os planetas.
+
+### Quantidade de níveis
+**10 níveis** por estrutura, cobrindo o jogo base completo (Planetas 1 a
+5). Não usa o mesmo "5" de raridade/drones/planetas de propósito — 10
+níveis dão mais fôlego à progressão de estruturas especificamente, que é
+o elemento com o qual o jogador mais interage repetidamente ao longo de
+toda a partida (loop híbrido).
+
+**Nota para fase futura (Fase 3/4 — não decidido):** cogitada extensão
+para até **15 níveis**, usando novos materiais a serem introduzidos nessa
+fase (ver conteúdo do Portal de Exploração,
+`docs/estruturas/planeta-5/portal-de-exploracao.md`). Depende da aceitação
+do jogo após lançamento — não é compromisso, apenas direção registrada.
+
+### Três regras combinadas por nível
+
+1. **Todo nível aumenta um número** (capacidade, velocidade ou volume de
+   produção), com **crescimento exponencial** (cada upgrade multiplica o
+   resultado, não soma um valor fixo) — mantém a sensação de progresso
+   constante mesmo nos níveis "de transição".
+2. **Níveis-marco (breakpoints) introduzem uma capacidade nova**, não
+   apenas número maior — mesma regra de progressão significativa já usada
+   nos drones (ver `docs/drones/colheita.md`) e definida no conceito
+   central (`docs/01-conceito.md`). Nem todo nível precisa ser um
+   breakpoint; a maioria só aumenta números, mantendo o ritmo de pequenas
+   recompensas frequentes que sustenta o loop idle.
+3. **Níveis mais altos exigem materiais de outros planetas** para evoluir,
+   reforçando a dependência entre planetas já central ao design (ver
+   `docs/01-conceito.md`, "Dependência entre planetas"). Uma estrutura do
+   Planeta 1, por exemplo, pode exigir material do Planeta 2 ou 3 para
+   evoluir a partir de determinado nível — a progressão de uma única
+   estrutura passa a depender da rede interplanetária, não só do próprio
+   planeta onde ela está.
+
+### Próximo passo
+Detalhar, estrutura por estrutura, quais níveis são breakpoints, quais
+capacidades cada breakpoint introduz, e quais materiais/quantidades são
+exigidos em cada nível — a começar pelo Planeta 1.
+
 ## Pendências gerais
 - Todos os 5 planetas do jogo base têm lista de estruturas fechada.
-- Definir os **níveis de evolução** (upgrades) de cada estrutura
-  individualmente, seguindo o mesmo modelo já usado nos drones.
+- Regra geral de níveis de estrutura definida (acima).
+- Detalhar os níveis específicos de cada estrutura, uma por uma,
+  começando pelo Planeta 1.
