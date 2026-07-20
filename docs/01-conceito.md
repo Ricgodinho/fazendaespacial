@@ -117,6 +117,30 @@ de quem chegou ao Planeta 5.
 Isso também mantém sempre algo novo para descobrir em planetas antigos,
 reforçando o princípio de progressão retroativa já definido acima.
 
+#### Sementes seguem a mesma tabela de raridade (decisão)
+Sementes **não possuem uma escala própria separada** — usam a mesma
+tabela de 5 níveis de raridade acima (Comum a Lendário), sujeitas ao
+mesmo gate por progresso do jogador.
+
+Dois filtros trabalham juntos, em ordem:
+1. **Teto global (progresso do jogador)**: define o que **pode**
+   aparecer em qualquer lugar. Sem o jogador ter alcançado o Planeta 4,
+   por exemplo, nenhum item Épico aparece em lugar nenhum — nem no
+   Planeta 1.
+2. **Modificador local (Nível do Viveiro)**: dentro do teto já liberado
+   pelo progresso do jogador, o nível de upgrade do Viveiro usado na
+   colheita define a **probabilidade** de sair algo mais raro naquela
+   coleta específica — um Viveiro de nível mais alto aumenta a chance de
+   uma semente de raridade superior, mas nunca ultrapassa o teto global
+   já liberado.
+
+Esta regra substitui e descarta uma ideia anterior (nunca formalizada em
+documento) de uma "janela deslizante" baseada no planeta do cultivo colhido
+— superada por este modelo de dois filtros.
+
+Fórmula exata de probabilidade por nível de Viveiro ainda a definir (ver
+pendências em `docs/estruturas/planeta-1/viveiro.md`).
+
 #### Nota para fase futura (mercado entre jogadores — não decidido)
 Foi levantada a ideia de, na Fase 3 (multiplayer, ver
 `docs/02-roadmap-fases.md`), permitir um mercado entre jogadores onde um

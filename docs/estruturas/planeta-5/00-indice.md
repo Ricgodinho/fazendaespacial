@@ -32,8 +32,11 @@ apenas uma lista solta:
    desconhecida — gancho para eventos, novas sementes, e conteúdo de
    Fase 3/4 (não decidido em detalhe, apenas registrado como direção
    futura).
-7. Armazém geral (planeta 5) — armazenamento padrão.
-8. Hangar de drones (planeta 5) — capacidade de operação simultânea.
+7. **Lua Satélite (Mineração Restrita)** → fonte local de minério para a
+   Fundição Central (item 5) e ponto de escavação/descoberta deste
+   planeta. Acesso restrito a drones Tier 5.
+8. Armazém geral (planeta 5) — armazenamento padrão.
+9. Hangar de drones (planeta 5) — capacidade de operação simultânea.
 
 ## Lista de estruturas — decisão
 
@@ -45,8 +48,9 @@ apenas uma lista solta:
 | 4 | Arquivo Central | Narrativa | `arquivo-central.md` |
 | 5 | Fundição Central | Mineral | `fundicao-central.md` |
 | 6 | Antena/Portal de Exploração | Gancho Fase 3/4 | `portal-de-exploracao.md` |
-| 7 | Armazém geral (planeta 5) | Todas | `armazem-geral.md` |
-| 8 | Hangar de drones (planeta 5) | — | `hangar-de-drones.md` |
+| 7 | Lua Satélite (Mineração Restrita) | Mineral / Descobertas | `lua-satelite-mineradora.md` |
+| 8 | Armazém geral (planeta 5) | Todas | `armazem-geral.md` |
+| 9 | Hangar de drones (planeta 5) | — | `hangar-de-drones.md` |
 
 ## Nota de exceção: Fundição Central
 
@@ -57,7 +61,8 @@ exploração espacial profunda (conteúdo futuro de Fase 3/4), e depender de
 transporte até o Planeta 2 para processar minério contradiria seu papel
 de ponto autossuficiente e avançado da rede. É uma exceção deliberada à
 regra geral, não um esquecimento — ver nota espelhada em
-`docs/estruturas/planeta-2/fundicao.md`.
+`docs/estruturas/planeta-2/fundicao.md`. Sua fonte local de matéria-prima
+é a **Lua Satélite (Mineração Restrita)**, ver item 7 da lista acima.
 
 ## Nota para fase futura: Manufatura de Equipamento de Exploração (não decidido)
 

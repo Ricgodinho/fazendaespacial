@@ -5,6 +5,12 @@ mecânicas novas de manipulação de tempo (congelamento), revivescência de
 organismos preservados, e um evento climático raro (aurora) — não é
 reaproveitamento reskinado de estruturas de planetas anteriores.
 
+**Pré-requisito de acesso:** o **Módulo de Resistência ao Frio** deve ser
+construído no Estaleiro do Planeta 2 (ver
+`docs/estruturas/planeta-2/estaleiro.md`) antes da primeira expedição a
+este planeta, seguindo a regra geral de desbloqueio já definida em
+`docs/01-conceito.md`.
+
 ## Lista de estruturas — decisão
 
 | # | Estrutura (nome provisório) | Cadeia | Arquivo |

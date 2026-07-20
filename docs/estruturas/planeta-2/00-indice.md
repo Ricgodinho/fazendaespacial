@@ -1,6 +1,6 @@
 # Estruturas — Planeta 2 (A Lua)
 
-Planeta Planeta 2: 100% mineral/tecnológico, sem agricultura (ver
+Planeta 2: 100% mineral/tecnológico, sem agricultura (ver
 `docs/01-conceito.md`). Tema central: minério, criação de drones e
 upgrade de módulos de nave.
 
@@ -36,13 +36,21 @@ Esta é uma decisão reversível, não definitiva.
 
 ### Fundição — escopo ampliado
 Além de minério bruto → barras/metal processado, a Fundição também pode
-**criar ligas combinando materiais de múltiplos tiers** — conectando-se à
-regra de dependência entre tiers já definida em `docs/01-conceito.md`
-("Planeta 5 pode exigir materiais dos Tiers 2, 3 e 4").
+**criar ligas combinando materiais de múltiplos planetas** —
+conectando-se à regra de dependência entre planetas já definida em
+`docs/01-conceito.md` ("Planeta 5 pode exigir materiais dos Planetas 2, 3
+e 4").
 
 ### Oficina/Fábrica de Drones e Estaleiro
 Ambas conectam-se à identidade deste planeta como o local de "criação de
 drones, upgrade de naves" (ver debate em `docs/01-conceito.md`).
+
+### Mina de Minério: também é ponto de escavação/descoberta
+Além de extrair minério, a Mina de Minério funciona como o ponto de
+escavação/descoberta deste planeta — mesma função dupla da Mina de Pedra
+do Planeta 1 (ver `docs/estruturas/planeta-1/mina-de-pedra.md`). Resolve
+uma lacuna identificada em revisão: sem isso, não havia fonte de
+descobertas (coordenadas, organismos preservados) neste planeta.
 
 ## Pendente
 - Detalhar a função específica de cada estrutura (uma por arquivo).

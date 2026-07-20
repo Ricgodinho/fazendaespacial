@@ -1,5 +1,16 @@
 # Escopo do MVP
 
+> **Nota de escopo:** este documento e os Protótipos 0/1/2 descrevem o
+> **MVP técnico** — o menor recorte jogável para validar o loop híbrido.
+> Documentos em `docs/drones/`, `docs/estruturas/` e as decisões de
+> raridade/planetas em `docs/01-conceito.md` descrevem o **design
+> completo do jogo** (todas as fases, incluindo conteúdo fora do MVP).
+> As duas coisas coexistem de propósito: o design completo serve de
+> visão de longo prazo e material para a fábrica de desenvolvimento; o
+> MVP técnico é o que se constrói e testa primeiro. Não são
+> contraditórios — apenas escopos diferentes, registrados em documentos
+> diferentes.
+
 Este documento define o menor recorte jogável do projeto: o suficiente para
 provar que o loop híbrido (ativo + idle) é divertido, antes de qualquer
 expansão de conteúdo, arte final ou passagem para produção.
@@ -13,7 +24,7 @@ Tudo que não ajuda a responder essa pergunta fica fora do MVP.
 
 ## Dentro do escopo do MVP
 
-- **1 planeta apenas.** Sem sistema solar, sem viagem, sem múltiplos tiers.
+- **1 planeta apenas.** Sem sistema solar, sem viagem, sem múltiplos planetas.
 - **Loop ativo**: plantar, colher, construir estruturas básicas de produção.
 - **Loop passivo/idle**: pelo menos 1 cadeia de produção que continua
   avançando com o jogo fechado (ex: uma plantação automatizada simples),
@@ -27,7 +38,7 @@ Tudo que não ajuda a responder essa pergunta fica fora do MVP.
 
 ## Fora do escopo do MVP
 
-- Nave, viagens, múltiplos planetas/tiers.
+- Nave, viagens, múltiplos planetas.
 - Escavações e descobertas.
 - Raridade de itens.
 - Localização em múltiplos idiomas.

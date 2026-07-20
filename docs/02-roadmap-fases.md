@@ -1,5 +1,10 @@
 # Roadmap por fases
 
+> **Nota de escopo:** ver `docs/00-mvp-escopo.md` para a distinção entre
+> MVP técnico (o que se constrói primeiro, validado por protótipo) e
+> design completo do jogo (documentado em `docs/drones/`,
+> `docs/estruturas/` e `docs/01-conceito.md`, cobrindo todas as fases).
+
 ## Fase 1 — MVP single-player
 - Loop híbrido (ativo + idle) validado em um número reduzido de planetas (1 a 3).
 - Sistemas centrais: plantio/cultivo, produção passiva, progressão, primeira economia.

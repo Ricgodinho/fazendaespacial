@@ -1,7 +1,7 @@
 # Área de Plantio de Árvores
 
 **Cadeia:** Madeira
-**Tier:** 1
+**Planeta:** 1
 
 Ainda não detalhado. Ver `00-indice.md` desta pasta para o contexto geral
 do Planeta 1.

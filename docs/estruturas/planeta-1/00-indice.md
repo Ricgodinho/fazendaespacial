@@ -27,10 +27,12 @@ madeira e pedra. Minerais e Fundição só entram a partir do Planeta 2 (ver
   Funciona tanto como fonte de pedra quanto como ponto de escavação e
   descoberta (plantas, cartas estelares, outros achados), conectando-se
   ao drone de Escavação/Exploração (`docs/drones/escavacao.md`).
-- **Viveiro**: produz sementes a partir de matéria-prima colhida,
-  incluindo o sistema de drop de semente por tier (ver debate em
-  `docs/01-conceito.md`, seção de Raridade, para o princípio geral —
-  mecânica específica de probabilidade a fechar).
+- **Viveiro**: produz sementes a partir de matéria-prima colhida. As
+  sementes seguem a mesma tabela de raridade do jogo (ver
+  `docs/01-conceito.md`, seção de Raridade) — o teto do que pode
+  aparecer é definido pelo progresso do jogador, e o Nível do Viveiro
+  modifica a probabilidade dentro desse teto. Fórmula exata de
+  probabilidade por nível ainda a definir.
 
 ## Pendente
 - Detalhar a função específica de cada estrutura (uma por arquivo).

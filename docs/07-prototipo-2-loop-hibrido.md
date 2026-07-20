@@ -43,13 +43,13 @@ Duas camadas de limite trabalham juntas:
 Cada estrutura tem uma capacidade máxima de armazenamento. Ao atingir o
 teto, a produção pausa até o jogador coletar. Nada é perdido pela pausa.
 
-**A capacidade é upgradável através da progressão entre tiers/planetas**,
+**A capacidade é upgradável através da progressão entre planetas**,
 seguindo o mesmo princípio de progressão retroativa do conceito central
 (ver `docs/01-conceito.md`): por exemplo, minerais extraídos de uma lua
-podem liberar um projeto de upgrade de armazenamento; tecnologias de tiers
-posteriores podem viabilizar drones que ampliam a capacidade de coleta;
-módulos de nave podem liberar melhorias aplicáveis a estruturas de tiers
-anteriores.
+podem liberar um projeto de upgrade de armazenamento; tecnologias de
+planetas posteriores podem viabilizar drones que ampliam a capacidade de
+coleta; módulos de nave podem liberar melhorias aplicáveis a estruturas
+de planetas anteriores.
 
 ### 2. Teto global de horas (novo, inspirado em referências do gênero)
 Além da capacidade por estrutura, existe um limite máximo de tempo de
@@ -100,7 +100,7 @@ desse tempo.
    despercebido para a maioria dos padrões de uso?
 3. A progressão de capacidade via upgrade (mineral → drone → módulo de
    nave) está clara o suficiente neste estágio inicial, mesmo sem os
-   tiers posteriores implementados?
+   planetas posteriores implementados?
 
 *Este é o último protótipo antes do MVP completo. Após validação, os
 documentos `00` a `06` devem ser revisados e consolidados antes da entrega
