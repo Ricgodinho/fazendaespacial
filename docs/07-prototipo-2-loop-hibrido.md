@@ -1,6 +1,4 @@
-import os
-
-content = """# Protótipo 2 — Loop Híbrido Completo
+# Protótipo 2 — Loop Híbrido Completo
 
 Este documento junta o loop ativo (`docs/05-prototipo-1-loop-ativo.md`) e o
 loop idle (`docs/04-prototipo-0-loop-idle.md`) em um único protótipo
@@ -107,12 +105,3 @@ desse tempo.
 *Este é o último protótipo antes do MVP completo. Após validação, os
 documentos `00` a `06` devem ser revisados e consolidados antes da entrega
 à fábrica de desenvolvimento.*
-"""
-
-path = os.path.join("docs", "07-prototipo-2-loop-hibrido.md")
-os.makedirs("docs", exist_ok=True)
-
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print(f"Arquivo atualizado: {path}")
