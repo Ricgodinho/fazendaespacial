@@ -128,6 +128,48 @@ bancada de reparos e espaço limitado para drones. A nave não deve substituir a
 fazendas nem permitir grandes plantações, linhas de produção ou expansões
 excessivas.
 
+### Desbloqueio de novos tiers
+O acesso a um novo planeta ou lua depende de uma combinação de requisitos:
+
+1. descobrir o destino por meio de coordenadas, mapas, registros, sensores,
+   ruínas, observatórios ou informações fornecidas por personagens;
+2. estabilizar funções essenciais do mundo atual por meio de marcos concretos,
+   sem exigir que o planeta esteja completamente concluído;
+3. recuperar ou construir um módulo funcional da nave necessário para enfrentar
+   as condições do novo destino;
+4. reunir os materiais necessários por meio da rede formada pelos planetas já
+   visitados.
+
+Os marcos de estabilização podem incluir recuperar uma área agrícola, estabelecer
+uma produção estável, restaurar uma estrutura importante, produzir um recurso
+especial ou resolver um problema ambiental local.
+
+Os módulos da nave não devem representar apenas aumentos numéricos. Cada melhoria
+precisa introduzir uma nova capacidade, como alcançar uma lua próxima, resistir
+a temperaturas extremas, atravessar tempestades, pousar sobre água, transportar
+organismos ou navegar por regiões gravitacionalmente instáveis.
+
+Os módulos também devem produzir alterações visíveis na nave.
+
+### Primeira expedição e conexão
+A primeira viagem para um novo mundo funciona como uma expedição inicial com
+capacidade limitada. O jogador explora o local, conhece suas condições e identifica
+onde poderá estabelecer a nova fazenda.
+
+Após essa primeira visita, o jogador precisa construir ou restaurar infraestrutura
+local para conectar o novo mundo à antiga rede agrícola.
+
+Somente depois dessa conexão são liberadas operações regulares, como transporte
+de recursos, envio de drones, rotas logísticas e produção passiva.
+
+As viagens são automáticas e não exigem pilotagem obrigatória. Elas podem incluir
+animações e interações leves, mas não devem transformar o jogo em um simulador de
+naves nem criar repetição desnecessária.
+
+A estrutura geral de desbloqueio pode permanecer semelhante entre os tiers, mas
+os desafios e as formas de cumprir cada requisito devem variar conforme a
+identidade de cada planeta.
+
 ## Plataforma e escopo
 - Alvo final: jogo indie completo, com lançamento em **Steam**.
 - Plataforma inicial: PC.
@@ -149,8 +191,6 @@ minimalista.
 
 ## Em aberto para debate
 - O que exatamente se planta, cria e produz.
-- Requisitos para melhorar a nave e alcançar cada novo tier.
-- Funcionamento das viagens e rotas entre planetas.
 - Tipos e funções dos drones.
 - Categorias definitivas de raridade.
 - Objetivo de longo prazo e encerramento da jornada.
