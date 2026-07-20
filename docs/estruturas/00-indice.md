@@ -33,7 +33,7 @@ função de cada estrutura, não o nome definitivo.
 
 - `tier-1/00-indice.md` — estruturas do planeta inicial (Tier 1 de
   planeta) — fechado
-- `tier-2/00-indice.md` — estruturas do segundo planeta (a lua) — a debater
+- `tier-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
 - `tier-3/00-indice.md` — a debater
 - `tier-4/00-indice.md` — a debater
 - `tier-5/00-indice.md` — a debater
@@ -43,7 +43,7 @@ função de cada estrutura, não o nome definitivo.
 | Tier do Planeta | Status |
 |---|---|
 | Tier 1 (planeta inicial) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
-| Tier 2 (a lua) | 🔲 Pendente |
+| Tier 2 (a lua) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Tier 3 | 🔲 Pendente |
 | Tier 4 | 🔲 Pendente |
 | Tier 5 | 🔲 Pendente |
