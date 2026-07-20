@@ -87,16 +87,40 @@ Recursos de tiers antigos continuam relevantes em construções e tecnologias
 avançadas. Um projeto de Tier 5, por exemplo, pode exigir materiais produzidos
 nos Tiers 2, 3 e 4.
 
-### Raridade
-Ferramentas, recursos, plantas, projetos ou descobertas podem possuir níveis de
-raridade, como comum, incomum, raro e lendário.
+### Raridade — decisão
+
+**5 níveis de raridade**: comum, incomum, raro, épico e lendário.
 
 A raridade não deve representar somente melhorias numéricas. Itens mais raros
 podem possuir aparência, comportamento, aplicação, história ou capacidade
-especial própria.
+especial própria. Esta regra se aplica a ferramentas, recursos, plantas,
+projetos, descobertas e também aos drones.
 
-A nomenclatura e a quantidade definitiva de níveis de raridade ainda serão
-definidas.
+#### Liberação por progresso do jogador, não por planeta
+Cada nível de raridade é liberado a partir de um marco de progressão do
+jogador (chegar a um determinado tier), mas uma vez liberado, pode aparecer
+em **qualquer planeta já visitado** — incluindo os primeiros tiers.
+
+| Raridade | Liberada a partir de | Onde pode aparecer |
+|---|---|---|
+| Comum | Tier 1 (sempre) | Qualquer planeta |
+| Incomum | Tier 1 (sempre) | Qualquer planeta |
+| Raro | Tier 3 | Qualquer planeta já visitado |
+| Épico | Tier 4 | Qualquer planeta já visitado |
+| Lendário | Tier 5 | Qualquer planeta já visitado |
+
+Motivo: o gate é pelo progresso do jogador, não pelo planeta, evitando risco
+de poder desproporcional cedo demais — quando um item lendário pode aparecer
+no Tier 1, o jogador já tem toda a força de jogo de quem chegou ao Tier 5.
+Isso também mantém sempre algo novo para descobrir em planetas antigos,
+reforçando o princípio de progressão retroativa já definido acima.
+
+#### Nota para fase futura (mercado entre jogadores — não decidido)
+Foi levantada a ideia de, na Fase 3 (multiplayer, ver
+`docs/02-roadmap-fases.md`), permitir um mercado entre jogadores onde um
+jogador em tier inicial possa comprar itens de raridade mais alta de outro
+jogador, mesmo sem ainda poder obtê-los por conta própria. Esta é apenas uma
+ideia registrada para debate futuro, não uma decisão.
 
 ## Automação e retorno aos planetas
 O jogador começa executando pessoalmente grande parte das atividades da primeira
