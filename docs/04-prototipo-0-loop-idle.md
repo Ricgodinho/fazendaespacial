@@ -25,8 +25,13 @@ agradável, ajustando números livremente até "sentir certo" no papel.
 |---|---|
 | Tempo de crescimento | 2 horas |
 | Produção por ciclo | 10 unidades |
-| Capacidade de armazenamento | 30 unidades (3 ciclos) |
-| Tempo até saturar (sem coleta) | 6 horas |
+| Capacidade de armazenamento | 100 unidades (10 ciclos) |
+| Tempo até saturar (sem coleta) | 20 horas |
+
+> Valor ajustado após simulação em planilha (ver `planilhas/planilha_loop_idle.xlsx`):
+> capacidade de 30 unidades fazia o jogador casual (1x/dia) perder 75% da
+> produção; com 100 unidades a perda cai para ~17%, mantendo uma leve
+> sensação de urgência sem punir demais quem joga com pouca frequência.
 
 ### Cultivo de progressão — "Fibra Estelar" (nome provisório)
 | Parâmetro | Valor exemplo |
