@@ -12,15 +12,15 @@ repetidamente tarefas já dominadas.
 
 ## Cenário
 O jogo ocorre em um sistema solar com múltiplos planetas e luas. Cada mundo
-funciona como uma fazenda e também como um **tier de progressão**, apresentando
+funciona como uma fazenda e também como um **planeta de progressão**, apresentando
 clima, gravidade, recursos, cultivos, criaturas e desafios próprios.
 
 Os planetas não funcionam como fases descartáveis. Cada mundo mantém recursos,
 funções ou capacidades exclusivas e continua participando da rede produtiva mesmo
-depois que novos tiers são desbloqueados.
+depois que novos planetas são desbloqueados.
 
 Planetas avançados podem depender de materiais, tecnologias e produtos originados
-em diferentes tiers anteriores.
+em diferentes planetas anteriores.
 
 ## Identidade central
 O jogador herda uma pequena propriedade agrícola parcialmente abandonada de um
@@ -66,26 +66,26 @@ Itens necessários para o avanço principal possuem caminhos previsíveis e não
 dependem exclusivamente de sorte. Descobertas opcionais podem variar em
 localização, conteúdo e raridade.
 
-Tecnologias obtidas em tiers posteriores permitem retornar aos planetas
+Tecnologias obtidas em planetas posteriores permitem retornar aos planetas
 anteriores e acessar ruínas, áreas ou camadas de escavação antes inacessíveis.
 
 ## Princípios de progressão
 
 ### Progressão significativa
-Novos tiers não devem oferecer apenas versões numericamente superiores de
+Novos planetas não devem oferecer apenas versões numericamente superiores de
 ferramentas, construções ou recursos. Cada avanço precisa introduzir uma nova
 capacidade, alterar a forma de jogar ou permitir novas interações com planetas
 anteriores.
 
 ### Progressão retroativa
-Tecnologias obtidas em tiers avançados também devem transformar os mundos já
+Tecnologias obtidas em planetas avançados também devem transformar os mundos já
 visitados. Um novo planeta pode liberar máquinas, drones, cultivos, melhorias,
-áreas ou formas de automação aplicáveis aos tiers anteriores.
+áreas ou formas de automação aplicáveis aos planetas anteriores.
 
 ### Dependência entre planetas
-Recursos de tiers antigos continuam relevantes em construções e tecnologias
-avançadas. Um projeto de Tier 5, por exemplo, pode exigir materiais produzidos
-nos Tiers 2, 3 e 4.
+Recursos de planetas antigos continuam relevantes em construções e tecnologias
+avançadas. Um projeto do Planeta 5, por exemplo, pode exigir materiais produzidos
+nos Planetas 2, 3 e 4.
 
 ### Raridade — decisão
 
@@ -154,7 +154,7 @@ bancada de reparos e espaço limitado para drones. A nave não deve substituir a
 fazendas nem permitir grandes plantações, linhas de produção ou expansões
 excessivas.
 
-### Desbloqueio de novos tiers
+### Desbloqueio de novos planetas
 O acesso a um novo planeta ou lua depende de uma combinação de requisitos:
 
 1. descobrir o destino por meio de coordenadas, mapas, registros, sensores,
@@ -192,7 +192,7 @@ As viagens são automáticas e não exigem pilotagem obrigatória. Elas podem in
 animações e interações leves, mas não devem transformar o jogo em um simulador de
 naves nem criar repetição desnecessária.
 
-A estrutura geral de desbloqueio pode permanecer semelhante entre os tiers, mas
+A estrutura geral de desbloqueio pode permanecer semelhante entre os planetas, mas
 os desafios e as formas de cumprir cada requisito devem variar conforme a
 identidade de cada planeta.
 
