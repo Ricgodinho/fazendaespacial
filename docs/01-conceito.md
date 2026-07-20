@@ -114,6 +114,20 @@ descobertas, eventos e novas melhorias continuam dependendo do jogador.
 Os planetas anteriores permanecem visitáveis, personalizáveis e relevantes mesmo
 quando sua produção básica estiver automatizada.
 
+## Nave
+O jogador herda uma nave antiga junto com a propriedade. Ela funciona como o elo
+permanente entre os diferentes planetas e luas, sendo restaurada gradualmente ao
+longo da jornada.
+
+A nave serve para transportar o jogador, uma quantidade limitada de recursos e
+os drones necessários para cada operação. Ela também funciona como um pequeno
+espaço pessoal personalizável.
+
+Seu interior deve permanecer compacto, podendo incluir cabine, armazenamento,
+bancada de reparos e espaço limitado para drones. A nave não deve substituir as
+fazendas nem permitir grandes plantações, linhas de produção ou expansões
+excessivas.
+
 ## Plataforma e escopo
 - Alvo final: jogo indie completo, com lançamento em **Steam**.
 - Plataforma inicial: PC.
