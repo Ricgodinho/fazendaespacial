@@ -204,7 +204,7 @@ estilizado se mostre inviável para o orçamento do projeto.
 A câmera do jogo deve permitir **rotação e zoom livres** ao redor da cena.
 Isso significa que, na prática, a arte precisa ser implementada como
 **modelos 3D com textura/shader pintado à mão** (não ilustração 2D
-tradicional nem imagens pré-renderizadas) — only assim a câmera pode
+tradicional nem imagens pré-renderizadas) — só assim a câmera pode
 girar livremente mantendo a aparência ilustrativa desejada. Referências de
 mercado nesse pipeline: Genshin Impact, Ni no Kuni, World of Warcraft.
 
