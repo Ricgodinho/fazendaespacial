@@ -1,6 +1,4 @@
-import os
-
-content = """# Protótipo 0 — Matemática do loop idle
+# Protótipo 0 — Matemática do loop idle
 
 Este documento define as regras numéricas do loop passivo/idle, para
 validar em planilha (sem código, sem interface) antes de qualquer
@@ -76,12 +74,3 @@ Preencher uma planilha com essas taxas e simular cenários de jogador:
 
 *Este documento deve ser atualizado com os números finais depois da
 validação em planilha, antes de iniciar o Protótipo 0 em código.*
-"""
-
-path = os.path.join("docs", "04-prototipo-0-loop-idle.md")
-os.makedirs("docs", exist_ok=True)
-
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print(f"Arquivo atualizado: {path}")
