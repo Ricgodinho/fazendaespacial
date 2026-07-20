@@ -1,16 +1,13 @@
 # Estruturas — Índice Geral
 
-## Atenção: dois significados diferentes de "Tier" neste documento
+## Atenção: dois conceitos diferentes neste documento
 
-Este documento usa "Tier" para duas coisas distintas — importante não
-confundir:
-
-1. **Planeta**: qual planeta/mundo é esse na progressão do jogo
-   (ver `docs/01-conceito.md`). Cada planeta tem seu próprio conjunto de
+1. **Planeta**: qual planeta/mundo é esse na progressão do jogo (ver
+   `docs/01-conceito.md`). Cada planeta tem seu próprio conjunto de
    estruturas — algumas exclusivas daquele planeta (ex: só o planeta
    inicial tem Mina de Pedra "herdada do antigo dono").
-   *Exemplo: "Planeta Planeta 1" = o planeta inicial herdado do parente
-   distante. Nome definitivo do planeta ainda não decidido — ver
+   *Exemplo: "Planeta 1" = o planeta inicial herdado do parente distante.
+   Nome definitivo do planeta ainda não decidido — ver
    `docs/01-conceito.md`, seção "Em aberto para debate".*
 
 2. **Nível da Estrutura**: o upgrade/evolução de uma estrutura específica
@@ -31,12 +28,11 @@ função de cada estrutura, não o nome definitivo.
 
 ## Estrutura de pastas
 
-- `planeta-1/00-indice.md` — estruturas do planeta inicial (Planeta 1 de
-  planeta) — fechado
+- `planeta-1/00-indice.md` — estruturas do planeta inicial — fechado
 - `planeta-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
 - `planeta-3/00-indice.md` — estruturas do terceiro planeta (água) — fechado
-- `tier-4/00-indice.md` — a debater
-- `tier-5/00-indice.md` — a debater
+- `planeta-4/00-indice.md` — a debater
+- `planeta-5/00-indice.md` — a debater
 
 ## Status (por Planeta)
 
@@ -44,11 +40,11 @@ função de cada estrutura, não o nome definitivo.
 |---|---|
 | Planeta 1 (planeta inicial) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Planeta 2 (a lua) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
-| Planeta 3 | 🔲 Pendente |
+| Planeta 3 (água) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Planeta 4 | 🔲 Pendente |
 | Planeta 5 | 🔲 Pendente |
 
 ## Pendências gerais
-- Listar estruturas dos planetas Planeta 2 a 5.
+- Listar estruturas dos planetas 4 e 5.
 - Definir os **níveis de evolução** (upgrades) de cada estrutura
   individualmente, seguindo o mesmo modelo já usado nos drones.
