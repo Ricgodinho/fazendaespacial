@@ -1,6 +1,4 @@
-import os
-
-content = """# Stack Técnica
+# Stack Técnica
 
 Este documento registra as decisões técnicas de base do projeto, para
 alinhamento com a fábrica de desenvolvimento antes do início da produção.
@@ -46,12 +44,3 @@ PC (Steam), conforme definido em `docs/01-conceito.md`.
 
 *Este documento deve ser atualizado conforme decisões técnicas adicionais
 forem tomadas, antes da entrega à fábrica de desenvolvimento.*
-"""
-
-path = os.path.join("docs", "06-stack-tecnica.md")
-os.makedirs("docs", exist_ok=True)
-
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print(f"Arquivo atualizado: {path}")
