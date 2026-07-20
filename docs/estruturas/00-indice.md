@@ -32,7 +32,7 @@ função de cada estrutura, não o nome definitivo.
 - `planeta-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
 - `planeta-3/00-indice.md` — estruturas do terceiro planeta (água) — fechado
 - `planeta-4/00-indice.md` — estruturas do quarto planeta (gelo) — fechado
-- `planeta-5/00-indice.md` — a debater
+- `planeta-5/00-indice.md` — estruturas do quinto planeta (origem/núcleo) — fechado
 
 ## Status (por Planeta)
 
@@ -42,9 +42,9 @@ função de cada estrutura, não o nome definitivo.
 | Planeta 2 (a lua) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Planeta 3 (água) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 | Planeta 4 (gelo) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
-| Planeta 5 | 🔲 Pendente |
+| Planeta 5 (origem/núcleo) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
 
 ## Pendências gerais
-- Listar estruturas do planeta 5.
+- Todos os 5 planetas do jogo base têm lista de estruturas fechada.
 - Definir os **níveis de evolução** (upgrades) de cada estrutura
   individualmente, seguindo o mesmo modelo já usado nos drones.
