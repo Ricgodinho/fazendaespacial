@@ -1,6 +1,4 @@
-import os
-
-content = """# Drones
+# Drones
 
 Este documento é construído por subtópicos, debatidos e fechados um a um.
 Cobre: categorias funcionais, evolução por tier, e aplicação da raridade
@@ -63,12 +61,3 @@ visitante. Esta é apenas uma ideia registrada para debate futuro na Fase
 
 *Este documento será atualizado conforme os subtópicos seguintes forem
 debatidos e fechados.*
-"""
-
-path = os.path.join("docs", "08-drones.md")
-os.makedirs("docs", exist_ok=True)
-
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print(f"Arquivo criado: {path}")
