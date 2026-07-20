@@ -1,8 +1,8 @@
-# Estruturas — Tier 1 (Planeta inicial)
+# Estruturas — Planeta 1 (Planeta inicial)
 
-Tier 1 é exclusivamente agrícola/recursos naturais básicos: comida,
-madeira e pedra. Minerais e Fundição só entram a partir do Tier 2 (ver
-`docs/01-conceito.md`, referência à lua mineral de Tier 2).
+Planeta 1 é exclusivamente agrícola/recursos naturais básicos: comida,
+madeira e pedra. Minerais e Fundição só entram a partir do Planeta 2 (ver
+`docs/01-conceito.md`, referência à lua mineral de Planeta 2).
 
 ## Lista de estruturas — decisão
 

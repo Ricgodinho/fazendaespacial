@@ -1,7 +1,7 @@
-# Área de Plantio de Árvores
+# Mina de Minério
 
-**Cadeia:** Madeira
-**Tier:** 1
+**Cadeia:** Mineral
+**Planeta:** 2 (a lua)
 
 Ainda não detalhado. Ver `00-indice.md` desta pasta para o contexto geral
-do Tier 1.
+do Planeta 2.

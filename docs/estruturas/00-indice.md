@@ -5,11 +5,11 @@
 Este documento usa "Tier" para duas coisas distintas — importante não
 confundir:
 
-1. **Tier do Planeta**: qual planeta/mundo é esse na progressão do jogo
+1. **Planeta**: qual planeta/mundo é esse na progressão do jogo
    (ver `docs/01-conceito.md`). Cada planeta tem seu próprio conjunto de
    estruturas — algumas exclusivas daquele planeta (ex: só o planeta
    inicial tem Mina de Pedra "herdada do antigo dono").
-   *Exemplo: "Planeta Tier 1" = o planeta inicial herdado do parente
+   *Exemplo: "Planeta Planeta 1" = o planeta inicial herdado do parente
    distante. Nome definitivo do planeta ainda não decidido — ver
    `docs/01-conceito.md`, seção "Em aberto para debate".*
 
@@ -31,24 +31,24 @@ função de cada estrutura, não o nome definitivo.
 
 ## Estrutura de pastas
 
-- `tier-1/00-indice.md` — estruturas do planeta inicial (Tier 1 de
+- `planeta-1/00-indice.md` — estruturas do planeta inicial (Planeta 1 de
   planeta) — fechado
-- `tier-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
+- `planeta-2/00-indice.md` — estruturas do segundo planeta (a lua) — fechado
 - `tier-3/00-indice.md` — a debater
 - `tier-4/00-indice.md` — a debater
 - `tier-5/00-indice.md` — a debater
 
-## Status (por Tier de Planeta)
+## Status (por Planeta)
 
-| Tier do Planeta | Status |
+| Planeta | Status |
 |---|---|
-| Tier 1 (planeta inicial) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
-| Tier 2 (a lua) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
-| Tier 3 | 🔲 Pendente |
-| Tier 4 | 🔲 Pendente |
-| Tier 5 | 🔲 Pendente |
+| Planeta 1 (planeta inicial) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
+| Planeta 2 (a lua) | ✅ Lista de estruturas fechada — nível de cada estrutura a detalhar |
+| Planeta 3 | 🔲 Pendente |
+| Planeta 4 | 🔲 Pendente |
+| Planeta 5 | 🔲 Pendente |
 
 ## Pendências gerais
-- Listar estruturas dos planetas Tier 2 a 5.
+- Listar estruturas dos planetas Planeta 2 a 5.
 - Definir os **níveis de evolução** (upgrades) de cada estrutura
   individualmente, seguindo o mesmo modelo já usado nos drones.

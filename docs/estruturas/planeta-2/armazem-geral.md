@@ -1,7 +1,7 @@
-# Armazém Geral
+# Armazém Geral (lua)
 
 **Cadeia:** Todas
-**Tier:** 1
+**Planeta:** 2 (a lua)
 
 Ainda não detalhado. Ver `00-indice.md` desta pasta para o contexto geral
-do Tier 1.
+do Planeta 2.

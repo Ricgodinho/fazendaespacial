@@ -98,38 +98,40 @@ projetos, descobertas e também aos drones.
 
 #### Liberação por progresso do jogador, não por planeta
 Cada nível de raridade é liberado a partir de um marco de progressão do
-jogador (chegar a um determinado tier), mas uma vez liberado, pode aparecer
-em **qualquer planeta já visitado** — incluindo os primeiros tiers.
+jogador (chegar a um determinado planeta), mas uma vez liberado, pode
+aparecer em **qualquer planeta já visitado** — incluindo os primeiros
+planetas.
 
 | Raridade | Liberada a partir de | Onde pode aparecer |
 |---|---|---|
-| Comum | Tier 1 (sempre) | Qualquer planeta |
-| Incomum | Tier 1 (sempre) | Qualquer planeta |
-| Raro | Tier 3 | Qualquer planeta já visitado |
-| Épico | Tier 4 | Qualquer planeta já visitado |
-| Lendário | Tier 5 | Qualquer planeta já visitado |
+| Comum | Planeta 1 (sempre) | Qualquer planeta |
+| Incomum | Planeta 1 (sempre) | Qualquer planeta |
+| Raro | Planeta 3 | Qualquer planeta já visitado |
+| Épico | Planeta 4 | Qualquer planeta já visitado |
+| Lendário | Planeta 5 | Qualquer planeta já visitado |
 
-Motivo: o gate é pelo progresso do jogador, não pelo planeta, evitando risco
-de poder desproporcional cedo demais — quando um item lendário pode aparecer
-no Tier 1, o jogador já tem toda a força de jogo de quem chegou ao Tier 5.
+Motivo: o gate é pelo progresso do jogador, não pelo planeta em si,
+evitando risco de poder desproporcional cedo demais — quando um item
+lendário pode aparecer no Planeta 1, o jogador já tem toda a força de jogo
+de quem chegou ao Planeta 5.
 Isso também mantém sempre algo novo para descobrir em planetas antigos,
 reforçando o princípio de progressão retroativa já definido acima.
 
 #### Nota para fase futura (mercado entre jogadores — não decidido)
 Foi levantada a ideia de, na Fase 3 (multiplayer, ver
 `docs/02-roadmap-fases.md`), permitir um mercado entre jogadores onde um
-jogador em tier inicial possa comprar itens de raridade mais alta de outro
+jogador em planeta inicial possa comprar itens de raridade mais alta de outro
 jogador, mesmo sem ainda poder obtê-los por conta própria. Esta é apenas uma
 ideia registrada para debate futuro, não uma decisão.
 
 ## Automação e retorno aos planetas
 O jogador começa executando pessoalmente grande parte das atividades da primeira
-fazenda. Novos tiers liberam tecnologias que reduzem tarefas repetitivas nos
+fazenda. Novos planetas liberam tecnologias que reduzem tarefas repetitivas nos
 mundos anteriores.
 
-Como exemplo inicial, uma lua mineral de Tier 2 pode liberar projetos e materiais
-para drones básicos utilizados no Tier 1. Tecnologias obtidas no Tier 3 podem
-permitir automatizar completamente o ciclo produtivo já configurado no Tier 1.
+Como exemplo inicial, o Planeta 2 (lua mineral) pode liberar projetos e materiais
+para drones básicos utilizados no Planeta 1. Tecnologias obtidas no Planeta 3 podem
+permitir automatizar completamente o ciclo produtivo já configurado no Planeta 1.
 
 Automação completa significa que uma operação conhecida pode funcionar sem
 intervenção manual constante. Decisões, expansão, configuração, decoração,

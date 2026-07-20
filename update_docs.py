@@ -1,95 +1,94 @@
 import os
+import re
 
-# Lê o arquivo existente
-with open(os.path.join("docs", "08-drones.md"), "r", encoding="utf-8") as f:
-    original = f.read()
+# --------------------------------------------------------------------
+# 1. Corrige o texto em docs/01-conceito.md (raridade e automação)
+# --------------------------------------------------------------------
+conceito_path = os.path.join("docs", "01-conceito.md")
+with open(conceito_path, "r", encoding="utf-8") as f:
+    conceito = f.read()
 
-# Pontos de corte, usando os cabeçalhos que já existem no arquivo
-marker_subtopico3 = "## Subtópico 3: Drone de Colheita — decisão"
-marker_pendencias = "## Subtópicos ainda a debater"
+replacements_conceito = [
+    (
+        "Cada nível de raridade é liberado a partir de um marco de progressão do\njogador (chegar a um determinado tier), mas uma vez liberado, pode aparecer\nem **qualquer planeta já visitado** — incluindo os primeiros tiers.",
+        "Cada nível de raridade é liberado a partir de um marco de progressão do\njogador (chegar a um determinado planeta), mas uma vez liberado, pode\naparecer em **qualquer planeta já visitado** — incluindo os primeiros\nplanetas."
+    ),
+    (
+        "| Comum | Tier 1 (sempre) | Qualquer planeta |\n| Incomum | Tier 1 (sempre) | Qualquer planeta |\n| Raro | Tier 3 | Qualquer planeta já visitado |\n| Épico | Tier 4 | Qualquer planeta já visitado |\n| Lendário | Tier 5 | Qualquer planeta já visitado |",
+        "| Comum | Planeta 1 (sempre) | Qualquer planeta |\n| Incomum | Planeta 1 (sempre) | Qualquer planeta |\n| Raro | Planeta 3 | Qualquer planeta já visitado |\n| Épico | Planeta 4 | Qualquer planeta já visitado |\n| Lendário | Planeta 5 | Qualquer planeta já visitado |"
+    ),
+    (
+        "Motivo: o gate é pelo progresso do jogador, não pelo planeta, evitando risco\nde poder desproporcional cedo demais — quando um item lendário pode aparecer\nno Tier 1, o jogador já tem toda a força de jogo de quem chegou ao Tier 5.",
+        "Motivo: o gate é pelo progresso do jogador, não pelo planeta em si,\nevitando risco de poder desproporcional cedo demais — quando um item\nlendário pode aparecer no Planeta 1, o jogador já tem toda a força de jogo\nde quem chegou ao Planeta 5."
+    ),
+    (
+        "jogador em tier inicial possa comprar itens de raridade mais alta de outro",
+        "jogador em planeta inicial possa comprar itens de raridade mais alta de outro"
+    ),
+    (
+        "O jogador começa executando pessoalmente grande parte das atividades da primeira\nfazenda. Novos tiers liberam tecnologias que reduzem tarefas repetitivas nos\nmundos anteriores.",
+        "O jogador começa executando pessoalmente grande parte das atividades da primeira\nfazenda. Novos planetas liberam tecnologias que reduzem tarefas repetitivas nos\nmundos anteriores."
+    ),
+    (
+        "Como exemplo inicial, uma lua mineral de Tier 2 pode liberar projetos e materiais\npara drones básicos utilizados no Tier 1. Tecnologias obtidas no Tier 3 podem\npermitir automatizar completamente o ciclo produtivo já configurado no Tier 1.",
+        "Como exemplo inicial, o Planeta 2 (lua mineral) pode liberar projetos e materiais\npara drones básicos utilizados no Planeta 1. Tecnologias obtidas no Planeta 3 podem\npermitir automatizar completamente o ciclo produtivo já configurado no Planeta 1."
+    ),
+]
 
-idx_sub3 = original.index(marker_subtopico3)
-idx_pend = original.index(marker_pendencias)
+for old, new in replacements_conceito:
+    if old not in conceito:
+        print(f"AVISO: trecho não encontrado em 01-conceito.md (pulando): {old[:50]}...")
+        continue
+    conceito = conceito.replace(old, new)
 
-# Parte 1: cabeçalho + Subtópico 1 + Subtópico 2 (tudo antes do Subtópico 3)
-parte_indice = original[:idx_sub3].strip()
+with open(conceito_path, "w", encoding="utf-8") as f:
+    f.write(conceito)
+print("Atualizado: docs/01-conceito.md")
 
-# Parte 2: Subtópico 3 (drone de colheita), sem incluir a seção de pendências
-parte_colheita = original[idx_sub3:idx_pend].strip()
+# --------------------------------------------------------------------
+# 2. Renomeia as pastas tier-1 -> planeta-1, tier-2 -> planeta-2
+# --------------------------------------------------------------------
+renames = [
+    (os.path.join("docs", "estruturas", "tier-1"), os.path.join("docs", "estruturas", "planeta-1")),
+    (os.path.join("docs", "estruturas", "tier-2"), os.path.join("docs", "estruturas", "planeta-2")),
+]
+for old_dir, new_dir in renames:
+    if os.path.exists(old_dir):
+        os.rename(old_dir, new_dir)
+        print(f"Renomeado: {old_dir} -> {new_dir}")
+    else:
+        print(f"AVISO: pasta não encontrada (pulando): {old_dir}")
 
-# Ajusta o cabeçalho do índice (era "# Drones", vira "# Drones — Índice" com nova intro)
-parte_indice = parte_indice.replace(
-    "# Drones\n\nEste documento é construído por subtópicos, debatidos e fechados um a um.\nCobre: categorias funcionais, evolução por tier, e aplicação da raridade\n(ver `docs/01-conceito.md` para a tabela de raridade já definida).",
-    "# Drones — Índice\n\n"
-    "Este é o índice do sistema de Drones. Cada categoria de drone tem seu\n"
-    "próprio arquivo nesta pasta. Este documento cobre as decisões que se\n"
-    "aplicam a todas as categorias: funções gerais, modelo de progressão,\n"
-    "crafting e limites de quantidade.\n\n"
-    "## Arquivos desta pasta\n\n"
-    "- `colheita.md` — especificação do drone de Colheita (fechado)\n"
-    "- `plantio.md` — especificação do drone de Plantio (a debater)\n"
-    "- `transporte.md` — especificação do drone de Transporte/logística (a debater)\n"
-    "- `escavacao.md` — especificação do drone de Escavação (a debater)\n"
-    "- `construcao.md` — especificação do drone de Construção/reparo (a debater)\n"
-    "- `companheiro.md` — especificação do drone companheiro (a debater)\n"
-    "- `arte/00-indice.md` — referências visuais específicas de drones\n"
-    "- `audio/00-indice.md` — efeitos sonoros específicos de drones"
-)
+# --------------------------------------------------------------------
+# 3. Corrige o texto dentro de todos os arquivos de docs/estruturas/
+# --------------------------------------------------------------------
+def fix_text(content):
+    content = content.replace("**Tier do Planeta:** 2 (a lua)", "**Planeta:** 2 (a lua)")
+    content = content.replace("**Tier do Planeta:** 1", "**Planeta:** 1")
+    content = content.replace("# Estruturas — Tier 1 (Planeta inicial)", "# Estruturas — Planeta 1 (Planeta inicial)")
+    content = content.replace("# Estruturas — Tier 2 (A Lua)", "# Estruturas — Planeta 2 (A Lua)")
+    content = re.sub(r"\bTier 1\b", "Planeta 1", content)
+    content = re.sub(r"\bTier 2\b", "Planeta 2", content)
+    content = re.sub(r"\bTier 3\b", "Planeta 3", content)
+    content = re.sub(r"\bTier 4\b", "Planeta 4", content)
+    content = re.sub(r"\bTier 5\b", "Planeta 5", content)
+    content = content.replace("Tier do Planeta", "Planeta")
+    content = content.replace("Tier de Planeta", "Planeta")
+    content = content.replace("tier-1/", "planeta-1/")
+    content = content.replace("tier-2/", "planeta-2/")
+    return content
 
-# Adiciona rodapé de pendências gerais ao índice
-parte_indice += (
-    "\n\n## Pendências gerais do sistema de Drones\n"
-    "- Especificação tier a tier das categorias ainda não fechadas (Plantio,\n"
-    "  Transporte, Escavação, Construção).\n"
-    "- Aplicação da raridade dentro de cada categoria/tier.\n\n"
-    "*Este índice é atualizado conforme decisões gerais (aplicáveis a todas as\n"
-    "categorias) forem debatidas. Decisões específicas de cada drone ficam no\n"
-    "arquivo próprio da categoria.*\n"
-)
+estruturas_root = os.path.join("docs", "estruturas")
+for dirpath, _, filenames in os.walk(estruturas_root):
+    for filename in filenames:
+        if filename.endswith(".md"):
+            filepath = os.path.join(dirpath, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                original = f.read()
+            fixed = fix_text(original)
+            if fixed != original:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(fixed)
+                print(f"Corrigido: {filepath}")
 
-# Ajusta o cabeçalho da colheita e adiciona referência ao índice
-parte_colheita = parte_colheita.replace(
-    marker_subtopico3,
-    "# Drone de Colheita\n\n"
-    "Ver `00-indice.md` para categorias gerais, modelo de progressão e limites\n"
-    "de hangar aplicáveis a todos os drones.\n\n"
-    "## Especificação por tier — decisão"
-)
-parte_colheita += "\n\n## Pendente\n- Aplicação da raridade dentro de cada tier deste drone.\n"
-
-# Placeholders para as categorias ainda não debatidas
-def placeholder(titulo):
-    return f"# {titulo}\n\nAinda não debatido. Ver `00-indice.md` para o contexto geral do sistema\nde Drones.\n"
-
-arte_placeholder = (
-    "# Drones — Arte (índice)\n\n"
-    "Referências visuais específicas de drones. Ver `docs/01-conceito.md` para\n"
-    "a decisão de direção visual geral do jogo (2D estilizado / fallback\n"
-    "low-poly 3D).\n\nAinda não populado.\n"
-)
-audio_placeholder = (
-    "# Drones — Áudio (índice)\n\n"
-    "Referências e decisões de efeitos sonoros específicos de drones.\n\n"
-    "Ainda não populado.\n"
-)
-
-files = {
-    os.path.join("docs", "drones", "00-indice.md"): parte_indice + "\n",
-    os.path.join("docs", "drones", "colheita.md"): parte_colheita + "\n",
-    os.path.join("docs", "drones", "plantio.md"): placeholder("Drone de Plantio"),
-    os.path.join("docs", "drones", "transporte.md"): placeholder("Drone de Transporte/Logística"),
-    os.path.join("docs", "drones", "escavacao.md"): placeholder("Drone de Escavação/Exploração"),
-    os.path.join("docs", "drones", "construcao.md"): placeholder("Drone de Construção/Reparo"),
-    os.path.join("docs", "drones", "companheiro.md"): placeholder("Drone Companheiro"),
-    os.path.join("docs", "drones", "arte", "00-indice.md"): arte_placeholder,
-    os.path.join("docs", "drones", "audio", "00-indice.md"): audio_placeholder,
-}
-
-for path, content in files.items():
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
-    print(f"Criado: {path}")
-
-os.remove(os.path.join("docs", "08-drones.md"))
-print("Removido (migrado): docs/08-drones.md")
+print("\nConcluído. Revise 'git status' e 'git diff' antes de commitar.")

@@ -1,6 +1,6 @@
-# Estruturas — Tier 2 (A Lua)
+# Estruturas — Planeta 2 (A Lua)
 
-Planeta Tier 2: 100% mineral/tecnológico, sem agricultura (ver
+Planeta Planeta 2: 100% mineral/tecnológico, sem agricultura (ver
 `docs/01-conceito.md`). Tema central: minério, criação de drones e
 upgrade de módulos de nave.
 
@@ -19,9 +19,9 @@ upgrade de módulos de nave.
 ## Notas gerais
 
 ### Processamento de pedra — decisão de teste (a validar em playtest)
-Diferente do Tier 1, o Tier 2 **não tem estrutura própria de processamento
+Diferente do Planeta 1, o Planeta 2 **não tem estrutura própria de processamento
 de pedra**. A pedra extraída na Mina de Pedra (lua) deve ser transportada
-até o Tier 1 para ser processada lá, usando o sistema de logística entre
+até o Planeta 1 para ser processada lá, usando o sistema de logística entre
 planetas já previsto (ver `docs/07-prototipo-2-loop-hibrido.md`).
 
 **Motivo:** reforça a dependência entre planetas e a "rede agrícola
@@ -38,7 +38,7 @@ Esta é uma decisão reversível, não definitiva.
 Além de minério bruto → barras/metal processado, a Fundição também pode
 **criar ligas combinando materiais de múltiplos tiers** — conectando-se à
 regra de dependência entre tiers já definida em `docs/01-conceito.md`
-("Tier 5 pode exigir materiais dos Tiers 2, 3 e 4").
+("Planeta 5 pode exigir materiais dos Tiers 2, 3 e 4").
 
 ### Oficina/Fábrica de Drones e Estaleiro
 Ambas conectam-se à identidade deste planeta como o local de "criação de
