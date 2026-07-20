@@ -54,9 +54,59 @@ quando outro jogador visitasse a fazenda (ver "Multiplayer" em
 visitante. Esta é apenas uma ideia registrada para debate futuro na Fase
 3, não uma decisão.
 
+## Subtópico 2: Modelo de progressão, crafting e limites — decisão
+
+### Item por tier, não experiência/nível
+Drones não evoluem por experiência (XP). Cada tier de um drone é um
+**item próprio**, obtido por compra (moeda do jogo), drop, ou construção
+— seguindo o mesmo modelo já usado para ferramentas e estruturas. Isso
+aproveita a economia por tier e a dependência entre planetas já definidas
+em `docs/01-conceito.md`, em vez de criar um sistema de progressão
+paralelo.
+
+### Não existe categoria separada de "crafting"
+Quem processa/crafta é a **estrutura de processamento** (já definida em
+`docs/05-prototipo-1-loop-ativo.md` e `docs/07-prototipo-2-loop-hibrido.md`),
+não um drone. A categoria **Transporte/logística** é responsável por
+alimentar essas estruturas com a matéria-prima colhida — não é necessária
+uma categoria de drone dedicada a crafting.
+
+### Dois limites distintos de quantidade de drones
+
+1. **Capacidade de carga da nave** (temporário, por viagem): quantos
+   drones o jogador consegue levar ao expandir para um novo tier/planeta.
+   Já previsto na seção "Nave" de `docs/01-conceito.md`.
+2. **Capacidade do hangar de drones** (permanente, por planeta): quantos
+   drones podem operar simultaneamente numa fazenda já estabelecida,
+   independente da capacidade de carga da nave. Requer uma nova estrutura
+   — o **hangar de drones** — com capacidade própria e upgradável, seguindo
+   o mesmo padrão de capacidade upgradável já usado no loop idle
+   (`docs/04-prototipo-0-loop-idle.md`).
+
+### Hangar: pool único compartilhado, com peso por tier
+A capacidade do hangar é um **pool único**, compartilhado entre todas as
+categorias de drone (não capacidade separada por categoria) — reforça a
+decisão estratégica do jogador sobre como distribuir suas vagas.
+
+Cada drone consome um **peso** do pool proporcional ao seu tier, evitando
+que o jogador lote o hangar apenas com drones de tier avançado sem custo
+estratégico algum.
+
+| Tier do drone | Peso no hangar (exemplo) |
+|---|---|
+| 1 | 1 |
+| 2 | 2 |
+| 3 | 3 |
+| 4 | 5 |
+| 5 | 8 |
+
+Valores de exemplo, a validar em playtest/planilha — mesmo princípio já
+aplicado ao loop idle (ver `planilhas/planilha_loop_idle.xlsx`).
+
 ## Subtópicos ainda a debater
-- Evolução de cada categoria por tier (o que muda de capacidade entre
-  tiers).
+- Especificação tier a tier do drone de Colheita (em andamento).
+- Especificação tier a tier das demais categorias (Plantio, Transporte,
+  Escavação, Construção).
 - Aplicação da raridade dentro de cada categoria/tier.
 
 *Este documento será atualizado conforme os subtópicos seguintes forem
