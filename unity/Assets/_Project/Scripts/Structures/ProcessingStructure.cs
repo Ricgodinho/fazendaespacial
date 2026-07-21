@@ -104,6 +104,7 @@ public class ProcessingStructure : PlacedStructure
         StoredInput -= Definition.inputAmountRequired;
         StoredOutput = Mathf.Min(StoredOutput + Definition.outputAmountProduced, Definition.outputStorageCapacity);
         ProcessElapsedSeconds = 0f;
+        GameLog.Log("Estrutura", "CicloCompleto", $"estrutura={Definition.displayName} insumo_restante={StoredInput} produto_pronto={StoredOutput}");
     }
 
     private void Update()

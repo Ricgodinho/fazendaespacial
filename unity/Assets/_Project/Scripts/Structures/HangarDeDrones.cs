@@ -49,6 +49,9 @@ public class HangarDeDrones : PlacedStructure
     // e fica parado, sem quebrar nada.
     private string RequiredSeedResourceName => $"Semente de {AutoPlantCrop.displayName}";
 
+    // Identifica o Hangar nos logs quando houver mais de um no mapa.
+    private string HangarLabel => $"({_coord.x},{_coord.y})";
+
     private readonly List<TransporteRoute> _transporteRoutes = new();
 
     private float _plantioTimer;
@@ -145,11 +148,13 @@ public class HangarDeDrones : PlacedStructure
             ref _colheitaScanCursor);
         if (target == null)
         {
+            GameLog.Log("Colheita", "NoTarget", $"hangar={HangarLabel} raio={Definition.droneRangeInTiles}");
             return;
         }
 
         _colheitaTimer = 0f;
         _colheitaDroneBusy = true;
+        GameLog.Log("Colheita", "TripStart", $"hangar={HangarLabel} tile=({target.Coord.x},{target.Coord.y}) cultivo={target.PlantedCrop.Definition.displayName}");
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         Vector3 tilePoint = target.transform.position + Vector3.up * DroneFlightHeight;
@@ -161,6 +166,11 @@ public class HangarDeDrones : PlacedStructure
                 if (target.HarvestCrop(out var harvested))
                 {
                     _inventory.Add(harvested.displayName, harvested.yieldAmount);
+                    GameLog.Log("Colheita", "Harvested", $"hangar={HangarLabel} tile=({target.Coord.x},{target.Coord.y}) cultivo={harvested.displayName} quantidade={harvested.yieldAmount}");
+                }
+                else
+                {
+                    GameLog.Log("Colheita", "HarvestFailed", $"hangar={HangarLabel} tile=({target.Coord.x},{target.Coord.y})");
                 }
 
                 drone.SetCarrying(true);
@@ -177,6 +187,7 @@ public class HangarDeDrones : PlacedStructure
         {
             drone.SetCarrying(false);
             _colheitaDroneBusy = false;
+            GameLog.Log("Colheita", "TripEnd", $"hangar={HangarLabel}");
         }));
 
         DroneVisual.Fly(hangarPoint, ColheitaDroneColor, startCarrying: false, legs);
@@ -188,17 +199,20 @@ public class HangarDeDrones : PlacedStructure
         // - sem semente do Viveiro, o drone nao consegue plantar.
         if (_inventory.GetAmount(RequiredSeedResourceName) < 1)
         {
+            GameLog.Log("Plantio", "NoSeed", $"hangar={HangarLabel} cultivo={AutoPlantCrop.displayName} semente={RequiredSeedResourceName}");
             return;
         }
 
         var target = FindFirstInRange(t => t.Occupancy == TileOccupancy.Empty, ref _plantioScanCursor);
         if (target == null)
         {
+            GameLog.Log("Plantio", "NoEmptyTile", $"hangar={HangarLabel} raio={Definition.droneRangeInTiles}");
             return;
         }
 
         _plantioTimer = 0f;
         _plantioDroneBusy = true;
+        GameLog.Log("Plantio", "TripStart", $"hangar={HangarLabel} cultivo={AutoPlantCrop.displayName} tile=({target.Coord.x},{target.Coord.y})");
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         Vector3 tilePoint = target.transform.position + Vector3.up * DroneFlightHeight;
@@ -214,6 +228,7 @@ public class HangarDeDrones : PlacedStructure
             {
                 _inventory.TryRemove(RequiredSeedResourceName, 1);
                 drone.SetCarrying(true);
+                GameLog.Log("Plantio", "SeedPickedUp", $"hangar={HangarLabel} semente={RequiredSeedResourceName}");
             }));
         }
         else
@@ -224,11 +239,16 @@ public class HangarDeDrones : PlacedStructure
 
         legs.Add((tilePoint, drone =>
         {
-            target.PlantCrop(AutoPlantCrop);
+            bool planted = target.PlantCrop(AutoPlantCrop);
             drone.SetCarrying(false);
+            GameLog.Log("Plantio", planted ? "Planted" : "PlantFailed", $"hangar={HangarLabel} tile=({target.Coord.x},{target.Coord.y}) cultivo={AutoPlantCrop.displayName}");
         }));
 
-        legs.Add((hangarPoint, _ => _plantioDroneBusy = false));
+        legs.Add((hangarPoint, _ =>
+        {
+            _plantioDroneBusy = false;
+            GameLog.Log("Plantio", "TripEnd", $"hangar={HangarLabel}");
+        }));
 
         DroneVisual.Fly(hangarPoint, PlantioDroneColor, startCarrying: !hasArmazem, legs);
     }
@@ -240,12 +260,14 @@ public class HangarDeDrones : PlacedStructure
     {
         if (route.Busy)
         {
+            GameLog.Log("Transporte", "RouteBusy", $"hangar={HangarLabel} destino={route.TargetDefinition.displayName} direcao={route.Direction}");
             return;
         }
 
         var target = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == route.TargetDefinition);
         if (target == null)
         {
+            GameLog.Log("Transporte", "TargetNotBuilt", $"hangar={HangarLabel} destino={route.TargetDefinition.displayName} direcao={route.Direction}");
             return;
         }
 
@@ -266,10 +288,12 @@ public class HangarDeDrones : PlacedStructure
         int toCarry = Mathf.Min(available, Definition.transporteCapacidadePorViagem);
         if (toCarry <= 0)
         {
+            GameLog.Log("Transporte", "Delivery_NoStock", $"hangar={HangarLabel} recurso={resourceName} disponivel={available}");
             return;
         }
 
         route.Busy = true;
+        GameLog.Log("Transporte", "Delivery_Start", $"hangar={HangarLabel} recurso={resourceName} quantidade={toCarry} destino={destination.Definition.displayName}");
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         var legs = new List<(Vector3, Action<DroneVisual>)>();
@@ -303,9 +327,14 @@ public class HangarDeDrones : PlacedStructure
             }
 
             drone.SetCarrying(false);
+            GameLog.Log("Transporte", "Delivery_Delivered", $"hangar={HangarLabel} recurso={resourceName} entregue={deposited} sobra_devolvida={leftover}");
         }));
 
-        legs.Add((hangarPoint, _ => route.Busy = false));
+        legs.Add((hangarPoint, _ =>
+        {
+            route.Busy = false;
+            GameLog.Log("Transporte", "Delivery_TripEnd", $"hangar={HangarLabel}");
+        }));
 
         // Sem Armazem, o "insumo" ja sai do Hangar (nao ha ponto intermediario de coleta).
         DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: !hasArmazem, legs);
@@ -318,6 +347,7 @@ public class HangarDeDrones : PlacedStructure
     {
         if (!source.HasOutputReady)
         {
+            GameLog.Log("Transporte", "Collection_NoOutput", $"hangar={HangarLabel} origem={source.Definition.displayName}");
             return;
         }
 
@@ -328,6 +358,7 @@ public class HangarDeDrones : PlacedStructure
         int toCarry = Mathf.Min(source.StoredOutput, Mathf.Min(Definition.transporteCapacidadePorViagem, roomInInventory));
         if (toCarry <= 0)
         {
+            GameLog.Log("Transporte", "Collection_NoRoom", $"hangar={HangarLabel} origem={source.Definition.displayName} output_pronto={source.StoredOutput} espaco_inventario={roomInInventory}");
             return;
         }
 
@@ -335,6 +366,7 @@ public class HangarDeDrones : PlacedStructure
         string resourceName = source.Definition.outputResourceName;
         bool hasArmazem = ArmazemGeral.Instances.Count > 0;
         int collectedAmount = 0;
+        GameLog.Log("Transporte", "Collection_Start", $"hangar={HangarLabel} origem={source.Definition.displayName} recurso={resourceName} quantidade={toCarry}");
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         var legs = new List<(Vector3, Action<DroneVisual>)>
@@ -345,6 +377,7 @@ public class HangarDeDrones : PlacedStructure
                 // retirada. Ainda nao entra no inventario/Armazem aqui.
                 collectedAmount = source.CollectOutput(toCarry);
                 drone.SetCarrying(true);
+                GameLog.Log("Transporte", "Collection_PickedUp", $"hangar={HangarLabel} recurso={resourceName} quantidade={collectedAmount}");
             })
         };
 
@@ -371,6 +404,7 @@ public class HangarDeDrones : PlacedStructure
 
             drone.SetCarrying(false);
             route.Busy = false;
+            GameLog.Log("Transporte", "Collection_TripEnd", $"hangar={HangarLabel} recurso={resourceName} quantidade={collectedAmount}");
         }));
 
         DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: false, legs);

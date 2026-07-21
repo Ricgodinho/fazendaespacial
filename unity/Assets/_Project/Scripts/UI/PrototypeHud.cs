@@ -319,6 +319,8 @@ public class PrototypeHud : MonoBehaviour
             {
                 _inventory.TryRemove(resourceName, deposited);
             }
+
+            GameLog.Log("Janela", "Alimentar", $"estrutura={processing.Definition.displayName} recurso={resourceName} disponivel={available} depositado={deposited}");
         }
 
         if (GUILayout.Button($"Coletar {processing.Definition.outputResourceName}"))
@@ -327,12 +329,15 @@ public class PrototypeHud : MonoBehaviour
                 ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
                 : int.MaxValue;
 
-            int toCollect = Mathf.Min(processing.StoredOutput, roomInInventory);
+            int readyBefore = processing.StoredOutput;
+            int toCollect = Mathf.Min(readyBefore, roomInInventory);
             if (toCollect > 0)
             {
                 processing.CollectOutput(toCollect);
                 _inventory.Add(processing.Definition.outputResourceName, toCollect);
             }
+
+            GameLog.Log("Janela", "Coletar", $"estrutura={processing.Definition.displayName} recurso={processing.Definition.outputResourceName} pronto={readyBefore} coletado={toCollect} espaco_inventario={roomInInventory}");
         }
     }
 
