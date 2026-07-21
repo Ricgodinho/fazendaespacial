@@ -45,6 +45,15 @@ public class HangarDeDrones : PlacedStructure
     private bool _plantioDroneBusy;
     private bool _colheitaDroneBusy;
 
+    // Cursores de varredura round-robin - cada busca continua de onde a
+    // anterior parou, em vez de sempre recomecar do indice 0. Sem isso,
+    // um cultivo que amadurece mais rapido (ex: Trigo Lunar) sempre "ganha"
+    // a varredura e cultivos mais lentos (ex: Cedro Estelar) nunca chegam
+    // a ser escolhidos depois da primeira vez - bug de fome (starvation)
+    // encontrado em playtest.
+    private int _colheitaScanCursor;
+    private int _plantioScanCursor;
+
     public void Initialize(
         HangarDeDronesDefinition definition,
         TileGrid grid,
@@ -121,7 +130,9 @@ public class HangarDeDrones : PlacedStructure
 
     private void TryStartHarvestTrip()
     {
-        var target = FindFirstInRange(t => t.Occupancy == TileOccupancy.Crop && t.PlantedCrop != null && t.PlantedCrop.IsMature);
+        var target = FindFirstInRange(
+            t => t.Occupancy == TileOccupancy.Crop && t.PlantedCrop != null && t.PlantedCrop.IsMature,
+            ref _colheitaScanCursor);
         if (target == null)
         {
             return;
@@ -170,7 +181,7 @@ public class HangarDeDrones : PlacedStructure
             return;
         }
 
-        var target = FindFirstInRange(t => t.Occupancy == TileOccupancy.Empty);
+        var target = FindFirstInRange(t => t.Occupancy == TileOccupancy.Empty, ref _plantioScanCursor);
         if (target == null)
         {
             return;
@@ -355,12 +366,25 @@ public class HangarDeDrones : PlacedStructure
         DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: false, legs);
     }
 
-    private GridTile FindFirstInRange(Func<GridTile, bool> predicate)
+    // Round-robin: comeca a varredura a partir de "cursor" (nao sempre do
+    // indice 0), e avanca o cursor para logo apos o tile encontrado - da
+    // uma chance justa a todos os tiles ao longo do tempo.
+    private GridTile FindFirstInRange(Func<GridTile, bool> predicate, ref int cursor)
     {
-        foreach (var tile in _grid.Tiles)
+        var tiles = _grid.Tiles;
+        int count = tiles.Count;
+        if (count == 0)
         {
+            return null;
+        }
+
+        for (int offset = 0; offset < count; offset++)
+        {
+            int index = (cursor + offset) % count;
+            var tile = tiles[index];
             if (Vector2Int.Distance(tile.Coord, _coord) <= Definition.droneRangeInTiles && predicate(tile))
             {
+                cursor = (index + 1) % count;
                 return tile;
             }
         }
