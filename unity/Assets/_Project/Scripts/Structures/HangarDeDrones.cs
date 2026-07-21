@@ -30,7 +30,6 @@ public class HangarDeDrones : PlacedStructure
     public HangarDeDronesDefinition Definition { get; private set; }
     public bool PlantioEnabled { get; private set; } = true;
     public bool ColheitaEnabled { get; private set; } = true;
-    public bool ShowTransporteConfig;
     public IReadOnlyList<TransporteRoute> TransporteRoutes => _transporteRoutes;
 
     private TileGrid _grid;

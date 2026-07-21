@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PrototypeHud : MonoBehaviour
@@ -7,18 +8,15 @@ public class PrototypeHud : MonoBehaviour
         "1. Escolha uma ferramenta abaixo.\n" +
         "2. Clique num tile do terreno para aplicar.\n" +
         "3. Plante, espere crescer (fica dourado quando maduro) e colha.\n" +
-        "4. Construa a estrutura de processamento e clique nela para\n" +
-        "   alimentar com o que colheu.\n" +
-        "5. Ela fica azul enquanto processa; clique de novo quando ficar\n" +
-        "   dourada para coletar o resultado.\n" +
-        "6. Construa o Armazem Geral para ter capacidade de estoque, e o\n" +
-        "   Hangar de Drones para automatizar plantio e colheita perto dele.\n" +
-        "7. Construa o Viveiro para transformar Trigo Lunar em sementes -\n" +
-        "   sem semente, o drone de Plantio nao planta sozinho.\n" +
-        "8. Configure o Transporte no Hangar para entregar Trigo Lunar em\n" +
-        "   outra estrutura, manual ou automaticamente.\n" +
-        "9. Use 'Demolir' pra remover cultivo ou estrutura de um tile.\n" +
-        "10. Pode fechar o jogo e voltar depois - a produção continua.";
+        "4. Abra 'Construcao' para escolher o que construir, depois\n" +
+        "   clique num tile vazio.\n" +
+        "5. Clique na estrutura de processamento para alimentar/coletar.\n" +
+        "6. Abra a janela de um Hangar para pausar/retomar automacao e\n" +
+        "   configurar rotas de Transporte (manual ou automatico).\n" +
+        "7. Sem semente no inventario (produzida pelo Viveiro), o drone\n" +
+        "   de Plantio nao planta sozinho.\n" +
+        "8. Use 'Demolir' pra remover cultivo ou estrutura de um tile.\n" +
+        "9. Pode fechar o jogo e voltar depois - a produção continua.";
 
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
@@ -29,7 +27,12 @@ public class PrototypeHud : MonoBehaviour
     private ProcessingStructureDefinition _viveiroDefinition;
     private string _message;
     private bool _showInstructions = true;
-    private Vector2 _scroll;
+    private bool _showConstructionWindow;
+
+    private Rect _mainRect = new(10, 10, 360, 460);
+    private Rect _constructionRect = new(380, 10, 260, 200);
+    private readonly Dictionary<HangarDeDrones, Rect> _hangarWindowRects = new();
+    private readonly HashSet<HangarDeDrones> _openHangarWindows = new();
 
     public void Initialize(
         PlayerInventory inventory,
@@ -56,16 +59,40 @@ public class PrototypeHud : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 380, 720), GUI.skin.box);
-        GUILayout.Label("Prototipo - Planeta 1 (placeholder)");
+        _mainRect = GUILayout.Window(1, _mainRect, DrawMainWindow, "Prototipo - Planeta 1 (placeholder)");
 
+        if (_showConstructionWindow)
+        {
+            _constructionRect = GUILayout.Window(2, _constructionRect, DrawConstructionWindow, "Construcao");
+        }
+
+        int windowId = 100;
+        foreach (var hangar in HangarDeDrones.Instances)
+        {
+            if (!_openHangarWindows.Contains(hangar))
+            {
+                windowId++;
+                continue;
+            }
+
+            if (!_hangarWindowRects.TryGetValue(hangar, out var rect))
+            {
+                rect = new Rect(380, 220 + (windowId - 100) * 30, 320, 260);
+                _hangarWindowRects[hangar] = rect;
+            }
+
+            int id = windowId++;
+            _hangarWindowRects[hangar] = GUILayout.Window(id, rect, windowIndex => DrawHangarWindow(hangar), $"Hangar de Drones");
+        }
+    }
+
+    private void DrawMainWindow(int id)
+    {
         if (!string.IsNullOrEmpty(_message))
         {
-            GUILayout.Space(4);
             GUILayout.Label(_message, GUI.skin.box);
         }
 
-        GUILayout.Space(6);
         if (GUILayout.Button(_showInstructions ? "Ocultar instrucoes" : "Como jogar?"))
         {
             _showInstructions = !_showInstructions;
@@ -77,29 +104,38 @@ public class PrototypeHud : MonoBehaviour
         }
 
         GUILayout.Space(6);
-
         GUILayout.Label($"Ferramenta atual: {_toolSelector.CurrentTool}");
         if (GUILayout.Button("Nenhuma")) _toolSelector.SelectNone();
         if (GUILayout.Button($"Plantar ({_cropDefinition.displayName})")) _toolSelector.SelectPlant();
         if (GUILayout.Button("Colher")) _toolSelector.SelectHarvest();
-        if (GUILayout.Button($"Construir {_structureDefinition.displayName}")) _toolSelector.SelectBuildProcessing();
-        if (GUILayout.Button($"Construir {_armazemDefinition.displayName}")) _toolSelector.SelectBuildArmazem();
-        if (GUILayout.Button($"Construir {_hangarDefinition.displayName}")) _toolSelector.SelectBuildHangar();
-        if (GUILayout.Button($"Construir {_viveiroDefinition.displayName}")) _toolSelector.SelectBuildViveiro();
         if (GUILayout.Button("Demolir")) _toolSelector.SelectDemolish();
+
+        GUILayout.Space(6);
+        if (GUILayout.Button(_showConstructionWindow ? "Fechar Construcao" : "Construcao"))
+        {
+            _showConstructionWindow = !_showConstructionWindow;
+        }
 
         if (HangarDeDrones.Instances.Count > 0)
         {
-            GUILayout.Space(10);
-            GUILayout.Label("Automacao (Hangar de Drones):");
-
-            _scroll = GUILayout.BeginScrollView(_scroll, GUILayout.Height(260));
+            GUILayout.Space(6);
+            GUILayout.Label("Hangares:");
             for (int i = 0; i < HangarDeDrones.Instances.Count; i++)
             {
-                DrawHangarPanel(HangarDeDrones.Instances[i], HangarDeDrones.Instances.Count > 1 ? $"[Hangar {i + 1}] " : "");
+                var hangar = HangarDeDrones.Instances[i];
+                bool isOpen = _openHangarWindows.Contains(hangar);
+                if (GUILayout.Button($"{(isOpen ? "Fechar" : "Abrir")} Hangar {i + 1}"))
+                {
+                    if (isOpen)
+                    {
+                        _openHangarWindows.Remove(hangar);
+                    }
+                    else
+                    {
+                        _openHangarWindows.Add(hangar);
+                    }
+                }
             }
-
-            GUILayout.EndScrollView();
         }
 
         GUILayout.Space(10);
@@ -112,32 +148,51 @@ public class PrototypeHud : MonoBehaviour
             GUILayout.Label($"  {pair.Key}: {pair.Value}");
         }
 
-        GUILayout.EndArea();
+        GUI.DragWindow();
     }
 
-    private void DrawHangarPanel(HangarDeDrones hangar, string prefix)
+    private void DrawConstructionWindow(int id)
     {
-        string plantioLabel = prefix + (hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico");
+        if (GUILayout.Button(_structureDefinition.displayName))
+        {
+            _toolSelector.SelectBuildProcessing();
+            _showConstructionWindow = false;
+        }
+
+        if (GUILayout.Button(_armazemDefinition.displayName))
+        {
+            _toolSelector.SelectBuildArmazem();
+            _showConstructionWindow = false;
+        }
+
+        if (GUILayout.Button(_hangarDefinition.displayName))
+        {
+            _toolSelector.SelectBuildHangar();
+            _showConstructionWindow = false;
+        }
+
+        if (GUILayout.Button(_viveiroDefinition.displayName))
+        {
+            _toolSelector.SelectBuildViveiro();
+            _showConstructionWindow = false;
+        }
+
+        GUI.DragWindow();
+    }
+
+    private void DrawHangarWindow(HangarDeDrones hangar)
+    {
+        string plantioLabel = hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico";
         if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
 
-        string colheitaLabel = prefix + (hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica");
+        string colheitaLabel = hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica";
         if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
 
-        string configLabel = hangar.ShowTransporteConfig ? "Fechar configuracao de Transporte" : "Configurar Transporte";
-        if (GUILayout.Button(prefix + configLabel))
-        {
-            hangar.ShowTransporteConfig = !hangar.ShowTransporteConfig;
-        }
-
-        if (!hangar.ShowTransporteConfig)
-        {
-            return;
-        }
-
-        GUILayout.BeginVertical(GUI.skin.box);
+        GUILayout.Space(8);
+        GUILayout.Label("Transporte:");
         foreach (var route in hangar.TransporteRoutes)
         {
-            GUILayout.Label($"Rota: Armazem -> {route.TargetDefinition.displayName}");
+            GUILayout.Label($"Armazem -> {route.TargetDefinition.displayName}");
 
             GUILayout.BeginHorizontal();
             GUI.enabled = !route.Busy;
@@ -157,6 +212,6 @@ public class PrototypeHud : MonoBehaviour
             GUILayout.Space(4);
         }
 
-        GUILayout.EndVertical();
+        GUI.DragWindow();
     }
 }
