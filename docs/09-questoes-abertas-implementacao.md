@@ -102,8 +102,10 @@ etapa de design já está pronta para implementação no Planeta 1 - falta
 "Pendente"):
 - Os **materiais exatos** exigidos em cada nível (hoje só a dependência
   de planeta está fixada - ex: "Planeta 1 + 2" - não o item específico).
-  Isso trava só os níveis 5+ (que dependem de Planeta 2 existir), não
-  os níveis 1-4.
+  Ver `docs/10-pendencia-materiais-por-nivel.md` - pendência formal
+  passada para a equipe decidir, com tabela consolidada das 9
+  estruturas e sugestão de começar só pelos Níveis 1-4 (não dependem de
+  Planeta 2 existir).
 - Os **valores numéricos** de cada tabela são "exemplo" (progressão
   ~1,5x), a validar em playtest/planilha.
 - Itens específicos de alguns breakpoints do Nível 10 (ex: qual é a "2ª

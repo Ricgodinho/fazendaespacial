@@ -157,7 +157,8 @@ outros planetas ainda):
   `docs/09-questoes-abertas-implementacao.md` para o que já está
   decidido/pronto para implementar e o que ainda depende de decisão de
   design antes (Campo de Cultivo e Área de Plantio de Árvores, em
-  particular).
+  particular), e `docs/10-pendencia-materiais-por-nivel.md` para a
+  pendência de materiais exatos por nível (aguardando decisão).
 - Sistema de raridade (drop de sementes/produtos por nível) - depende
   de Planeta 2 existir para os primeiros breakpoints citados nos docs.
 - Build `.exe` standalone com bug conhecido de shader (URP/Lit
