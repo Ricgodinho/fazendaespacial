@@ -131,3 +131,43 @@ existentes — mesma função, design/aparência adaptada ao ambiente do
 planeta. Exemplo: o Planeta 3 (água) introduz variantes aquáticas dos
 drones de Plantio e Escavação (visualmente parecidas com um submarino),
 que continuam sendo apenas Plantio e Escavação, não uma 6ª/7ª categoria.
+
+## Desgaste e manutenção (regra geral) — decisão
+
+Drones não são eternos. Cada drone possui **durabilidade** (começa em
+100%), que diminui a cada ciclo de operação. Ao zerar, o drone precisa de
+manutenção antes de voltar a operar.
+
+### Fluxo de manutenção
+1. O Hangar detecta o drone com durabilidade zerada e o move
+   automaticamente para o **Armazém Geral do mesmo planeta** onde estava
+   trabalhando (ver `docs/estruturas/planeta-1/armazem-geral.md`) — sem
+   necessidade de viagem entre planetas.
+2. O reparo tem **custo** (material/moeda, valor exato a definir).
+3. Cada reparo restaura a durabilidade ao máximo, mas **reduz o teto
+   máximo dela** — após vários reparos, o teto fica baixo o suficiente
+   para que trocar o drone (comprar/craftar um novo) valha mais a pena
+   que continuar consertando. Isso cria obsolescência natural sem
+   depender de sorte ou quebra aleatória.
+
+### Curva por Tier do drone
+Desgaste por ciclo e redução de teto por reparo **melhoram com o tier**
+— drones mais avançados são mais duráveis, reforçando a diferença entre
+tiers além de capacidade/velocidade.
+
+| Tier do drone | Desgaste por ciclo de uso | Redução de teto por reparo |
+|---|---|---|
+| 1 | 2% | -8% |
+| 2 | 1,5% | -6% |
+| 3 | 1% | -5% |
+| 4 | 0,75% | -3% |
+| 5 | 0,5% | -2% |
+
+Valores de exemplo, a validar em playtest/planilha.
+
+### Pendente
+- Definir custo exato de cada reparo (material/moeda).
+- Definir se manutenção automática (configurável no Armazém Geral, ver
+  `docs/estruturas/planeta-1/armazem-geral.md`) tem custo adicional além
+  do reparo em si.
+

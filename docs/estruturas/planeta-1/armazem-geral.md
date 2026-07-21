@@ -21,8 +21,18 @@ silo de colheita. Guarda:
 - **Itens vindos de outros planetas** via Drone de Transporte —
   materiais usados nas dependências de nível de outras estruturas (ver
   `docs/01-conceito.md`, "Dependência entre planetas")
-- **Drones em manutenção**, ou preparados para transporte a outros
-  planetas (aguardando embarque na nave)
+- **Drones em manutenção** (enviados automaticamente pelo Hangar deste
+  mesmo planeta ao zerarem durabilidade, ver `docs/drones/00-indice.md`,
+  seção Desgaste), ou preparados para transporte a outros planetas
+  (aguardando embarque na nave)
+
+### Manutenção automática (configurável)
+O Armazém Geral de **cada planeta** oferece uma configuração de
+manutenção automática: por padrão, o reparo de drones é manual (o
+jogador aciona e paga o custo); uma vez ativada a configuração, reparos
+passam a acontecer automaticamente (ainda com custo, descontado sozinho)
+neste planeta especificamente. Não depende de nenhuma outra estrutura ou
+planeta — cada Armazém Geral tem sua própria configuração independente.
 
 Diferente da capacidade de armazenamento por cultivo já definida no
 Protótipo 0 (ex: Trigo Lunar com teto próprio no campo), o Armazém Geral
@@ -53,7 +63,7 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível.
 - Definir o valor exato de venda mínima do overflow automático (Nível 10).
-- Confirmar se drones em manutenção ocupam capacidade do Armazém Geral ou
-  têm um espaço próprio separado.
+- Definir se drones aguardando manutenção ocupam a capacidade geral do
+  Armazém ou um espaço próprio reservado.
 - Validar a curva de capacidade em playtest/planilha antes da
   implementação.
