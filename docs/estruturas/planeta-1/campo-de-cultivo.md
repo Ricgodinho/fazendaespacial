@@ -24,7 +24,7 @@ capacidade nova, não só número maior).
 | 7 | 45 | **Multi-cultivo**: planta 2 tipos de cultivo diferentes ao mesmo tempo no mesmo campo. *Exige material do Planeta 2 para o upgrade.* |
 | 8 | 65 | — |
 | 9 | 95 | — |
-| 10 | 140 | **-20% no tempo de crescimento** de todos os cultivos deste campo, e multi-cultivo passa de 2 para 3 tipos simultâneos. *Exige material dos Planetas 3 e 4 para o upgrade.* |
+| 10 | 140 | **-20% no tempo de crescimento** de todos os cultivos deste campo, e multi-cultivo passa de 2 para 3 tipos simultâneos. *Exige material dos Planetas 3, 4 e 5 para o upgrade.* |
 
 Valores de tiles são exemplo (progressão ~1,5x por nível) — a validar em
 playtest/planilha, mesmo princípio já aplicado ao loop idle (ver

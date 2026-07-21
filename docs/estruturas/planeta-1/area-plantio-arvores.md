@@ -24,7 +24,7 @@ simultaneamente (cresce em todo nível). Apenas 3 níveis são breakpoints
 | 7 | 40 | **Corte em área**: corta várias árvores adjacentes de uma vez, em vez de uma por uma. *Exige material do Planeta 2 para o upgrade.* |
 | 8 | 60 | — |
 | 9 | 90 | — |
-| 10 | 135 | **-25% no tempo de crescimento** das árvores, e libera uma 2ª espécie de árvore (madeira de tipo diferente, mais nobre/rara). *Exige material dos Planetas 3 e 4 para o upgrade.* |
+| 10 | 135 | **-25% no tempo de crescimento** das árvores, e libera uma 2ª espécie de árvore (madeira de tipo diferente, mais nobre/rara). *Exige material dos Planetas 3, 4 e 5 para o upgrade.* |
 
 Valores são exemplo (progressão ~1,5x por nível) — a validar em
 playtest/planilha, mesmo princípio já aplicado ao loop idle (ver

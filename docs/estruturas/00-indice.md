@@ -82,6 +82,30 @@ do jogo após lançamento — não é compromisso, apenas direção registrada.
    estrutura passa a depender da rede interplanetária, não só do próprio
    planeta onde ela está.
 
+### Regra corrigida: Nível 10 sempre inclui o planeta mais avançado disponível
+O **Nível 10 (teto) de qualquer estrutura de qualquer planeta** deve
+exigir material do planeta mais avançado que exista no jogo (hoje, o
+Planeta 5) — não apenas dos planetas "vizinhos". Motivo: sem essa regra,
+estruturas exclusivas de planetas avançados (ex: a Lua Satélite do
+Planeta 5, que só serve para alimentar a Fundição Central) ficariam sem
+propósito fora do próprio planeta onde existem, contrariando o princípio
+de progressão retroativa já definido em `docs/01-conceito.md`. Levar
+qualquer estrutura do Planeta 1 ao nível máximo deve exigir ter dominado
+o jogo inteiro até o Planeta 5 — criando um gancho natural de
+"completude pós-jogo".
+
+### Regra corrigida: Nível 10 sempre inclui o planeta mais avançado disponível
+O **Nível 10 (teto) de qualquer estrutura de qualquer planeta** deve
+exigir material do planeta mais avançado que exista no jogo (hoje, o
+Planeta 5) — não apenas dos planetas "vizinhos". Motivo: sem essa regra,
+estruturas exclusivas de planetas avançados (ex: a Lua Satélite do
+Planeta 5, que só serve para alimentar a Fundição Central) ficariam sem
+propósito fora do próprio planeta onde existem, contrariando o princípio
+de progressão retroativa já definido em `docs/01-conceito.md`. Levar
+qualquer estrutura do Planeta 1 ao nível máximo deve exigir ter dominado
+o jogo inteiro até o Planeta 5 — criando um gancho natural de
+"completude pós-jogo".
+
 ### Próximo passo
 Detalhar, estrutura por estrutura, quais níveis são breakpoints, quais
 capacidades cada breakpoint introduz, e quais materiais/quantidades são
