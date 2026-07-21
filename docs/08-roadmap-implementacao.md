@@ -6,10 +6,13 @@
 > programação** dentro da Fase 1, consolidando a sequência já sugerida em
 > `docs/00-mvp-escopo.md`.
 
-## Etapa 0 — Setup do projeto Unity
-- Projeto Unity vive em `fazendaespacial/unity/` — pasta irmã de `docs/`,
-  `artes/` e `planilhas/`, no mesmo repositório/pasta do Drive (decisão
-  registrada abaixo).
+## Etapa 0 — Setup do projeto Unity — ✅ concluído
+- Projeto Unity vive em `unity/`, pasta irmã de `docs/`, `artes/` e
+  `planilhas/`. O repositório inteiro foi movido do Google Drive para
+  `C:\Users\ricgo\dev\fazendaespacial` (local, git único com remoto no
+  GitHub) depois que a criação do projeto crashou na pasta do Drive —
+  o banco de assets da Unity (LMDB) não é compatível com o driver de
+  sincronização do Google Drive (mmap não suportado).
 - Versão do Editor: **Unity 6000.5.4f1** (já instalada via Unity Hub).
   Não é a LTS clássica (6.3 LTS, suporte até dez/2027), é a versão de
   "update release" mais recente da Unity — considerada production-ready
@@ -22,13 +25,19 @@
   especulativo para Drones/Nave ainda.
 - Grid em 3D desde o início (câmera livre), mesmo com placeholders,
   conforme decisão de arte em `docs/01-conceito.md`.
+- **URP (Universal Render Pipeline) 17.5.0** instalado e configurado como
+  pipeline padrão, com Renderer vinculado.
+- **Input System novo** instalado (`com.unity.inputsystem@1.20.0`),
+  Input Manager legado desativado (`activeInputHandler: 1`) — decisão
+  tomada antes de escrever o código de interação da Etapa 2, para não
+  precisar migrar depois.
 
 ## Etapa 1 — Protótipo 0: matemática do loop idle — ✅ concluído
 Validado em planilha (`planilhas/planilha_loop_idle.xlsx`), ver
 `docs/04-prototipo-0-loop-idle.md`. Capacidade de armazenamento ajustada de
 30 para 100 unidades no Trigo Lunar após simulação de jogador casual.
 
-## Etapa 2 — Protótipo 1: loop ativo
+## Etapa 2 — Protótipo 1: loop ativo — 🔄 em andamento
 Ver `docs/05-prototipo-1-loop-ativo.md` para as regras completas.
 
 - Interação: ferramenta selecionada na barra de ações + clique no tile.
