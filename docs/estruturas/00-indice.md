@@ -99,6 +99,44 @@ Detalhar, estrutura por estrutura, quais níveis são breakpoints, quais
 capacidades cada breakpoint introduz, e quais materiais/quantidades são
 exigidos em cada nível — a começar pelo Planeta 1.
 
+## Estados visuais de processamento (regra geral) — decisão
+
+Aplica-se a **toda estrutura que processa matéria-prima ao longo do
+tempo** (ex: Estruturas de Processamento), em qualquer planeta. Validado
+no protótipo técnico (Protótipo 2, ver
+`docs/07-prototipo-2-loop-hibrido.md`) e registrado aqui como requisito
+de arte a levar para o setor de arte (ver `docs/arte/00-indice.md`).
+
+3 estados, com prioridade visual nesta ordem:
+
+1. **Processando** (prioridade mais alta): a estrutura tem insumo
+   suficiente e espaço de saída disponível, processando ativamente.
+   Deve comunicar "trabalho em andamento" e, se possível, o progresso
+   do ciclo atual (ex: intensidade de cor, animação contínua).
+2. **Pronto para coleta**: não está mais processando (por falta de
+   insumo ou por ter enchido a capacidade de saída), mas tem produto
+   acumulado esperando o jogador coletar. Deve usar a **mesma
+   linguagem visual de "pronto para interagir"** usada no estágio final
+   de crescimento dos cultivos (ver `docs/cultivos/00-indice.md`) —
+   reforça uma convenção única de "isso aqui brilha/destaca-se quando
+   dá pra clicar", em vez de uma convenção por sistema.
+3. **Parado/ocioso**: sem insumo suficiente para iniciar um ciclo e sem
+   produto pendente. Visual neutro, discreto — não deve competir com os
+   outros dois estados, que exigem atenção do jogador.
+
+### Motivo
+Sem alguma sinalização entre os 3 estados, o jogador não consegue saber
+à distância se uma estrutura precisa de atenção (alimentar com insumo)
+ou se já tem algo pronto pra buscar — quebra o princípio de comunicar
+claramente o resultado do tempo passivo, já central ao loop híbrido
+(`docs/01-conceito.md`, `docs/04-prototipo-0-loop-idle.md`).
+
+### Pendente
+- Referência visual concreta (cor exata, tipo de animação, silhueta)
+  depende da direção de arte final (2D estilizado vs. low-poly 3D,
+  `docs/01-conceito.md`) — o protótipo técnico usa cor + rotação como
+  placeholder, não como especificação de arte definitiva.
+
 ## Pendências gerais
 - Todos os 5 planetas do jogo base têm lista de estruturas fechada.
 - Regra geral de níveis de estrutura definida (acima).
