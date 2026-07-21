@@ -230,7 +230,6 @@ public class HangarDeDrones : PlacedStructure
         }
 
         route.Busy = true;
-        _inventory.TryRemove(resourceName, toCarry);
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         var legs = new List<(Vector3, Action<DroneVisual>)>();
@@ -238,8 +237,19 @@ public class HangarDeDrones : PlacedStructure
 
         if (hasArmazem)
         {
-            // Sai vazio do Hangar, so fica "carregado" ao pegar o insumo no Armazem.
-            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone => drone.SetCarrying(true)));
+            // So sai do inventario quando o drone de fato chega no Armazem
+            // pra pegar - nao no momento em que a viagem e decidida.
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone =>
+            {
+                _inventory.TryRemove(resourceName, toCarry);
+                drone.SetCarrying(true);
+            }));
+        }
+        else
+        {
+            // Sem Armazem, a retirada e instantanea no Hangar (nao ha ponto
+            // intermediario de coleta pra visitar).
+            _inventory.TryRemove(resourceName, toCarry);
         }
 
         legs.Add((destination.transform.position + Vector3.up * DroneFlightHeight, drone =>
@@ -283,29 +293,42 @@ public class HangarDeDrones : PlacedStructure
 
         route.Busy = true;
         string resourceName = source.Definition.outputResourceName;
+        bool hasArmazem = ArmazemGeral.Instances.Count > 0;
+        int collectedAmount = 0;
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         var legs = new List<(Vector3, Action<DroneVisual>)>
         {
             (source.transform.position + Vector3.up * DroneFlightHeight, drone =>
             {
-                int collected = source.CollectOutput(toCarry);
-                if (collected > 0)
-                {
-                    _inventory.Add(resourceName, collected);
-                }
-
+                // Sai da estrutura assim que o drone pega - isso e so a
+                // retirada. Ainda nao entra no inventario/Armazem aqui.
+                collectedAmount = source.CollectOutput(toCarry);
                 drone.SetCarrying(true);
             })
         };
 
-        if (ArmazemGeral.Instances.Count > 0)
+        if (hasArmazem)
         {
-            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, null));
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone =>
+            {
+                // So agora, chegando no Armazem, o que foi coletado passa a
+                // contar no inventario do jogador.
+                if (collectedAmount > 0)
+                {
+                    _inventory.Add(resourceName, collectedAmount);
+                }
+            }));
         }
 
         legs.Add((hangarPoint, drone =>
         {
+            if (!hasArmazem && collectedAmount > 0)
+            {
+                // Sem Armazem, a entrega e instantanea de volta no Hangar.
+                _inventory.Add(resourceName, collectedAmount);
+            }
+
             drone.SetCarrying(false);
             route.Busy = false;
         }));
