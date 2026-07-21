@@ -175,22 +175,38 @@ public class HangarDeDrones : PlacedStructure
 
         _plantioTimer = 0f;
         _plantioDroneBusy = true;
-        _inventory.TryRemove(_seedResourceName, 1);
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         Vector3 tilePoint = target.transform.position + Vector3.up * DroneFlightHeight;
+        bool hasArmazem = ArmazemGeral.Instances.Count > 0;
 
-        var legs = new List<(Vector3, Action<DroneVisual>)>
+        var legs = new List<(Vector3, Action<DroneVisual>)>();
+
+        if (hasArmazem)
         {
-            (tilePoint, drone =>
+            // Sai vazio do Hangar, so pega a semente ao chegar no Armazem -
+            // mesmo padrao do Drone de Transporte.
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone =>
             {
-                target.PlantCrop(_cropToAutoPlant);
-                drone.SetCarrying(false);
-            }),
-            (hangarPoint, _ => _plantioDroneBusy = false)
-        };
+                _inventory.TryRemove(_seedResourceName, 1);
+                drone.SetCarrying(true);
+            }));
+        }
+        else
+        {
+            // Sem Armazem, a retirada e instantanea no Hangar.
+            _inventory.TryRemove(_seedResourceName, 1);
+        }
 
-        DroneVisual.Fly(hangarPoint, PlantioDroneColor, startCarrying: true, legs);
+        legs.Add((tilePoint, drone =>
+        {
+            target.PlantCrop(_cropToAutoPlant);
+            drone.SetCarrying(false);
+        }));
+
+        legs.Add((hangarPoint, _ => _plantioDroneBusy = false));
+
+        DroneVisual.Fly(hangarPoint, PlantioDroneColor, startCarrying: !hasArmazem, legs);
     }
 
     // Acionado manualmente (botao "Entregar/Coletar agora") ou
