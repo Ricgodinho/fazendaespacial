@@ -101,8 +101,11 @@ public static class GameBootstrap
 
             if (tileData.occupancy == (int)TileOccupancy.Crop)
             {
-                if (!cropsByName.TryGetValue(tileData.definitionName, out var cropDefinition))
+                // definitionName pode vir nulo de um save de um esquema
+                // anterior (schema mudou) - pula o tile em vez de quebrar.
+                if (string.IsNullOrEmpty(tileData.definitionName) || !cropsByName.TryGetValue(tileData.definitionName, out var cropDefinition))
                 {
+                    Debug.LogWarning($"Save antigo/incompativel: cultivo '{tileData.definitionName}' nao reconhecido no tile ({tileData.x},{tileData.z}) - ignorado.");
                     continue;
                 }
 
@@ -111,8 +114,9 @@ public static class GameBootstrap
             }
             else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsProcessingStructure(tileData))
             {
-                if (!structuresByName.TryGetValue(tileData.definitionName, out var structureDefinition))
+                if (string.IsNullOrEmpty(tileData.definitionName) || !structuresByName.TryGetValue(tileData.definitionName, out var structureDefinition))
                 {
+                    Debug.LogWarning($"Save antigo/incompativel: estrutura '{tileData.definitionName}' nao reconhecida no tile ({tileData.x},{tileData.z}) - ignorada.");
                     continue;
                 }
 
