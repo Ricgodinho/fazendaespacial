@@ -153,7 +153,11 @@ outros planetas ainda):
 - Mecânica de escavação/descoberta da Mina de Pedra (achados, itens
   raros) - hoje só a extração contínua está implementada.
 - Sistema de níveis de estrutura (10 níveis, breakpoints, dependência
-  de outros planetas) - hoje tudo fixo em Nível 1.
+  de outros planetas) - hoje tudo fixo em Nível 1. Ver
+  `docs/09-questoes-abertas-implementacao.md` para o que já está
+  decidido/pronto para implementar e o que ainda depende de decisão de
+  design antes (Campo de Cultivo e Área de Plantio de Árvores, em
+  particular).
 - Sistema de raridade (drop de sementes/produtos por nível) - depende
   de Planeta 2 existir para os primeiros breakpoints citados nos docs.
 - Build `.exe` standalone com bug conhecido de shader (URP/Lit
