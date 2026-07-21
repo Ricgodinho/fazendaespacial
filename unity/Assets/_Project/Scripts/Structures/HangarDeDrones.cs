@@ -386,11 +386,14 @@ public class HangarDeDrones : PlacedStructure
             legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone =>
             {
                 // So agora, chegando no Armazem, o que foi coletado passa a
-                // contar no inventario do jogador.
+                // contar no inventario do jogador - e e aqui que o drone
+                // "larga a carga" visualmente (entrega concluida).
                 if (collectedAmount > 0)
                 {
                     _inventory.Add(resourceName, collectedAmount);
                 }
+
+                drone.SetCarrying(false);
             }));
         }
 
