@@ -9,6 +9,7 @@ public class ClickController : MonoBehaviour
     private TileGrid _grid;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
+    private MinaDePedraDefinition _minaDefinition;
     private List<ProcessingStructureDefinition> _processingStructures;
     private CropDefinition _cropForHangarAutoPlant;
     private PrototypeHud _hud;
@@ -19,6 +20,7 @@ public class ClickController : MonoBehaviour
         TileGrid grid,
         ArmazemGeralDefinition armazemDefinition,
         HangarDeDronesDefinition hangarDefinition,
+        MinaDePedraDefinition minaDefinition,
         List<ProcessingStructureDefinition> processingStructures,
         CropDefinition cropForHangarAutoPlant,
         PrototypeHud hud)
@@ -28,6 +30,7 @@ public class ClickController : MonoBehaviour
         _grid = grid;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
+        _minaDefinition = minaDefinition;
         _processingStructures = processingStructures;
         _cropForHangarAutoPlant = cropForHangarAutoPlant;
         _hud = hud;
@@ -140,6 +143,11 @@ public class ClickController : MonoBehaviour
                 GameLog.Log("Click", builtHangar ? "BuildHangar_OK" : "BuildHangar_Fail", $"tile={coord}");
                 break;
 
+            case ToolType.BuildMina:
+                bool builtMina = tile.BuildMinaDePedra(_minaDefinition);
+                GameLog.Log("Click", builtMina ? "BuildMina_OK" : "BuildMina_Fail", $"tile={coord}");
+                break;
+
             default:
                 GameLog.Log("Click", "NoOp", $"tile={coord} ferramenta={_toolSelector.CurrentTool}");
                 break;
@@ -153,6 +161,7 @@ public class ClickController : MonoBehaviour
             ProcessingStructure processing => processing.Definition.displayName,
             ArmazemGeral armazem => armazem.Definition.displayName,
             HangarDeDrones hangar => hangar.Definition.displayName,
+            MinaDePedra mina => mina.Definition.displayName,
             _ => structure.GetType().Name
         };
     }

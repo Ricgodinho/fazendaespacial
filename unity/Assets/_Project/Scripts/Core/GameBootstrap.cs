@@ -17,18 +17,21 @@ public static class GameBootstrap
         var processamentoDeTrigo = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeTrigo");
         var viveiro = Resources.Load<ProcessingStructureDefinition>("Viveiro");
         var processamentoDeMadeira = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeMadeira");
+        var processamentoDePedra = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDePedra");
         var armazemDefinition = Resources.Load<ArmazemGeralDefinition>("ArmazemGeral");
         var hangarDefinition = Resources.Load<HangarDeDronesDefinition>("HangarDeDrones");
+        var minaDefinition = Resources.Load<MinaDePedraDefinition>("MinaDePedra");
 
         if (trigoLunar == null || cedroEstelar == null || bagaEstelar == null || processamentoDeTrigo == null || viveiro == null
-            || processamentoDeMadeira == null || armazemDefinition == null || hangarDefinition == null)
+            || processamentoDeMadeira == null || processamentoDePedra == null || armazemDefinition == null || hangarDefinition == null
+            || minaDefinition == null)
         {
             Debug.LogError("GameBootstrap: definicoes nao encontradas em Resources.");
             return;
         }
 
         var crops = new List<CropDefinition> { trigoLunar, cedroEstelar, bagaEstelar };
-        var processingStructures = new List<ProcessingStructureDefinition> { processamentoDeTrigo, viveiro, processamentoDeMadeira };
+        var processingStructures = new List<ProcessingStructureDefinition> { processamentoDeTrigo, viveiro, processamentoDeMadeira, processamentoDePedra };
 
         var cropsByName = new Dictionary<string, CropDefinition>();
         foreach (var crop in crops)
@@ -49,7 +52,7 @@ public static class GameBootstrap
         var saveSystem = new SaveSystem(Application.persistentDataPath + "/savegame.json");
 
         string welcomeBackMessage = LoadIfAvailable(
-            saveSystem, grid, inventory, cropsByName, structuresByName, armazemDefinition, hangarDefinition, processingStructures, trigoLunar);
+            saveSystem, grid, inventory, cropsByName, structuresByName, armazemDefinition, hangarDefinition, minaDefinition, processingStructures, trigoLunar);
 
         var toolSelector = new GameObject("ToolSelector").AddComponent<ToolSelector>();
 
@@ -57,9 +60,9 @@ public static class GameBootstrap
 
         var clickController = new GameObject("ClickController").AddComponent<ClickController>();
         clickController.Initialize(
-            inventory, toolSelector, grid, armazemDefinition, hangarDefinition, processingStructures, trigoLunar, hud);
+            inventory, toolSelector, grid, armazemDefinition, hangarDefinition, minaDefinition, processingStructures, trigoLunar, hud);
 
-        hud.Initialize(inventory, toolSelector, crops, processingStructures, armazemDefinition, hangarDefinition);
+        hud.Initialize(inventory, toolSelector, crops, processingStructures, armazemDefinition, hangarDefinition, minaDefinition);
         if (!string.IsNullOrEmpty(welcomeBackMessage))
         {
             hud.ShowMessage(welcomeBackMessage);
@@ -79,6 +82,7 @@ public static class GameBootstrap
         Dictionary<string, ProcessingStructureDefinition> structuresByName,
         ArmazemGeralDefinition armazemDefinition,
         HangarDeDronesDefinition hangarDefinition,
+        MinaDePedraDefinition minaDefinition,
         List<ProcessingStructureDefinition> processingStructures,
         CropDefinition cropForHangarAutoPlant)
     {
@@ -132,6 +136,11 @@ public static class GameBootstrap
                 // Simplificacao: a automacao do Hangar nao simula catch-up
                 // offline (retoma o tick normalmente a partir da reabertura).
                 tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropForHangarAutoPlant, processingStructures);
+            }
+            else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsMina(tileData))
+            {
+                tile.BuildMinaDePedra(minaDefinition, tileData.progressSeconds, tileData.storedOutput);
+                ((MinaDePedra)tile.BuiltStructure).ApplyOfflineElapsed(cappedOfflineSeconds);
             }
         }
 

@@ -5,7 +5,10 @@ public class ProcessingStructureDefinition : ScriptableObject
 {
     public string displayName = "Processamento de Trigo";
 
-    public CropDefinition inputCropDefinition;
+    // Nome do recurso exigido como insumo (chave no PlayerInventory) - nao
+    // precisa ser um CropDefinition (ex: "Pedra Ancestral" vem de uma mina,
+    // nao de um cultivo plantavel).
+    public string inputResourceName = "Trigo Lunar";
     public int inputAmountRequired = 5;
 
     public string outputResourceName = "Farinha Lunar";

@@ -25,6 +25,7 @@ public class PrototypeHud : MonoBehaviour
     private List<ProcessingStructureDefinition> _processingStructures;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
+    private MinaDePedraDefinition _minaDefinition;
     private string _message;
     private bool _showInstructions = true;
     private bool _showConstructionWindow;
@@ -42,7 +43,8 @@ public class PrototypeHud : MonoBehaviour
         List<CropDefinition> crops,
         List<ProcessingStructureDefinition> processingStructures,
         ArmazemGeralDefinition armazemDefinition,
-        HangarDeDronesDefinition hangarDefinition)
+        HangarDeDronesDefinition hangarDefinition,
+        MinaDePedraDefinition minaDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
@@ -50,6 +52,7 @@ public class PrototypeHud : MonoBehaviour
         _processingStructures = processingStructures;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
+        _minaDefinition = minaDefinition;
     }
 
     public void ShowMessage(string message)
@@ -126,6 +129,7 @@ public class PrototypeHud : MonoBehaviour
         {
             ProcessingStructure processing => processing.Definition.displayName,
             ArmazemGeral armazem => armazem.Definition.displayName,
+            MinaDePedra mina => mina.Definition.displayName,
             _ => "Estrutura"
         };
     }
@@ -225,6 +229,12 @@ public class PrototypeHud : MonoBehaviour
             _showConstructionWindow = false;
         }
 
+        if (GUILayout.Button(_minaDefinition.displayName))
+        {
+            _toolSelector.SelectBuildMina();
+            _showConstructionWindow = false;
+        }
+
         GUI.DragWindow();
     }
 
@@ -301,6 +311,9 @@ public class PrototypeHud : MonoBehaviour
             case ArmazemGeral armazem:
                 DrawArmazemContents(armazem);
                 break;
+            case MinaDePedra mina:
+                DrawMinaContents(mina);
+                break;
         }
 
         GUI.DragWindow();
@@ -310,13 +323,13 @@ public class PrototypeHud : MonoBehaviour
     {
         string status = processing.IsProcessing ? "Processando" : processing.HasOutputReady ? "Pronto para coleta" : "Parado";
         GUILayout.Label($"Status: {status}");
-        GUILayout.Label($"Insumo ({processing.Definition.inputCropDefinition.displayName}): {processing.StoredInput}/{processing.Definition.inputAmountRequired}");
+        GUILayout.Label($"Insumo ({processing.Definition.inputResourceName}): {processing.StoredInput}/{processing.Definition.inputAmountRequired}");
         GUILayout.Label($"Produto ({processing.Definition.outputResourceName}): {processing.StoredOutput}/{processing.Definition.outputStorageCapacity}");
 
         GUILayout.Space(6);
-        if (GUILayout.Button($"Alimentar com {processing.Definition.inputCropDefinition.displayName}"))
+        if (GUILayout.Button($"Alimentar com {processing.Definition.inputResourceName}"))
         {
-            string resourceName = processing.Definition.inputCropDefinition.displayName;
+            string resourceName = processing.Definition.inputResourceName;
             int available = _inventory.GetAmount(resourceName);
             int deposited = processing.TryDepositInput(available);
             if (deposited > 0)
@@ -342,6 +355,33 @@ public class PrototypeHud : MonoBehaviour
             }
 
             GameLog.Log("Janela", "Coletar", $"estrutura={processing.Definition.displayName} recurso={processing.Definition.outputResourceName} pronto={readyBefore} coletado={toCollect} espaco_inventario={roomInInventory}");
+        }
+    }
+
+    private void DrawMinaContents(MinaDePedra mina)
+    {
+        string status = mina.HasOutputReady && mina.StoredOutput >= mina.Definition.outputStorageCapacity
+            ? "Cheia - pronta para coleta"
+            : "Extraindo";
+        GUILayout.Label($"Status: {status}");
+        GUILayout.Label($"Produto ({mina.Definition.outputResourceName}): {mina.StoredOutput}/{mina.Definition.outputStorageCapacity}");
+
+        GUILayout.Space(6);
+        if (GUILayout.Button($"Coletar {mina.Definition.outputResourceName}"))
+        {
+            int roomInInventory = _inventory.Capacity.HasValue
+                ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
+                : int.MaxValue;
+
+            int readyBefore = mina.StoredOutput;
+            int toCollect = Mathf.Min(readyBefore, roomInInventory);
+            if (toCollect > 0)
+            {
+                mina.CollectOutput(toCollect);
+                _inventory.Add(mina.Definition.outputResourceName, toCollect);
+            }
+
+            GameLog.Log("Janela", "Coletar", $"estrutura={mina.Definition.displayName} recurso={mina.Definition.outputResourceName} pronto={readyBefore} coletado={toCollect} espaco_inventario={roomInInventory}");
         }
     }
 

@@ -6,5 +6,6 @@ public enum ToolType
     Build,      // usa ToolSelector.SelectedProcessingStructure
     BuildArmazem,
     BuildHangar,
+    BuildMina,
     Demolish
 }

@@ -44,6 +44,7 @@ public class SaveSystem
     private const string StructureKindProcessing = "processing";
     private const string StructureKindArmazem = "armazem";
     private const string StructureKindHangar = "hangar";
+    private const string StructureKindMina = "mina";
 
     private static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -113,6 +114,18 @@ public class SaveSystem
                     structureKind = StructureKindHangar
                 });
             }
+            else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is MinaDePedra mina)
+            {
+                data.tiles.Add(new TileSaveData
+                {
+                    x = tile.Coord.x,
+                    z = tile.Coord.y,
+                    occupancy = (int)TileOccupancy.Structure,
+                    structureKind = StructureKindMina,
+                    progressSeconds = mina.ProcessElapsedSeconds,
+                    storedOutput = mina.StoredOutput
+                });
+            }
         }
 
         foreach (var pair in inventory.All)
@@ -136,4 +149,5 @@ public class SaveSystem
     public static bool IsProcessingStructure(TileSaveData tileData) => tileData.structureKind == StructureKindProcessing;
     public static bool IsArmazem(TileSaveData tileData) => tileData.structureKind == StructureKindArmazem;
     public static bool IsHangar(TileSaveData tileData) => tileData.structureKind == StructureKindHangar;
+    public static bool IsMina(TileSaveData tileData) => tileData.structureKind == StructureKindMina;
 }

@@ -122,6 +122,25 @@ public class GridTile : MonoBehaviour
         return true;
     }
 
+    public bool BuildMinaDePedra(
+        MinaDePedraDefinition definition,
+        float initialProcessElapsedSeconds = 0f,
+        int initialStoredOutput = 0)
+    {
+        if (Occupancy != TileOccupancy.Empty)
+        {
+            return false;
+        }
+
+        var mina = CreateStructureAnchor(definition.displayName).AddComponent<MinaDePedra>();
+        mina.Initialize(definition, this, initialProcessElapsedSeconds, initialStoredOutput);
+        BuiltStructure = mina;
+
+        Occupancy = TileOccupancy.Structure;
+        RefreshGroundColor();
+        return true;
+    }
+
     // Remove o que estiver no tile (cultivo ou estrutura), sem gerar
     // nenhum recurso de volta - e uma demolicao, nao uma colheita.
     public void Demolish()

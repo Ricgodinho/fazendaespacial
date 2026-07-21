@@ -295,7 +295,7 @@ public class HangarDeDrones : PlacedStructure
 
     private void TryRunDeliveryRoute(TransporteRoute route, ProcessingStructure destination)
     {
-        string resourceName = destination.Definition.inputCropDefinition.displayName;
+        string resourceName = destination.Definition.inputResourceName;
         int available = _inventory.GetAmount(resourceName);
         int toCarry = Mathf.Min(available, Definition.transporteCapacidadePorViagem);
         if (toCarry <= 0)

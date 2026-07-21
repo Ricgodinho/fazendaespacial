@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Viveiro
   m_EditorClassIdentifier: Assembly-CSharp::ProcessingStructureDefinition
   displayName: Viveiro
-  inputCropDefinition: {fileID: 11400000, guid: 0597ae1cf4ee72946bdd49fc3b4423db, type: 2}
+  inputResourceName: Trigo Lunar
   inputAmountRequired: 5
   outputResourceName: Semente de Trigo Lunar
   outputAmountProduced: 3
   processTimeSeconds: 8
   outputStorageCapacity: 15
-  isViveiro: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ProcessamentoDeTrigo
   m_EditorClassIdentifier: Assembly-CSharp::ProcessingStructureDefinition
   displayName: Processamento de Trigo
-  inputCropDefinition: {fileID: 11400000, guid: 0597ae1cf4ee72946bdd49fc3b4423db, type: 2}
+  inputResourceName: Trigo Lunar
   inputAmountRequired: 5
   outputResourceName: Farinha Lunar
   outputAmountProduced: 3

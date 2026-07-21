@@ -24,5 +24,6 @@ public class ToolSelector : MonoBehaviour
 
     public void SelectBuildArmazem() => CurrentTool = ToolType.BuildArmazem;
     public void SelectBuildHangar() => CurrentTool = ToolType.BuildHangar;
+    public void SelectBuildMina() => CurrentTool = ToolType.BuildMina;
     public void SelectDemolish() => CurrentTool = ToolType.Demolish;
 }
