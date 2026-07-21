@@ -272,7 +272,9 @@ leveza de performance, mas com um visual mais elaborado e atraente do que um idl
 minimalista.
 
 ## Em aberto para debate
-- O que exatamente se planta, cria e produz.
+- O que exatamente se planta, cria e produz (estágios visuais de
+  crescimento já definidos em `docs/cultivos/00-indice.md`; nomes e
+  detalhes específicos de cada cultivo ainda pendentes).
 - Tipos e funções dos drones.
 - Categorias definitivas de raridade.
 - Objetivo de longo prazo e encerramento da jornada.
