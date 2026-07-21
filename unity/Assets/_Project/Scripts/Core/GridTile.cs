@@ -106,7 +106,6 @@ public class GridTile : MonoBehaviour
         TileGrid grid,
         PlayerInventory inventory,
         CropDefinition cropToAutoPlant,
-        ProcessingStructureDefinition viveiroDefinition,
         IEnumerable<ProcessingStructureDefinition> transporteTargets)
     {
         if (Occupancy != TileOccupancy.Empty)
@@ -115,7 +114,7 @@ public class GridTile : MonoBehaviour
         }
 
         var hangar = CreateStructureAnchor(definition.displayName).AddComponent<HangarDeDrones>();
-        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, viveiroDefinition, transporteTargets);
+        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, transporteTargets);
         BuiltStructure = hangar;
 
         Occupancy = TileOccupancy.Structure;

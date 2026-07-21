@@ -11,7 +11,6 @@ public class ClickController : MonoBehaviour
     private HangarDeDronesDefinition _hangarDefinition;
     private List<ProcessingStructureDefinition> _processingStructures;
     private CropDefinition _cropForHangarAutoPlant;
-    private ProcessingStructureDefinition _viveiroDefinition;
     private PrototypeHud _hud;
 
     public void Initialize(
@@ -22,7 +21,6 @@ public class ClickController : MonoBehaviour
         HangarDeDronesDefinition hangarDefinition,
         List<ProcessingStructureDefinition> processingStructures,
         CropDefinition cropForHangarAutoPlant,
-        ProcessingStructureDefinition viveiroDefinition,
         PrototypeHud hud)
     {
         _inventory = inventory;
@@ -32,7 +30,6 @@ public class ClickController : MonoBehaviour
         _hangarDefinition = hangarDefinition;
         _processingStructures = processingStructures;
         _cropForHangarAutoPlant = cropForHangarAutoPlant;
-        _viveiroDefinition = viveiroDefinition;
         _hud = hud;
     }
 
@@ -112,7 +109,7 @@ public class ClickController : MonoBehaviour
 
             case ToolType.BuildHangar:
                 tile.BuildHangarDeDrones(
-                    _hangarDefinition, _grid, _inventory, _cropForHangarAutoPlant, _viveiroDefinition, _processingStructures);
+                    _hangarDefinition, _grid, _inventory, _cropForHangarAutoPlant, _processingStructures);
                 break;
         }
     }

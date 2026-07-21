@@ -32,11 +32,22 @@ public class HangarDeDrones : PlacedStructure
     public bool ColheitaEnabled { get; private set; } = true;
     public IReadOnlyList<TransporteRoute> TransporteRoutes => _transporteRoutes;
 
+    // Tier 1 do Plantio so automatiza 1 cultivo por vez (docs/drones/plantio.md,
+    // breakpoint de multi-cultivo so no Tier 4) - escolhido pelo jogador, nao
+    // fixo em codigo. Sem isso, o drone reocupa qualquer tile vazio (inclusive
+    // um que acabou de ser colhido de outro cultivo) sempre com o mesmo tipo.
+    public CropDefinition AutoPlantCrop { get; private set; }
+
     private TileGrid _grid;
     private Vector2Int _coord;
     private PlayerInventory _inventory;
-    private CropDefinition _cropToAutoPlant;
-    private string _seedResourceName;
+
+    // "Semente de X" segue a convencao ja usada pelo unico Viveiro que existe
+    // hoje (produz "Semente de Trigo Lunar" a partir de Trigo Lunar) - se o
+    // jogador trocar o cultivo automatizado para algo sem Viveiro proprio
+    // ainda (ex: Cedro Estelar), o drone simplesmente nunca encontra semente
+    // e fica parado, sem quebrar nada.
+    private string RequiredSeedResourceName => $"Semente de {AutoPlantCrop.displayName}";
 
     private readonly List<TransporteRoute> _transporteRoutes = new();
 
@@ -60,15 +71,13 @@ public class HangarDeDrones : PlacedStructure
         Vector2Int coord,
         PlayerInventory inventory,
         CropDefinition cropToAutoPlant,
-        ProcessingStructureDefinition viveiroDefinition,
         IEnumerable<ProcessingStructureDefinition> transporteTargets)
     {
         Definition = definition;
         _grid = grid;
         _coord = coord;
         _inventory = inventory;
-        _cropToAutoPlant = cropToAutoPlant;
-        _seedResourceName = viveiroDefinition.outputResourceName;
+        AutoPlantCrop = cropToAutoPlant;
 
         // Uma rota de entrega + uma de coleta por estrutura de processamento
         // existente (Viveiro incluso, ja que reaproveita a mesma classe).
@@ -96,6 +105,7 @@ public class HangarDeDrones : PlacedStructure
 
     public void SetPlantioEnabled(bool value) => PlantioEnabled = value;
     public void SetColheitaEnabled(bool value) => ColheitaEnabled = value;
+    public void SetAutoPlantCrop(CropDefinition crop) => AutoPlantCrop = crop;
 
     private void Update()
     {
@@ -176,7 +186,7 @@ public class HangarDeDrones : PlacedStructure
     {
         // Plantio Tier 1 "usa sementes do Armazem Geral" (docs/drones/plantio.md)
         // - sem semente do Viveiro, o drone nao consegue plantar.
-        if (_inventory.GetAmount(_seedResourceName) < 1)
+        if (_inventory.GetAmount(RequiredSeedResourceName) < 1)
         {
             return;
         }
@@ -202,19 +212,19 @@ public class HangarDeDrones : PlacedStructure
             // mesmo padrao do Drone de Transporte.
             legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone =>
             {
-                _inventory.TryRemove(_seedResourceName, 1);
+                _inventory.TryRemove(RequiredSeedResourceName, 1);
                 drone.SetCarrying(true);
             }));
         }
         else
         {
             // Sem Armazem, a retirada e instantanea no Hangar.
-            _inventory.TryRemove(_seedResourceName, 1);
+            _inventory.TryRemove(RequiredSeedResourceName, 1);
         }
 
         legs.Add((tilePoint, drone =>
         {
-            target.PlantCrop(_cropToAutoPlant);
+            target.PlantCrop(AutoPlantCrop);
             drone.SetCarrying(false);
         }));
 

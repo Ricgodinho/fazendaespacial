@@ -233,6 +233,26 @@ public class PrototypeHud : MonoBehaviour
         string plantioLabel = hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico";
         if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
 
+        // Tier 1 so automatiza 1 cultivo por vez (docs/drones/plantio.md) -
+        // o jogador escolhe qual, em vez de ficar fixo em codigo. Sem
+        // Viveiro proprio pro cultivo escolhido, o drone so fica parado
+        // esperando semente, nunca rouba o tile de outro cultivo.
+        GUILayout.Label($"Cultivo automatico: {hangar.AutoPlantCrop.displayName}");
+        GUILayout.BeginHorizontal();
+        foreach (var crop in _crops)
+        {
+            bool isSelected = hangar.AutoPlantCrop == crop;
+            GUI.enabled = !isSelected;
+            if (GUILayout.Button(crop.displayName))
+            {
+                hangar.SetAutoPlantCrop(crop);
+            }
+
+            GUI.enabled = true;
+        }
+
+        GUILayout.EndHorizontal();
+
         string colheitaLabel = hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica";
         if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
 

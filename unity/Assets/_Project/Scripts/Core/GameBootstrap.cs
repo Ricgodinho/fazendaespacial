@@ -48,7 +48,7 @@ public static class GameBootstrap
         var saveSystem = new SaveSystem(Application.persistentDataPath + "/savegame.json");
 
         string welcomeBackMessage = LoadIfAvailable(
-            saveSystem, grid, inventory, cropsByName, structuresByName, armazemDefinition, hangarDefinition, viveiro, processingStructures, trigoLunar);
+            saveSystem, grid, inventory, cropsByName, structuresByName, armazemDefinition, hangarDefinition, processingStructures, trigoLunar);
 
         var toolSelector = new GameObject("ToolSelector").AddComponent<ToolSelector>();
 
@@ -56,7 +56,7 @@ public static class GameBootstrap
 
         var clickController = new GameObject("ClickController").AddComponent<ClickController>();
         clickController.Initialize(
-            inventory, toolSelector, grid, armazemDefinition, hangarDefinition, processingStructures, trigoLunar, viveiro, hud);
+            inventory, toolSelector, grid, armazemDefinition, hangarDefinition, processingStructures, trigoLunar, hud);
 
         hud.Initialize(inventory, toolSelector, crops, processingStructures, armazemDefinition, hangarDefinition);
         if (!string.IsNullOrEmpty(welcomeBackMessage))
@@ -78,7 +78,6 @@ public static class GameBootstrap
         Dictionary<string, ProcessingStructureDefinition> structuresByName,
         ArmazemGeralDefinition armazemDefinition,
         HangarDeDronesDefinition hangarDefinition,
-        ProcessingStructureDefinition viveiroDefinition,
         List<ProcessingStructureDefinition> processingStructures,
         CropDefinition cropForHangarAutoPlant)
     {
@@ -131,7 +130,7 @@ public static class GameBootstrap
             {
                 // Simplificacao: a automacao do Hangar nao simula catch-up
                 // offline (retoma o tick normalmente a partir da reabertura).
-                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropForHangarAutoPlant, viveiroDefinition, processingStructures);
+                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropForHangarAutoPlant, processingStructures);
             }
         }
 
