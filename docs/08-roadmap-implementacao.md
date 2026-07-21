@@ -134,19 +134,31 @@ outros planetas ainda):
 - **HUD em janelas** (`GUILayout.Window`): janela principal, janela de
   Construção, e uma janela por Hangar construído - substituiu o painel
   único que cortava conteúdo.
+- **Área de Plantio de Árvores + Processamento de Madeira**: Cedro
+  Estelar (cultivo) → Tábua Estelar (Processamento de Madeira, Nível 1 -
+  Lenha/Carvão Estelar ficam para quando houver múltiplos produtos
+  simultâneos, Nível 4).
+- **Baga Estelar**: 3º cultivo (fruta), mesmo padrão de Trigo
+  Lunar/Cedro Estelar.
+- **Mina de Pedra + Processamento de Pedra** (Nível 1): extração
+  contínua de Pedra Ancestral (sem insumo, diferente da Estrutura de
+  Processamento) → Bloco Ancestral. Mecânica de escavação/descoberta da
+  Mina ainda não implementada (ver `docs/estruturas/planeta-1/mina-de-pedra.md`,
+  "Função dupla").
 
 ### Ainda falta para o Planeta 1 completo
-- Área de Plantio de Árvores + Processamento de Madeira (Cedro Estelar,
-  Tábua/Lenha/Carvão Estelar).
-- Mina de Pedra (com mecânica de escavação/descoberta) + Processamento
-  de Pedra.
-- Outros cultivos (Fibra Estelar) além do Trigo Lunar.
+- Fibra Estelar (cultivo) - ainda sem estrutura de processamento/uso
+  definido em detalhe (`docs/itens/itens.csv` marca "A definir"); precisa
+  de spec antes de implementar.
+- Mecânica de escavação/descoberta da Mina de Pedra (achados, itens
+  raros) - hoje só a extração contínua está implementada.
 - Sistema de níveis de estrutura (10 níveis, breakpoints, dependência
   de outros planetas) - hoje tudo fixo em Nível 1.
-- Sistema de raridade (drop de sementes/produtos por nível).
+- Sistema de raridade (drop de sementes/produtos por nível) - depende
+  de Planeta 2 existir para os primeiros breakpoints citados nos docs.
 - Build `.exe` standalone com bug conhecido de shader (URP/Lit
   removido do build por só ser referenciado via `Shader.Find` em
-  runtime) - ainda não corrigido.
+  runtime) - propositalmente adiado até o Planeta 1 estar completo.
 
 *Este roadmap deve ser atualizado conforme decisões pendentes (repositório
 do projeto Unity, versão do Unity, mecanismo de save/load) forem fechadas
