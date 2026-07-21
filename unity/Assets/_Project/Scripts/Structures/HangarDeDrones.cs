@@ -78,6 +78,7 @@ public class HangarDeDrones : PlacedStructure
 
     public void Initialize(
         HangarDeDronesDefinition definition,
+        GridTile tile,
         TileGrid grid,
         Vector2Int coord,
         PlayerInventory inventory,
@@ -104,7 +105,10 @@ public class HangarDeDrones : PlacedStructure
         visual.transform.localPosition = Vector3.zero;
         visual.transform.localScale = new Vector3(1f, 0.6f, 1f);
 
-        Destroy(visual.GetComponent<Collider>());
+        // Mantem o colisor e liga de volta ao tile (ver TileLink) - era
+        // exatamente a falta disso que fazia o clique no Hangar (estrutura
+        // mais alta, perto da borda do grid) nao acertar nada.
+        TileLink.Attach(visual, tile);
 
         var renderer = visual.GetComponent<Renderer>();
         renderer.material = RendererTint.SharedUrpLitMaterial;

@@ -42,7 +42,7 @@ public class GridTile : MonoBehaviour
         cropObject.transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
 
         PlantedCrop = cropObject.AddComponent<CropInstance>();
-        PlantedCrop.Initialize(definition, initialAccumulatedSeconds);
+        PlantedCrop.Initialize(definition, this, initialAccumulatedSeconds);
 
         Occupancy = TileOccupancy.Crop;
         RefreshGroundColor();
@@ -77,7 +77,7 @@ public class GridTile : MonoBehaviour
         }
 
         var structure = CreateStructureAnchor(definition.displayName).AddComponent<ProcessingStructure>();
-        structure.Initialize(definition, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
+        structure.Initialize(definition, this, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
         BuiltStructure = structure;
 
         Occupancy = TileOccupancy.Structure;
@@ -93,7 +93,7 @@ public class GridTile : MonoBehaviour
         }
 
         var armazem = CreateStructureAnchor(definition.displayName).AddComponent<ArmazemGeral>();
-        armazem.Initialize(definition, inventory);
+        armazem.Initialize(definition, this, inventory);
         BuiltStructure = armazem;
 
         Occupancy = TileOccupancy.Structure;
@@ -114,7 +114,7 @@ public class GridTile : MonoBehaviour
         }
 
         var hangar = CreateStructureAnchor(definition.displayName).AddComponent<HangarDeDrones>();
-        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, transporteTargets);
+        hangar.Initialize(definition, this, grid, Coord, inventory, cropToAutoPlant, transporteTargets);
         BuiltStructure = hangar;
 
         Occupancy = TileOccupancy.Structure;

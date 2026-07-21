@@ -26,6 +26,7 @@ public class ProcessingStructure : PlacedStructure
 
     public void Initialize(
         ProcessingStructureDefinition definition,
+        GridTile tile,
         float initialProcessElapsedSeconds = 0f,
         int initialStoredInput = 0,
         int initialStoredOutput = 0)
@@ -41,8 +42,9 @@ public class ProcessingStructure : PlacedStructure
         visual.transform.localPosition = Vector3.zero;
         visual.transform.localScale = new Vector3(0.8f, 1f, 0.8f);
 
-        // O raycast de clique deve sempre acertar o tile, nao a estrutura em cima dele.
-        Destroy(visual.GetComponent<Collider>());
+        // Mantem o colisor e liga de volta ao tile (ver TileLink) - evita
+        // que o raycast erre em estruturas altas perto da borda do grid.
+        TileLink.Attach(visual, tile);
 
         _visualTransform = visual.transform;
         _visualRenderer = visual.GetComponent<Renderer>();

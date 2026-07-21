@@ -38,7 +38,7 @@ public class CropInstance : MonoBehaviour
     private Transform _visualTransform;
     private int _lastStageShown = -1;
 
-    public void Initialize(CropDefinition definition, float initialAccumulatedSeconds = 0f)
+    public void Initialize(CropDefinition definition, GridTile tile, float initialAccumulatedSeconds = 0f)
     {
         Definition = definition;
         AccumulatedSeconds = initialAccumulatedSeconds;
@@ -48,8 +48,10 @@ public class CropInstance : MonoBehaviour
         visual.transform.SetParent(transform, worldPositionStays: false);
         visual.transform.localPosition = Vector3.zero;
 
-        // O raycast de clique deve sempre acertar o tile, nao a planta em cima dele.
-        Destroy(visual.GetComponent<Collider>());
+        // Mantem o colisor (em vez de destruir) e liga de volta ao tile -
+        // evita que o raycast erre em estruturas/cultivos altos perto da
+        // borda do grid (ver TileLink).
+        TileLink.Attach(visual, tile);
 
         _visualTransform = visual.transform;
         _visualRenderer = visual.GetComponent<Renderer>();

@@ -17,7 +17,7 @@ public class ArmazemGeral : PlacedStructure
     private void OnEnable() => Instances.Add(this);
     private void OnDisable() => Instances.Remove(this);
 
-    public void Initialize(ArmazemGeralDefinition definition, PlayerInventory inventory)
+    public void Initialize(ArmazemGeralDefinition definition, GridTile tile, PlayerInventory inventory)
     {
         Definition = definition;
         inventory.Capacity = definition.capacity;
@@ -28,7 +28,9 @@ public class ArmazemGeral : PlacedStructure
         visual.transform.localPosition = Vector3.zero;
         visual.transform.localScale = new Vector3(0.9f, 0.7f, 0.9f);
 
-        Destroy(visual.GetComponent<Collider>());
+        // Mantem o colisor e liga de volta ao tile (ver TileLink) - evita
+        // que o raycast erre em estruturas altas perto da borda do grid.
+        TileLink.Attach(visual, tile);
 
         var renderer = visual.GetComponent<Renderer>();
         renderer.material = RendererTint.SharedUrpLitMaterial;

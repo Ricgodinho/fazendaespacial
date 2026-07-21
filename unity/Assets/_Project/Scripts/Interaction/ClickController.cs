@@ -54,6 +54,14 @@ public class ClickController : MonoBehaviour
         var tile = hit.collider.GetComponent<GridTile>();
         if (tile == null)
         {
+            // Clique pode ter acertado o colisor do proprio cultivo/estrutura
+            // (nao o tile diretamente) - resolve pelo TileLink.
+            var link = hit.collider.GetComponentInParent<TileLink>();
+            tile = link != null ? link.Tile : null;
+        }
+
+        if (tile == null)
+        {
             return;
         }
 
