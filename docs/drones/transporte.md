@@ -35,6 +35,45 @@ Oficina (renovação). Isso é o que alimenta, na prática, todas as
 dependências de nível de estrutura já fechadas (ex: "Dependência:
 Planeta 2") em `docs/estruturas/planeta-1/`.
 
+## Direções da rota — clarificação (validado no protótipo)
+
+Uma rota de Transporte cobre dois sentidos possíveis, ambos já testados
+no protótipo técnico:
+
+- **Entrega**: Armazém Geral → estrutura (leva insumo para processar,
+  ex: Trigo Lunar até o Viveiro).
+- **Coleta**: estrutura → Armazém Geral (traz o produto pronto, ex:
+  Semente de Trigo Lunar do Viveiro de volta ao inventário). Sem essa
+  direção, o produto acumulado fica preso dentro da própria estrutura
+  até o jogador clicar nela manualmente para coletar.
+
+Ambas as direções já existem desde o Tier 1 no protótipo (uma rota de
+entrega e uma de coleta por estrutura), em vez de esperar por tiers
+mais altos — decisão de escopo para validar a mecânica antes de
+formalizar a progressão completa de tier.
+
+## Modo manual/automático — decisão de escopo do protótipo
+
+A tabela de tiers acima define Tier 1 como manual e Tier 2 como
+automático. No protótipo técnico, os dois modos **coexistem por rota**,
+escolhidos pelo jogador (botão "Entregar/Coletar agora" para o modo
+manual, toggle "Automático" para repetir sozinho no mesmo intervalo dos
+drones de Colheita/Plantio) — em vez de travar o modo automático atrás
+de um sistema de tier ainda não implementado. Quando o sistema de tier
+for formalizado, a expectativa é que o toggle "Automático" só fique
+disponível a partir do Tier 2, conforme a tabela acima.
+
+## Regra de simulação — pegar/largar acontece na chegada (decisão)
+
+Ao implementar o drone, ficou clara uma regra que deve valer para
+**qualquer** drone que carregue algo entre dois pontos: o item só sai
+da origem e só entra no destino no momento exato em que o drone chega
+visualmente em cada ponto — nunca no instante em que a viagem é
+decidida. Ver a mesma regra registrada de forma geral em
+`docs/drones/00-indice.md`.
+
 ## Pendente
 - Aplicação da raridade do próprio drone dentro de cada tier — mesma
   pendência já registrada para os demais drones.
+- Capacidade real por viagem (Nível 1) — protótipo usa valor de teste
+  (10 unidades), a validar em playtest/planilha como os demais números.

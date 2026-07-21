@@ -98,6 +98,56 @@ manualmente. Playtest formal com pessoas de fora do time ainda pendente
 - Resultado define se avança para Fase 2 (expansão do sistema solar) e
   para o envolvimento de uma fábrica de desenvolvimento.
 
+*Ainda pendente — o time optou por seguir para a Etapa 6 (expandir
+conteúdo) antes do playtest formal, aceitando o risco de retrabalho.*
+
+## Etapa 6 — Expansão pós-MVP: conteúdo real do Planeta 1 — 🔄 em andamento
+
+Decisão consciente de avançar para conteúdo real antes do playtest
+formal da Etapa 5 (risco de retrabalho aceito). Implementado até agora,
+todos em **Nível 1** (sem sistema de níveis, raridade, ou dependência de
+outros planetas ainda):
+
+- **Armazém Geral** (`docs/estruturas/planeta-1/armazem-geral.md`):
+  define a capacidade do inventário do jogador (100 no Nível 1).
+  `PlayerInventory.Add` respeita esse teto e devolve quanto de fato
+  coube — nada se perde, o excedente permanece na origem.
+- **Hangar de Drones** (`docs/estruturas/planeta-1/hangar-de-drones.md`):
+  hospeda os 3 drones Tier 1 abaixo. Simplificação: já nasce com os
+  drones prontos, sem economia de aquisição/durabilidade ainda.
+- **Drone de Colheita e de Plantio** Tier 1 (`docs/drones/colheita.md`,
+  `docs/drones/plantio.md`): automatizam 1 tile por vez, num raio do
+  Hangar. Plantio consome 1 semente do Armazém por plantio — sem
+  semente, não planta.
+- **Viveiro** (`docs/estruturas/planeta-1/viveiro.md`): reaproveita a
+  mesma classe de Estrutura de Processamento (só muda insumo/produto) -
+  transforma Trigo Lunar em Semente de Trigo Lunar.
+- **Drone de Transporte** Tier 1 (`docs/drones/transporte.md`): rotas
+  configuráveis por estrutura, em duas direções (entrega de insumo,
+  coleta de produto pronto), cada uma manual ou automática por toggle -
+  ver nota de escopo no próprio arquivo do drone.
+- **Demolir** (`docs/05-prototipo-1-loop-ativo.md`): remove cultivo ou
+  estrutura de um tile, sem gerar recurso de volta.
+- **Feedback visual dos drones**: indicador de carga (vazio/carregado)
+  e regra geral de simulação (retirar/depositar só na chegada visual,
+  não na decisão da viagem) - ver `docs/drones/00-indice.md`.
+- **HUD em janelas** (`GUILayout.Window`): janela principal, janela de
+  Construção, e uma janela por Hangar construído - substituiu o painel
+  único que cortava conteúdo.
+
+### Ainda falta para o Planeta 1 completo
+- Área de Plantio de Árvores + Processamento de Madeira (Cedro Estelar,
+  Tábua/Lenha/Carvão Estelar).
+- Mina de Pedra (com mecânica de escavação/descoberta) + Processamento
+  de Pedra.
+- Outros cultivos (Fibra Estelar) além do Trigo Lunar.
+- Sistema de níveis de estrutura (10 níveis, breakpoints, dependência
+  de outros planetas) - hoje tudo fixo em Nível 1.
+- Sistema de raridade (drop de sementes/produtos por nível).
+- Build `.exe` standalone com bug conhecido de shader (URP/Lit
+  removido do build por só ser referenciado via `Shader.Find` em
+  runtime) - ainda não corrigido.
+
 *Este roadmap deve ser atualizado conforme decisões pendentes (repositório
 do projeto Unity, versão do Unity, mecanismo de save/load) forem fechadas
 e conforme cada etapa for concluída.*

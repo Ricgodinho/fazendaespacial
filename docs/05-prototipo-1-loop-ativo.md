@@ -45,23 +45,34 @@ em `docs/01-conceito.md`), para não gerar retrabalho.
 4. **Coletar da estrutura**: clicar na estrutura para retirar o recurso
    processado (não precisa de ferramenta selecionada para esta ação).
 
-   **Decisão de implementação:** como o Protótipo 1 não tem drone de
-   Transporte ainda (ver `docs/drones/00-indice.md`), o mesmo clique que
-   coleta o output também alimenta a estrutura com insumo do inventário
-   do jogador (deposita o quanto couber na capacidade de insumo), quando
-   não há output pronto para coletar. Prioridade: coletar primeiro se
-   houver output pronto; alimentar só se não houver. Essa alimentação
-   manual deve ser substituída pelo drone de Transporte quando essa
-   categoria for implementada.
+   **Decisão de implementação:** o mesmo clique que coleta o output
+   também alimenta a estrutura com insumo do inventário do jogador
+   (deposita o quanto couber na capacidade de insumo), quando não há
+   output pronto para coletar. Prioridade: coletar primeiro se houver
+   output pronto; alimentar só se não houver. Essa era a única forma de
+   alimentar/coletar quando o drone de Transporte ainda não existia;
+   com o drone implementado (ver `docs/drones/transporte.md`), o clique
+   manual continua funcionando como alternativa sempre disponível, sem
+   depender de ter um Hangar de Drones construído.
+5. **Demolir**: selecionar a ferramenta de demolição, clicar em qualquer
+   tile ocupado (cultivo ou estrutura) para removê-lo. Não gera nenhum
+   recurso de volta — é uma remoção, não uma colheita.
 
 ## Fora do escopo deste protótipo
 
 - Loop idle / produção passiva (já coberto no Protótipo 0 — será somado
   no Protótipo 2).
 - Decoração e customização visual da fazenda.
-- Múltiplas estruturas, árvore de tecnologia, raridade.
+- Árvore de tecnologia, sistema de níveis de estrutura, raridade.
 - Nave, viagens, outros planetas.
 - Arte final — usar placeholders/assets prontos de loja.
+
+> **Nota (pós-Etapa 5):** "múltiplas estruturas" saiu do escopo original
+> deste documento, mas já foi implementado — Armazém Geral, Hangar de
+> Drones e Viveiro, além dos drones Tier 1 de Colheita/Plantio/Transporte,
+> foram construídos como expansão pós-MVP. Ver
+> `docs/08-roadmap-implementacao.md`, Etapa 6, para o resumo dessa
+> expansão e o que ainda falta do Planeta 1 completo.
 
 ## Perguntas a validar no playtest deste protótipo
 

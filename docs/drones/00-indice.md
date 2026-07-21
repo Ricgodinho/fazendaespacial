@@ -7,12 +7,12 @@ crafting e limites de quantidade.
 
 ## Arquivos desta pasta
 
-- `colheita.md` — especificação do drone de Colheita (fechado)
-- `plantio.md` — especificação do drone de Plantio (a debater)
-- `transporte.md` — especificação do drone de Transporte/logística (a debater)
-- `escavacao.md` — especificação do drone de Escavação (a debater)
-- `construcao.md` — especificação do drone de Construção/reparo (a debater)
-- `companheiro.md` — especificação do drone companheiro (a debater)
+- `colheita.md` — especificação do drone de Colheita (fechado; Tier 1 validado no protótipo técnico)
+- `plantio.md` — especificação do drone de Plantio (fechado; Tier 1 validado no protótipo técnico)
+- `transporte.md` — especificação do drone de Transporte/logística (fechado; Tier 1 validado no protótipo técnico)
+- `escavacao.md` — especificação do drone de Escavação (fechado)
+- `construcao.md` — especificação do drone de Construção/reparo (fechado)
+- `companheiro.md` — especificação do drone companheiro (fechado)
 - `arte/00-indice.md` — referências visuais específicas de drones
 - `audio/00-indice.md` — efeitos sonoros específicos de drones
 
@@ -114,6 +114,24 @@ estratégico algum.
 
 Valores de exemplo, a validar em playtest/planilha — mesmo princípio já
 aplicado ao loop idle (ver `planilhas/planilha_loop_idle.xlsx`).
+
+## Regra de simulação: pegar/largar acontece na chegada (decisão)
+
+Validado durante a implementação do protótipo técnico (drones de
+Colheita, Plantio e Transporte, todos Tier 1): qualquer drone que
+carregue algo entre dois pontos só **retira** o item da origem e só
+**entrega** o item no destino no momento exato em que chega
+visualmente em cada ponto — nunca no instante em que a viagem é
+decidida.
+
+Motivo: sem essa regra, outros sistemas (ex: outro drone que dependa do
+mesmo recurso) enxergam o item como já disponível/já removido antes do
+trajeto realmente acontecer, quebrando a leitura visual do jogo e
+criando inconsistências (ex: um drone de Plantio usando uma semente que
+o drone de Transporte ainda nem chegou a entregar no Armazém).
+
+Aplica-se tanto a retirar quanto a depositar, em qualquer estrutura
+(Armazém Geral, Viveiro, Estruturas de Processamento, etc.).
 
 ## Pendências gerais do sistema de Drones
 - Especificação tier a tier das categorias ainda não fechadas (Plantio,
