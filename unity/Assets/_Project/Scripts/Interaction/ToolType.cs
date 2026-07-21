@@ -3,5 +3,7 @@ public enum ToolType
     None,
     Plant,
     Harvest,
-    Build
+    BuildProcessing,
+    BuildArmazem,
+    BuildHangar
 }

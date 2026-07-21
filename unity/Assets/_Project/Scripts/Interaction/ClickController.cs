@@ -5,19 +5,28 @@ public class ClickController : MonoBehaviour
 {
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
+    private TileGrid _grid;
     private CropDefinition _cropDefinition;
     private ProcessingStructureDefinition _structureDefinition;
+    private ArmazemGeralDefinition _armazemDefinition;
+    private HangarDeDronesDefinition _hangarDefinition;
 
     public void Initialize(
         PlayerInventory inventory,
         ToolSelector toolSelector,
+        TileGrid grid,
         CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition)
+        ProcessingStructureDefinition structureDefinition,
+        ArmazemGeralDefinition armazemDefinition,
+        HangarDeDronesDefinition hangarDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
+        _grid = grid;
         _cropDefinition = cropDefinition;
         _structureDefinition = structureDefinition;
+        _armazemDefinition = armazemDefinition;
+        _hangarDefinition = hangarDefinition;
     }
 
     private void Update()
@@ -49,13 +58,12 @@ public class ClickController : MonoBehaviour
 
     private void HandleClick(GridTile tile)
     {
-        // Clicar numa estrutura sempre coleta/alimenta primeiro, independente da
-        // ferramenta selecionada (docs/05-prototipo-1-loop-ativo.md: "nao precisa
-        // de ferramenta selecionada para esta acao"). Sem drones ainda, a
-        // alimentacao manual do inventario para a estrutura acontece no mesmo clique.
-        if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure != null)
+        // Clicar numa Estrutura de Processamento sempre coleta/alimenta primeiro,
+        // independente da ferramenta selecionada (docs/05-prototipo-1-loop-ativo.md).
+        // Armazem Geral e Hangar de Drones nao tem interacao manual nesta versao.
+        if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is ProcessingStructure processingStructure)
         {
-            HandleStructureClick(tile.BuiltStructure);
+            HandleStructureClick(processingStructure);
             return;
         }
 
@@ -72,8 +80,16 @@ public class ClickController : MonoBehaviour
                 }
                 break;
 
-            case ToolType.Build:
-                tile.BuildStructure(_structureDefinition);
+            case ToolType.BuildProcessing:
+                tile.BuildProcessingStructure(_structureDefinition);
+                break;
+
+            case ToolType.BuildArmazem:
+                tile.BuildArmazemGeral(_armazemDefinition, _inventory);
+                break;
+
+            case ToolType.BuildHangar:
+                tile.BuildHangarDeDrones(_hangarDefinition, _grid, _inventory, _cropDefinition);
                 break;
         }
     }
@@ -82,8 +98,17 @@ public class ClickController : MonoBehaviour
     {
         if (structure.HasOutputReady)
         {
-            int collected = structure.CollectOutput();
-            _inventory.Add(structure.Definition.outputResourceName, collected);
+            int roomInInventory = _inventory.Capacity.HasValue
+                ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
+                : int.MaxValue;
+
+            int toCollect = Mathf.Min(structure.StoredOutput, roomInInventory);
+            if (toCollect > 0)
+            {
+                structure.CollectOutput(toCollect);
+                _inventory.Add(structure.Definition.outputResourceName, toCollect);
+            }
+
             return;
         }
 

@@ -9,7 +9,8 @@ public class TileSaveData
     public int x;
     public int z;
     public int occupancy; // espelha TileOccupancy: 0 Empty, 1 Crop, 2 Structure
-    public float progressSeconds; // AccumulatedSeconds (cultivo) ou ProcessElapsedSeconds (estrutura)
+    public int structureType; // so relevante se occupancy == Structure: 0 Processamento, 1 Armazem, 2 Hangar
+    public float progressSeconds; // AccumulatedSeconds (cultivo) ou ProcessElapsedSeconds (estrutura de processamento)
     public int storedInput;
     public int storedOutput;
 }
@@ -35,6 +36,10 @@ public class GameSaveData
 // de producao offline em si (ProcessingStructure/CropInstance) nao muda.
 public class SaveSystem
 {
+    private const int StructureTypeProcessing = 0;
+    private const int StructureTypeArmazem = 1;
+    private const int StructureTypeHangar = 2;
+
     private static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
     private readonly string _filePath;
@@ -68,16 +73,37 @@ public class SaveSystem
                     progressSeconds = tile.PlantedCrop.AccumulatedSeconds
                 });
             }
-            else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure != null)
+            else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is ProcessingStructure processing)
             {
                 data.tiles.Add(new TileSaveData
                 {
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Structure,
-                    progressSeconds = tile.BuiltStructure.ProcessElapsedSeconds,
-                    storedInput = tile.BuiltStructure.StoredInput,
-                    storedOutput = tile.BuiltStructure.StoredOutput
+                    structureType = StructureTypeProcessing,
+                    progressSeconds = processing.ProcessElapsedSeconds,
+                    storedInput = processing.StoredInput,
+                    storedOutput = processing.StoredOutput
+                });
+            }
+            else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is ArmazemGeral)
+            {
+                data.tiles.Add(new TileSaveData
+                {
+                    x = tile.Coord.x,
+                    z = tile.Coord.y,
+                    occupancy = (int)TileOccupancy.Structure,
+                    structureType = StructureTypeArmazem
+                });
+            }
+            else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is HangarDeDrones)
+            {
+                data.tiles.Add(new TileSaveData
+                {
+                    x = tile.Coord.x,
+                    z = tile.Coord.y,
+                    occupancy = (int)TileOccupancy.Structure,
+                    structureType = StructureTypeHangar
                 });
             }
         }
@@ -99,4 +125,8 @@ public class SaveSystem
 
         return JsonUtility.FromJson<GameSaveData>(File.ReadAllText(_filePath));
     }
+
+    public static bool IsProcessingStructure(TileSaveData tileData) => tileData.structureType == StructureTypeProcessing;
+    public static bool IsArmazem(TileSaveData tileData) => tileData.structureType == StructureTypeArmazem;
+    public static bool IsHangar(TileSaveData tileData) => tileData.structureType == StructureTypeHangar;
 }

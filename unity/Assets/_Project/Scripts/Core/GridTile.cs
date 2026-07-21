@@ -12,7 +12,7 @@ public class GridTile : MonoBehaviour
     public Vector2Int Coord { get; private set; }
     public TileOccupancy Occupancy { get; private set; } = TileOccupancy.Empty;
     public CropInstance PlantedCrop { get; private set; }
-    public ProcessingStructure BuiltStructure { get; private set; }
+    public PlacedStructure BuiltStructure { get; private set; }
 
     private Renderer _groundRenderer;
 
@@ -64,7 +64,7 @@ public class GridTile : MonoBehaviour
         return true;
     }
 
-    public bool BuildStructure(
+    public bool BuildProcessingStructure(
         ProcessingStructureDefinition definition,
         float initialProcessElapsedSeconds = 0f,
         int initialStoredInput = 0,
@@ -75,20 +75,61 @@ public class GridTile : MonoBehaviour
             return false;
         }
 
-        var structureObject = new GameObject($"Structure_{definition.displayName}");
-        // Mesmo motivo do PlantCrop: parenteado ao TileGrid, nao ao tile,
-        // para nao herdar a escala achatada do tile. A propria
-        // ProcessingStructure cria e gerencia seu visual (cor/rotacao
-        // conforme o estado de processamento).
-        structureObject.transform.SetParent(transform.parent, worldPositionStays: false);
-        structureObject.transform.position = transform.position + new Vector3(0f, 0.5f, 0f);
-
-        BuiltStructure = structureObject.AddComponent<ProcessingStructure>();
-        BuiltStructure.Initialize(definition, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
+        var structure = CreateStructureAnchor(definition.displayName).AddComponent<ProcessingStructure>();
+        structure.Initialize(definition, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
+        BuiltStructure = structure;
 
         Occupancy = TileOccupancy.Structure;
         RefreshGroundColor();
         return true;
+    }
+
+    public bool BuildArmazemGeral(ArmazemGeralDefinition definition, PlayerInventory inventory)
+    {
+        if (Occupancy != TileOccupancy.Empty)
+        {
+            return false;
+        }
+
+        var armazem = CreateStructureAnchor(definition.displayName).AddComponent<ArmazemGeral>();
+        armazem.Initialize(definition, inventory);
+        BuiltStructure = armazem;
+
+        Occupancy = TileOccupancy.Structure;
+        RefreshGroundColor();
+        return true;
+    }
+
+    public bool BuildHangarDeDrones(
+        HangarDeDronesDefinition definition,
+        TileGrid grid,
+        PlayerInventory inventory,
+        CropDefinition cropToAutoPlant)
+    {
+        if (Occupancy != TileOccupancy.Empty)
+        {
+            return false;
+        }
+
+        var hangar = CreateStructureAnchor(definition.displayName).AddComponent<HangarDeDrones>();
+        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant);
+        BuiltStructure = hangar;
+
+        Occupancy = TileOccupancy.Structure;
+        RefreshGroundColor();
+        return true;
+    }
+
+    // Parenteado ao TileGrid (escala identidade), nao ao tile em si - o
+    // tile tem escala nao-uniforme (achatado no Y) que distorceria
+    // qualquer filho parenteado diretamente a ele. Cada tipo de estrutura
+    // cria e gerencia seu proprio visual.
+    private GameObject CreateStructureAnchor(string displayName)
+    {
+        var structureObject = new GameObject($"Structure_{displayName}");
+        structureObject.transform.SetParent(transform.parent, worldPositionStays: false);
+        structureObject.transform.position = transform.position + new Vector3(0f, 0.5f, 0f);
+        return structureObject;
     }
 
     private void RefreshGroundColor()

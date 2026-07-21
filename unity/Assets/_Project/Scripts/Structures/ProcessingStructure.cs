@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ProcessingStructure : MonoBehaviour
+public class ProcessingStructure : PlacedStructure
 {
     private static readonly Color IdleColor = Color.gray;
     private static readonly Color ProcessingColorLow = new Color(0.2f, 0.4f, 0.8f);
@@ -53,10 +53,13 @@ public class ProcessingStructure : MonoBehaviour
         return amountToDeposit;
     }
 
-    public int CollectOutput()
+    // Coleta ate maxAmount do output pronto - o resto (se houver) permanece
+    // guardado na estrutura, nunca e perdido (ex: se o Armazem Geral do
+    // jogador estiver cheio no momento da coleta).
+    public int CollectOutput(int maxAmount)
     {
-        int collected = StoredOutput;
-        StoredOutput = 0;
+        int collected = Mathf.Min(StoredOutput, maxAmount);
+        StoredOutput -= collected;
         return collected;
     }
 

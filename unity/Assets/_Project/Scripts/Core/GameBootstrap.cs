@@ -12,10 +12,12 @@ public static class GameBootstrap
     {
         var cropDefinition = Resources.Load<CropDefinition>("TrigoLunar");
         var structureDefinition = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeTrigo");
+        var armazemDefinition = Resources.Load<ArmazemGeralDefinition>("ArmazemGeral");
+        var hangarDefinition = Resources.Load<HangarDeDronesDefinition>("HangarDeDrones");
 
-        if (cropDefinition == null || structureDefinition == null)
+        if (cropDefinition == null || structureDefinition == null || armazemDefinition == null || hangarDefinition == null)
         {
-            Debug.LogError("GameBootstrap: definicoes de cultivo/estrutura nao encontradas em Resources.");
+            Debug.LogError("GameBootstrap: definicoes nao encontradas em Resources.");
             return;
         }
 
@@ -25,15 +27,17 @@ public static class GameBootstrap
         var inventory = new PlayerInventory();
         var saveSystem = new SaveSystem(Application.persistentDataPath + "/savegame.json");
 
-        string welcomeBackMessage = LoadIfAvailable(saveSystem, grid, inventory, cropDefinition, structureDefinition);
+        string welcomeBackMessage = LoadIfAvailable(
+            saveSystem, grid, inventory, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition);
 
         var toolSelector = new GameObject("ToolSelector").AddComponent<ToolSelector>();
 
         var clickController = new GameObject("ClickController").AddComponent<ClickController>();
-        clickController.Initialize(inventory, toolSelector, cropDefinition, structureDefinition);
+        clickController.Initialize(
+            inventory, toolSelector, grid, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition);
 
         var hud = new GameObject("PrototypeHud").AddComponent<PrototypeHud>();
-        hud.Initialize(inventory, toolSelector, cropDefinition, structureDefinition);
+        hud.Initialize(inventory, toolSelector, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition);
         if (!string.IsNullOrEmpty(welcomeBackMessage))
         {
             hud.ShowMessage(welcomeBackMessage);
@@ -48,7 +52,9 @@ public static class GameBootstrap
         TileGrid grid,
         PlayerInventory inventory,
         CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition)
+        ProcessingStructureDefinition structureDefinition,
+        ArmazemGeralDefinition armazemDefinition,
+        HangarDeDronesDefinition hangarDefinition)
     {
         var save = saveSystem.Load();
         if (save == null)
@@ -72,10 +78,20 @@ public static class GameBootstrap
                 tile.PlantCrop(cropDefinition, tileData.progressSeconds);
                 tile.PlantedCrop.ApplyOfflineElapsed(cappedOfflineSeconds);
             }
-            else if (tileData.occupancy == (int)TileOccupancy.Structure)
+            else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsProcessingStructure(tileData))
             {
-                tile.BuildStructure(structureDefinition, tileData.progressSeconds, tileData.storedInput, tileData.storedOutput);
-                tile.BuiltStructure.ApplyOfflineElapsed(cappedOfflineSeconds);
+                tile.BuildProcessingStructure(structureDefinition, tileData.progressSeconds, tileData.storedInput, tileData.storedOutput);
+                ((ProcessingStructure)tile.BuiltStructure).ApplyOfflineElapsed(cappedOfflineSeconds);
+            }
+            else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsArmazem(tileData))
+            {
+                tile.BuildArmazemGeral(armazemDefinition, inventory);
+            }
+            else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsHangar(tileData))
+            {
+                // Simplificacao: a automacao do Hangar nao simula catch-up
+                // offline (retoma o tick normalmente a partir da reabertura).
+                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropDefinition);
             }
         }
 

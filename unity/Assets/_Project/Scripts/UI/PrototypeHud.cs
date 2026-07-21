@@ -7,16 +7,20 @@ public class PrototypeHud : MonoBehaviour
         "1. Escolha uma ferramenta abaixo.\n" +
         "2. Clique num tile do terreno para aplicar.\n" +
         "3. Plante, espere crescer (fica dourado quando maduro) e colha.\n" +
-        "4. Construa a estrutura e clique nela para alimentar com o que\n" +
-        "   colheu.\n" +
+        "4. Construa a estrutura de processamento e clique nela para\n" +
+        "   alimentar com o que colheu.\n" +
         "5. Ela fica azul enquanto processa; clique de novo quando ficar\n" +
         "   dourada para coletar o resultado.\n" +
-        "6. Pode fechar o jogo e voltar depois - a produção continua.";
+        "6. Construa o Armazem Geral para ter capacidade de estoque, e o\n" +
+        "   Hangar de Drones para automatizar plantio e colheita perto dele.\n" +
+        "7. Pode fechar o jogo e voltar depois - a produção continua.";
 
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
     private CropDefinition _cropDefinition;
     private ProcessingStructureDefinition _structureDefinition;
+    private ArmazemGeralDefinition _armazemDefinition;
+    private HangarDeDronesDefinition _hangarDefinition;
     private string _message;
     private bool _showInstructions = true;
 
@@ -24,12 +28,16 @@ public class PrototypeHud : MonoBehaviour
         PlayerInventory inventory,
         ToolSelector toolSelector,
         CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition)
+        ProcessingStructureDefinition structureDefinition,
+        ArmazemGeralDefinition armazemDefinition,
+        HangarDeDronesDefinition hangarDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
         _cropDefinition = cropDefinition;
         _structureDefinition = structureDefinition;
+        _armazemDefinition = armazemDefinition;
+        _hangarDefinition = hangarDefinition;
     }
 
     public void ShowMessage(string message)
@@ -39,8 +47,8 @@ public class PrototypeHud : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 340, 500), GUI.skin.box);
-        GUILayout.Label("Prototipo 2 - Loop Hibrido (placeholder)");
+        GUILayout.BeginArea(new Rect(10, 10, 340, 620), GUI.skin.box);
+        GUILayout.Label("Prototipo - Planeta 1 (placeholder)");
 
         if (!string.IsNullOrEmpty(_message))
         {
@@ -65,10 +73,15 @@ public class PrototypeHud : MonoBehaviour
         if (GUILayout.Button("Nenhuma")) _toolSelector.SelectNone();
         if (GUILayout.Button($"Plantar ({_cropDefinition.displayName})")) _toolSelector.SelectPlant();
         if (GUILayout.Button("Colher")) _toolSelector.SelectHarvest();
-        if (GUILayout.Button($"Construir ({_structureDefinition.displayName})")) _toolSelector.SelectBuild();
+        if (GUILayout.Button($"Construir {_structureDefinition.displayName}")) _toolSelector.SelectBuildProcessing();
+        if (GUILayout.Button($"Construir {_armazemDefinition.displayName}")) _toolSelector.SelectBuildArmazem();
+        if (GUILayout.Button($"Construir {_hangarDefinition.displayName}")) _toolSelector.SelectBuildHangar();
 
         GUILayout.Space(10);
-        GUILayout.Label("Inventario:");
+        string capacityText = _inventory.Capacity.HasValue
+            ? $"Inventario ({_inventory.Total}/{_inventory.Capacity.Value}):"
+            : "Inventario (sem Armazem Geral - sem limite ainda):";
+        GUILayout.Label(capacityText);
         foreach (var pair in _inventory.All)
         {
             GUILayout.Label($"  {pair.Key}: {pair.Value}");
