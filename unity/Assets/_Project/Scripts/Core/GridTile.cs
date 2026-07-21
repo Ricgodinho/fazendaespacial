@@ -75,20 +75,13 @@ public class GridTile : MonoBehaviour
             return false;
         }
 
-        var structureObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        structureObject.name = $"Structure_{definition.displayName}";
+        var structureObject = new GameObject($"Structure_{definition.displayName}");
         // Mesmo motivo do PlantCrop: parenteado ao TileGrid, nao ao tile,
-        // para nao herdar a escala achatada do tile.
+        // para nao herdar a escala achatada do tile. A propria
+        // ProcessingStructure cria e gerencia seu visual (cor/rotacao
+        // conforme o estado de processamento).
         structureObject.transform.SetParent(transform.parent, worldPositionStays: false);
         structureObject.transform.position = transform.position + new Vector3(0f, 0.5f, 0f);
-        structureObject.transform.localScale = new Vector3(0.8f, 1f, 0.8f);
-
-        // O raycast de clique deve sempre acertar o tile, nao a estrutura em cima dele.
-        Destroy(structureObject.GetComponent<Collider>());
-
-        var renderer = structureObject.GetComponent<Renderer>();
-        renderer.material = RendererTint.SharedUrpLitMaterial;
-        RendererTint.SetColor(renderer, Color.gray);
 
         BuiltStructure = structureObject.AddComponent<ProcessingStructure>();
         BuiltStructure.Initialize(definition, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
