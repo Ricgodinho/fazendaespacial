@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ProcessingStructure : PlacedStructure
 {
-    // Viveiro reaproveita esta mesma classe (so muda o Definition -
-    // insumo/produto/tempo diferentes) - ver ProcessingStructureDefinition.isViveiro.
+    // Viveiro e Processamento de Madeira reaproveitam esta mesma classe -
+    // so muda o Definition (insumo/produto/tempo diferentes).
     public static readonly List<ProcessingStructure> Instances = new();
 
     private static readonly Color IdleColor = Color.gray;
@@ -16,6 +16,7 @@ public class ProcessingStructure : PlacedStructure
 
     public ProcessingStructureDefinition Definition { get; private set; }
     public bool HasOutputReady => StoredOutput > 0;
+    public bool IsProcessing => CanProcess();
     public int StoredInput { get; private set; }
     public int StoredOutput { get; private set; }
     public float ProcessElapsedSeconds { get; private set; }

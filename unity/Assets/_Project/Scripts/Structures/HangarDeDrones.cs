@@ -51,8 +51,8 @@ public class HangarDeDrones : PlacedStructure
         Vector2Int coord,
         PlayerInventory inventory,
         CropDefinition cropToAutoPlant,
-        ProcessingStructureDefinition processingDefinition,
-        ProcessingStructureDefinition viveiroDefinition)
+        ProcessingStructureDefinition viveiroDefinition,
+        IEnumerable<ProcessingStructureDefinition> transporteTargets)
     {
         Definition = definition;
         _grid = grid;
@@ -61,10 +61,13 @@ public class HangarDeDrones : PlacedStructure
         _cropToAutoPlant = cropToAutoPlant;
         _seedResourceName = viveiroDefinition.outputResourceName;
 
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = processingDefinition, Direction = TransporteDirection.Delivery });
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = viveiroDefinition, Direction = TransporteDirection.Delivery });
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = processingDefinition, Direction = TransporteDirection.Collection });
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = viveiroDefinition, Direction = TransporteDirection.Collection });
+        // Uma rota de entrega + uma de coleta por estrutura de processamento
+        // existente (Viveiro incluso, ja que reaproveita a mesma classe).
+        foreach (var target in transporteTargets)
+        {
+            _transporteRoutes.Add(new TransporteRoute { TargetDefinition = target, Direction = TransporteDirection.Delivery });
+            _transporteRoutes.Add(new TransporteRoute { TargetDefinition = target, Direction = TransporteDirection.Collection });
+        }
 
         var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
         visual.name = "Visual";

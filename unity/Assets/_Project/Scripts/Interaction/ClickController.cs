@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,30 +7,33 @@ public class ClickController : MonoBehaviour
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
     private TileGrid _grid;
-    private CropDefinition _cropDefinition;
-    private ProcessingStructureDefinition _structureDefinition;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
+    private List<ProcessingStructureDefinition> _processingStructures;
+    private CropDefinition _cropForHangarAutoPlant;
     private ProcessingStructureDefinition _viveiroDefinition;
+    private PrototypeHud _hud;
 
     public void Initialize(
         PlayerInventory inventory,
         ToolSelector toolSelector,
         TileGrid grid,
-        CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition,
         ArmazemGeralDefinition armazemDefinition,
         HangarDeDronesDefinition hangarDefinition,
-        ProcessingStructureDefinition viveiroDefinition)
+        List<ProcessingStructureDefinition> processingStructures,
+        CropDefinition cropForHangarAutoPlant,
+        ProcessingStructureDefinition viveiroDefinition,
+        PrototypeHud hud)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
         _grid = grid;
-        _cropDefinition = cropDefinition;
-        _structureDefinition = structureDefinition;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
+        _processingStructures = processingStructures;
+        _cropForHangarAutoPlant = cropForHangarAutoPlant;
         _viveiroDefinition = viveiroDefinition;
+        _hud = hud;
     }
 
     private void Update()
@@ -68,19 +72,22 @@ public class ClickController : MonoBehaviour
             return;
         }
 
-        // Clicar numa Estrutura de Processamento sempre coleta/alimenta primeiro,
-        // independente da ferramenta selecionada (docs/05-prototipo-1-loop-ativo.md).
-        // Armazem Geral e Hangar de Drones nao tem interacao manual nesta versao.
-        if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is ProcessingStructure processingStructure)
+        // Clicar em qualquer estrutura ja construida abre a janela de
+        // conteudo dela (mostra o que tem dentro), em vez de agir direto.
+        if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure != null)
         {
-            HandleStructureClick(processingStructure);
+            _hud.ToggleStructureWindow(tile.BuiltStructure);
             return;
         }
 
         switch (_toolSelector.CurrentTool)
         {
             case ToolType.Plant:
-                tile.PlantCrop(_cropDefinition);
+                if (_toolSelector.SelectedCrop != null)
+                {
+                    tile.PlantCrop(_toolSelector.SelectedCrop);
+                }
+
                 break;
 
             case ToolType.Harvest:
@@ -88,10 +95,15 @@ public class ClickController : MonoBehaviour
                 {
                     _inventory.Add(harvested.displayName, harvested.yieldAmount);
                 }
+
                 break;
 
-            case ToolType.BuildProcessing:
-                tile.BuildProcessingStructure(_structureDefinition);
+            case ToolType.Build:
+                if (_toolSelector.SelectedProcessingStructure != null)
+                {
+                    tile.BuildProcessingStructure(_toolSelector.SelectedProcessingStructure);
+                }
+
                 break;
 
             case ToolType.BuildArmazem:
@@ -99,38 +111,9 @@ public class ClickController : MonoBehaviour
                 break;
 
             case ToolType.BuildHangar:
-                tile.BuildHangarDeDrones(_hangarDefinition, _grid, _inventory, _cropDefinition, _structureDefinition, _viveiroDefinition);
+                tile.BuildHangarDeDrones(
+                    _hangarDefinition, _grid, _inventory, _cropForHangarAutoPlant, _viveiroDefinition, _processingStructures);
                 break;
-
-            case ToolType.BuildViveiro:
-                tile.BuildProcessingStructure(_viveiroDefinition);
-                break;
-        }
-    }
-
-    private void HandleStructureClick(ProcessingStructure structure)
-    {
-        if (structure.HasOutputReady)
-        {
-            int roomInInventory = _inventory.Capacity.HasValue
-                ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
-                : int.MaxValue;
-
-            int toCollect = Mathf.Min(structure.StoredOutput, roomInInventory);
-            if (toCollect > 0)
-            {
-                structure.CollectOutput(toCollect);
-                _inventory.Add(structure.Definition.outputResourceName, toCollect);
-            }
-
-            return;
-        }
-
-        int available = _inventory.GetAmount(structure.Definition.inputCropDefinition.displayName);
-        int deposited = structure.TryDepositInput(available);
-        if (deposited > 0)
-        {
-            _inventory.TryRemove(structure.Definition.inputCropDefinition.displayName, deposited);
         }
     }
 }

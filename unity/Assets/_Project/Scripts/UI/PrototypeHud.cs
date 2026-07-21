@@ -5,12 +5,13 @@ public class PrototypeHud : MonoBehaviour
 {
     private const string InstructionsText =
         "Como jogar:\n" +
-        "1. Escolha uma ferramenta abaixo.\n" +
+        "1. Escolha uma ferramenta ou cultivo abaixo.\n" +
         "2. Clique num tile do terreno para aplicar.\n" +
         "3. Plante, espere crescer (fica dourado quando maduro) e colha.\n" +
         "4. Abra 'Construcao' para escolher o que construir, depois\n" +
         "   clique num tile vazio.\n" +
-        "5. Clique na estrutura de processamento para alimentar/coletar.\n" +
+        "5. Clique numa estrutura ja construida para ver o que tem\n" +
+        "   dentro dela (insumo/produto) e alimentar/coletar.\n" +
         "6. Abra a janela de um Hangar para pausar/retomar automacao e\n" +
         "   configurar rotas de Transporte (manual ou automatico).\n" +
         "7. Sem semente no inventario (produzida pelo Viveiro), o drone\n" +
@@ -20,41 +21,61 @@ public class PrototypeHud : MonoBehaviour
 
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
-    private CropDefinition _cropDefinition;
-    private ProcessingStructureDefinition _structureDefinition;
+    private List<CropDefinition> _crops;
+    private List<ProcessingStructureDefinition> _processingStructures;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
-    private ProcessingStructureDefinition _viveiroDefinition;
     private string _message;
     private bool _showInstructions = true;
     private bool _showConstructionWindow;
 
-    private Rect _mainRect = new(10, 10, 360, 460);
-    private Rect _constructionRect = new(380, 10, 260, 200);
+    private Rect _mainRect = new(10, 10, 360, 480);
+    private Rect _constructionRect = new(380, 10, 260, 220);
     private readonly Dictionary<HangarDeDrones, Rect> _hangarWindowRects = new();
     private readonly HashSet<HangarDeDrones> _openHangarWindows = new();
+    private readonly Dictionary<PlacedStructure, Rect> _structureWindowRects = new();
+    private readonly HashSet<PlacedStructure> _openStructureWindows = new();
 
     public void Initialize(
         PlayerInventory inventory,
         ToolSelector toolSelector,
-        CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition,
+        List<CropDefinition> crops,
+        List<ProcessingStructureDefinition> processingStructures,
         ArmazemGeralDefinition armazemDefinition,
-        HangarDeDronesDefinition hangarDefinition,
-        ProcessingStructureDefinition viveiroDefinition)
+        HangarDeDronesDefinition hangarDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
-        _cropDefinition = cropDefinition;
-        _structureDefinition = structureDefinition;
+        _crops = crops;
+        _processingStructures = processingStructures;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
-        _viveiroDefinition = viveiroDefinition;
     }
 
     public void ShowMessage(string message)
     {
         _message = message;
+    }
+
+    // Chamado pelo ClickController ao clicar numa estrutura ja construida.
+    // Hangar de Drones reusa a janela dedicada dele; as demais ganham uma
+    // janela de conteudo generica.
+    public void ToggleStructureWindow(PlacedStructure structure)
+    {
+        if (structure is HangarDeDrones hangar)
+        {
+            if (!_openHangarWindows.Remove(hangar))
+            {
+                _openHangarWindows.Add(hangar);
+            }
+
+            return;
+        }
+
+        if (!_openStructureWindows.Remove(structure))
+        {
+            _openStructureWindows.Add(structure);
+        }
     }
 
     private void OnGUI()
@@ -82,8 +103,31 @@ public class PrototypeHud : MonoBehaviour
             }
 
             int id = windowId++;
-            _hangarWindowRects[hangar] = GUILayout.Window(id, rect, windowIndex => DrawHangarWindow(hangar), $"Hangar de Drones");
+            _hangarWindowRects[hangar] = GUILayout.Window(id, rect, _ => DrawHangarWindow(hangar), "Hangar de Drones");
         }
+
+        int structureWindowId = 1000;
+        foreach (var structure in _openStructureWindows)
+        {
+            if (!_structureWindowRects.TryGetValue(structure, out var rect))
+            {
+                rect = new Rect(380, 220 + (structureWindowId - 1000) * 30, 300, 220);
+                _structureWindowRects[structure] = rect;
+            }
+
+            int id = structureWindowId++;
+            _structureWindowRects[structure] = GUILayout.Window(id, rect, _ => DrawStructureWindow(structure), StructureTitleFor(structure));
+        }
+    }
+
+    private static string StructureTitleFor(PlacedStructure structure)
+    {
+        return structure switch
+        {
+            ProcessingStructure processing => processing.Definition.displayName,
+            ArmazemGeral armazem => armazem.Definition.displayName,
+            _ => "Estrutura"
+        };
     }
 
     private void DrawMainWindow(int id)
@@ -106,9 +150,16 @@ public class PrototypeHud : MonoBehaviour
         GUILayout.Space(6);
         GUILayout.Label($"Ferramenta atual: {_toolSelector.CurrentTool}");
         if (GUILayout.Button("Nenhuma")) _toolSelector.SelectNone();
-        if (GUILayout.Button($"Plantar ({_cropDefinition.displayName})")) _toolSelector.SelectPlant();
         if (GUILayout.Button("Colher")) _toolSelector.SelectHarvest();
         if (GUILayout.Button("Demolir")) _toolSelector.SelectDemolish();
+
+        foreach (var crop in _crops)
+        {
+            if (GUILayout.Button($"Plantar ({crop.displayName})"))
+            {
+                _toolSelector.SelectPlant(crop);
+            }
+        }
 
         GUILayout.Space(6);
         if (GUILayout.Button(_showConstructionWindow ? "Fechar Construcao" : "Construcao"))
@@ -153,10 +204,13 @@ public class PrototypeHud : MonoBehaviour
 
     private void DrawConstructionWindow(int id)
     {
-        if (GUILayout.Button(_structureDefinition.displayName))
+        foreach (var structure in _processingStructures)
         {
-            _toolSelector.SelectBuildProcessing();
-            _showConstructionWindow = false;
+            if (GUILayout.Button(structure.displayName))
+            {
+                _toolSelector.SelectBuild(structure);
+                _showConstructionWindow = false;
+            }
         }
 
         if (GUILayout.Button(_armazemDefinition.displayName))
@@ -168,12 +222,6 @@ public class PrototypeHud : MonoBehaviour
         if (GUILayout.Button(_hangarDefinition.displayName))
         {
             _toolSelector.SelectBuildHangar();
-            _showConstructionWindow = false;
-        }
-
-        if (GUILayout.Button(_viveiroDefinition.displayName))
-        {
-            _toolSelector.SelectBuildViveiro();
             _showConstructionWindow = false;
         }
 
@@ -217,5 +265,60 @@ public class PrototypeHud : MonoBehaviour
         }
 
         GUI.DragWindow();
+    }
+
+    private void DrawStructureWindow(PlacedStructure structure)
+    {
+        switch (structure)
+        {
+            case ProcessingStructure processing:
+                DrawProcessingStructureContents(processing);
+                break;
+            case ArmazemGeral armazem:
+                DrawArmazemContents(armazem);
+                break;
+        }
+
+        GUI.DragWindow();
+    }
+
+    private void DrawProcessingStructureContents(ProcessingStructure processing)
+    {
+        string status = processing.IsProcessing ? "Processando" : processing.HasOutputReady ? "Pronto para coleta" : "Parado";
+        GUILayout.Label($"Status: {status}");
+        GUILayout.Label($"Insumo ({processing.Definition.inputCropDefinition.displayName}): {processing.StoredInput}/{processing.Definition.inputAmountRequired}");
+        GUILayout.Label($"Produto ({processing.Definition.outputResourceName}): {processing.StoredOutput}/{processing.Definition.outputStorageCapacity}");
+
+        GUILayout.Space(6);
+        if (GUILayout.Button($"Alimentar com {processing.Definition.inputCropDefinition.displayName}"))
+        {
+            string resourceName = processing.Definition.inputCropDefinition.displayName;
+            int available = _inventory.GetAmount(resourceName);
+            int deposited = processing.TryDepositInput(available);
+            if (deposited > 0)
+            {
+                _inventory.TryRemove(resourceName, deposited);
+            }
+        }
+
+        if (GUILayout.Button($"Coletar {processing.Definition.outputResourceName}"))
+        {
+            int roomInInventory = _inventory.Capacity.HasValue
+                ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
+                : int.MaxValue;
+
+            int toCollect = Mathf.Min(processing.StoredOutput, roomInInventory);
+            if (toCollect > 0)
+            {
+                processing.CollectOutput(toCollect);
+                _inventory.Add(processing.Definition.outputResourceName, toCollect);
+            }
+        }
+    }
+
+    private void DrawArmazemContents(ArmazemGeral armazem)
+    {
+        GUILayout.Label($"Capacidade: {_inventory.Total}/{armazem.Definition.capacity}");
+        GUILayout.Label("Guarda todo o inventario do jogador (comida, madeira, pedra, ferramentas).");
     }
 }

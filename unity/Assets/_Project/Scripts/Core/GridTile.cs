@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TileOccupancy
@@ -105,8 +106,8 @@ public class GridTile : MonoBehaviour
         TileGrid grid,
         PlayerInventory inventory,
         CropDefinition cropToAutoPlant,
-        ProcessingStructureDefinition processingDefinition,
-        ProcessingStructureDefinition viveiroDefinition)
+        ProcessingStructureDefinition viveiroDefinition,
+        IEnumerable<ProcessingStructureDefinition> transporteTargets)
     {
         if (Occupancy != TileOccupancy.Empty)
         {
@@ -114,7 +115,7 @@ public class GridTile : MonoBehaviour
         }
 
         var hangar = CreateStructureAnchor(definition.displayName).AddComponent<HangarDeDrones>();
-        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, processingDefinition, viveiroDefinition);
+        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, viveiroDefinition, transporteTargets);
         BuiltStructure = hangar;
 
         Occupancy = TileOccupancy.Structure;

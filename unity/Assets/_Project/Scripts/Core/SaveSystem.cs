@@ -9,7 +9,8 @@ public class TileSaveData
     public int x;
     public int z;
     public int occupancy; // espelha TileOccupancy: 0 Empty, 1 Crop, 2 Structure
-    public int structureType; // so relevante se occupancy == Structure: 0 Processamento, 1 Armazem, 2 Hangar, 3 Viveiro
+    public string structureKind; // so relevante se occupancy == Structure: "processing", "armazem" ou "hangar"
+    public string definitionName; // CropDefinition.displayName (Crop) ou ProcessingStructureDefinition.displayName (structureKind == "processing")
     public float progressSeconds; // AccumulatedSeconds (cultivo) ou ProcessElapsedSeconds (estrutura de processamento)
     public int storedInput;
     public int storedOutput;
@@ -34,12 +35,15 @@ public class GameSaveData
 // calcular ausencia (CurrentUnixSeconds) e o unico ponto que precisaria
 // trocar para um relogio de servidor no multiplayer (docs/07) - o calculo
 // de producao offline em si (ProcessingStructure/CropInstance) nao muda.
+//
+// Cultivos e estruturas de processamento sao identificados no save pelo
+// proprio displayName (ja e a chave usada no inventario em todo o resto
+// do jogo) - evita manter um segundo identificador em paralelo.
 public class SaveSystem
 {
-    private const int StructureTypeProcessing = 0;
-    private const int StructureTypeArmazem = 1;
-    private const int StructureTypeHangar = 2;
-    private const int StructureTypeViveiro = 3;
+    private const string StructureKindProcessing = "processing";
+    private const string StructureKindArmazem = "armazem";
+    private const string StructureKindHangar = "hangar";
 
     private static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -71,6 +75,7 @@ public class SaveSystem
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Crop,
+                    definitionName = tile.PlantedCrop.Definition.displayName,
                     progressSeconds = tile.PlantedCrop.AccumulatedSeconds
                 });
             }
@@ -81,7 +86,8 @@ public class SaveSystem
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Structure,
-                    structureType = processing.Definition.isViveiro ? StructureTypeViveiro : StructureTypeProcessing,
+                    structureKind = StructureKindProcessing,
+                    definitionName = processing.Definition.displayName,
                     progressSeconds = processing.ProcessElapsedSeconds,
                     storedInput = processing.StoredInput,
                     storedOutput = processing.StoredOutput
@@ -94,7 +100,7 @@ public class SaveSystem
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Structure,
-                    structureType = StructureTypeArmazem
+                    structureKind = StructureKindArmazem
                 });
             }
             else if (tile.Occupancy == TileOccupancy.Structure && tile.BuiltStructure is HangarDeDrones)
@@ -104,7 +110,7 @@ public class SaveSystem
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Structure,
-                    structureType = StructureTypeHangar
+                    structureKind = StructureKindHangar
                 });
             }
         }
@@ -127,8 +133,7 @@ public class SaveSystem
         return JsonUtility.FromJson<GameSaveData>(File.ReadAllText(_filePath));
     }
 
-    public static bool IsProcessingStructure(TileSaveData tileData) => tileData.structureType == StructureTypeProcessing;
-    public static bool IsArmazem(TileSaveData tileData) => tileData.structureType == StructureTypeArmazem;
-    public static bool IsHangar(TileSaveData tileData) => tileData.structureType == StructureTypeHangar;
-    public static bool IsViveiro(TileSaveData tileData) => tileData.structureType == StructureTypeViveiro;
+    public static bool IsProcessingStructure(TileSaveData tileData) => tileData.structureKind == StructureKindProcessing;
+    public static bool IsArmazem(TileSaveData tileData) => tileData.structureKind == StructureKindArmazem;
+    public static bool IsHangar(TileSaveData tileData) => tileData.structureKind == StructureKindHangar;
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameBootstrap
@@ -10,17 +11,34 @@ public static class GameBootstrap
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Initialize()
     {
-        var cropDefinition = Resources.Load<CropDefinition>("TrigoLunar");
-        var structureDefinition = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeTrigo");
+        var trigoLunar = Resources.Load<CropDefinition>("TrigoLunar");
+        var cedroEstelar = Resources.Load<CropDefinition>("CedroEstelar");
+        var processamentoDeTrigo = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeTrigo");
+        var viveiro = Resources.Load<ProcessingStructureDefinition>("Viveiro");
+        var processamentoDeMadeira = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeMadeira");
         var armazemDefinition = Resources.Load<ArmazemGeralDefinition>("ArmazemGeral");
         var hangarDefinition = Resources.Load<HangarDeDronesDefinition>("HangarDeDrones");
-        var viveiroDefinition = Resources.Load<ProcessingStructureDefinition>("Viveiro");
 
-        if (cropDefinition == null || structureDefinition == null || armazemDefinition == null
-            || hangarDefinition == null || viveiroDefinition == null)
+        if (trigoLunar == null || cedroEstelar == null || processamentoDeTrigo == null || viveiro == null
+            || processamentoDeMadeira == null || armazemDefinition == null || hangarDefinition == null)
         {
             Debug.LogError("GameBootstrap: definicoes nao encontradas em Resources.");
             return;
+        }
+
+        var crops = new List<CropDefinition> { trigoLunar, cedroEstelar };
+        var processingStructures = new List<ProcessingStructureDefinition> { processamentoDeTrigo, viveiro, processamentoDeMadeira };
+
+        var cropsByName = new Dictionary<string, CropDefinition>();
+        foreach (var crop in crops)
+        {
+            cropsByName[crop.displayName] = crop;
+        }
+
+        var structuresByName = new Dictionary<string, ProcessingStructureDefinition>();
+        foreach (var structure in processingStructures)
+        {
+            structuresByName[structure.displayName] = structure;
         }
 
         var grid = TileGrid.Create(width: 8, height: 8, tileSize: 1.2f);
@@ -30,16 +48,17 @@ public static class GameBootstrap
         var saveSystem = new SaveSystem(Application.persistentDataPath + "/savegame.json");
 
         string welcomeBackMessage = LoadIfAvailable(
-            saveSystem, grid, inventory, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition, viveiroDefinition);
+            saveSystem, grid, inventory, cropsByName, structuresByName, armazemDefinition, hangarDefinition, viveiro, processingStructures, trigoLunar);
 
         var toolSelector = new GameObject("ToolSelector").AddComponent<ToolSelector>();
 
+        var hud = new GameObject("PrototypeHud").AddComponent<PrototypeHud>();
+
         var clickController = new GameObject("ClickController").AddComponent<ClickController>();
         clickController.Initialize(
-            inventory, toolSelector, grid, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition, viveiroDefinition);
+            inventory, toolSelector, grid, armazemDefinition, hangarDefinition, processingStructures, trigoLunar, viveiro, hud);
 
-        var hud = new GameObject("PrototypeHud").AddComponent<PrototypeHud>();
-        hud.Initialize(inventory, toolSelector, cropDefinition, structureDefinition, armazemDefinition, hangarDefinition, viveiroDefinition);
+        hud.Initialize(inventory, toolSelector, crops, processingStructures, armazemDefinition, hangarDefinition);
         if (!string.IsNullOrEmpty(welcomeBackMessage))
         {
             hud.ShowMessage(welcomeBackMessage);
@@ -55,11 +74,13 @@ public static class GameBootstrap
         SaveSystem saveSystem,
         TileGrid grid,
         PlayerInventory inventory,
-        CropDefinition cropDefinition,
-        ProcessingStructureDefinition structureDefinition,
+        Dictionary<string, CropDefinition> cropsByName,
+        Dictionary<string, ProcessingStructureDefinition> structuresByName,
         ArmazemGeralDefinition armazemDefinition,
         HangarDeDronesDefinition hangarDefinition,
-        ProcessingStructureDefinition viveiroDefinition)
+        ProcessingStructureDefinition viveiroDefinition,
+        List<ProcessingStructureDefinition> processingStructures,
+        CropDefinition cropForHangarAutoPlant)
     {
         var save = saveSystem.Load();
         if (save == null)
@@ -80,17 +101,22 @@ public static class GameBootstrap
 
             if (tileData.occupancy == (int)TileOccupancy.Crop)
             {
+                if (!cropsByName.TryGetValue(tileData.definitionName, out var cropDefinition))
+                {
+                    continue;
+                }
+
                 tile.PlantCrop(cropDefinition, tileData.progressSeconds);
                 tile.PlantedCrop.ApplyOfflineElapsed(cappedOfflineSeconds);
             }
             else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsProcessingStructure(tileData))
             {
+                if (!structuresByName.TryGetValue(tileData.definitionName, out var structureDefinition))
+                {
+                    continue;
+                }
+
                 tile.BuildProcessingStructure(structureDefinition, tileData.progressSeconds, tileData.storedInput, tileData.storedOutput);
-                ((ProcessingStructure)tile.BuiltStructure).ApplyOfflineElapsed(cappedOfflineSeconds);
-            }
-            else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsViveiro(tileData))
-            {
-                tile.BuildProcessingStructure(viveiroDefinition, tileData.progressSeconds, tileData.storedInput, tileData.storedOutput);
                 ((ProcessingStructure)tile.BuiltStructure).ApplyOfflineElapsed(cappedOfflineSeconds);
             }
             else if (tileData.occupancy == (int)TileOccupancy.Structure && SaveSystem.IsArmazem(tileData))
@@ -101,7 +127,7 @@ public static class GameBootstrap
             {
                 // Simplificacao: a automacao do Hangar nao simula catch-up
                 // offline (retoma o tick normalmente a partir da reabertura).
-                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropDefinition, structureDefinition, viveiroDefinition);
+                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropForHangarAutoPlant, viveiroDefinition, processingStructures);
             }
         }
 

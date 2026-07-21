@@ -1,11 +1,10 @@
 public enum ToolType
 {
     None,
-    Plant,
+    Plant,      // usa ToolSelector.SelectedCrop
     Harvest,
-    BuildProcessing,
+    Build,      // usa ToolSelector.SelectedProcessingStructure
     BuildArmazem,
     BuildHangar,
-    BuildViveiro,
     Demolish
 }
