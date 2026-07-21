@@ -77,6 +77,23 @@ public class PrototypeHud : MonoBehaviour
         if (GUILayout.Button($"Construir {_armazemDefinition.displayName}")) _toolSelector.SelectBuildArmazem();
         if (GUILayout.Button($"Construir {_hangarDefinition.displayName}")) _toolSelector.SelectBuildHangar();
 
+        if (HangarDeDrones.Instances.Count > 0)
+        {
+            GUILayout.Space(10);
+            GUILayout.Label("Automacao (Hangar de Drones):");
+            for (int i = 0; i < HangarDeDrones.Instances.Count; i++)
+            {
+                var hangar = HangarDeDrones.Instances[i];
+                string prefix = HangarDeDrones.Instances.Count > 1 ? $"[Hangar {i + 1}] " : "";
+
+                string plantioLabel = prefix + (hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico");
+                if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
+
+                string colheitaLabel = prefix + (hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica");
+                if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
+            }
+        }
+
         GUILayout.Space(10);
         string capacityText = _inventory.Capacity.HasValue
             ? $"Inventario ({_inventory.Total}/{_inventory.Capacity.Value}):"
