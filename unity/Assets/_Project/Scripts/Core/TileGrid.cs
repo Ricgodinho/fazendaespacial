@@ -19,8 +19,6 @@ public class TileGrid : MonoBehaviour
 
     private void BuildTiles()
     {
-        var shader = Shader.Find("Universal Render Pipeline/Lit");
-
         for (int x = 0; x < Width; x++)
         {
             for (int z = 0; z < Height; z++)
@@ -32,7 +30,7 @@ public class TileGrid : MonoBehaviour
                 tileObject.transform.localScale = new Vector3(TileSize * 0.95f, 0.2f, TileSize * 0.95f);
 
                 var renderer = tileObject.GetComponent<Renderer>();
-                renderer.material = new Material(shader);
+                renderer.material = RendererTint.SharedUrpLitMaterial;
 
                 var tile = tileObject.AddComponent<GridTile>();
                 tile.Initialize(new Vector2Int(x, z), renderer);

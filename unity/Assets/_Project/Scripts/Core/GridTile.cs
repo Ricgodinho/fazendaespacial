@@ -78,8 +78,8 @@ public class GridTile : MonoBehaviour
         Destroy(structureObject.GetComponent<Collider>());
 
         var renderer = structureObject.GetComponent<Renderer>();
-        renderer.material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        renderer.material.color = Color.gray;
+        renderer.material = RendererTint.SharedUrpLitMaterial;
+        RendererTint.SetColor(renderer, Color.gray);
 
         BuiltStructure = structureObject.AddComponent<ProcessingStructure>();
         BuiltStructure.Initialize(definition);
@@ -96,6 +96,6 @@ public class GridTile : MonoBehaviour
             return;
         }
 
-        _groundRenderer.material.color = Occupancy == TileOccupancy.Empty ? EmptyColor : OccupiedColor;
+        RendererTint.SetColor(_groundRenderer, Occupancy == TileOccupancy.Empty ? EmptyColor : OccupiedColor);
     }
 }

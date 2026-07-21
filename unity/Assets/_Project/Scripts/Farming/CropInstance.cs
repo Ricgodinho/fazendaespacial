@@ -26,8 +26,8 @@ public class CropInstance : MonoBehaviour
         Destroy(visual.GetComponent<Collider>());
 
         _visualRenderer = visual.GetComponent<Renderer>();
-        _visualRenderer.material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        _visualRenderer.material.color = GrowingColor;
+        _visualRenderer.material = RendererTint.SharedUrpLitMaterial;
+        RendererTint.SetColor(_visualRenderer, GrowingColor);
     }
 
     private void Update()
@@ -37,6 +37,6 @@ public class CropInstance : MonoBehaviour
             return;
         }
 
-        _visualRenderer.material.color = IsMature ? MatureColor : GrowingColor;
+        RendererTint.SetColor(_visualRenderer, IsMature ? MatureColor : GrowingColor);
     }
 }
