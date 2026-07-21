@@ -192,13 +192,17 @@ public class PrototypeHud : MonoBehaviour
         GUILayout.Label("Transporte:");
         foreach (var route in hangar.TransporteRoutes)
         {
-            GUILayout.Label($"Armazem -> {route.TargetDefinition.displayName}");
+            bool isDelivery = route.Direction == TransporteDirection.Delivery;
+            string routeLabel = isDelivery
+                ? $"Armazem -> {route.TargetDefinition.displayName}"
+                : $"{route.TargetDefinition.displayName} -> Armazem";
+            GUILayout.Label(routeLabel);
 
             GUILayout.BeginHorizontal();
             GUI.enabled = !route.Busy;
-            if (GUILayout.Button("Entregar agora"))
+            if (GUILayout.Button(isDelivery ? "Entregar agora" : "Coletar agora"))
             {
-                hangar.TryDeliverRoute(route);
+                hangar.TryRunRoute(route);
             }
 
             GUI.enabled = true;

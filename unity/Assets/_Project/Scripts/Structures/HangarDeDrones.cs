@@ -61,8 +61,10 @@ public class HangarDeDrones : PlacedStructure
         _cropToAutoPlant = cropToAutoPlant;
         _seedResourceName = viveiroDefinition.outputResourceName;
 
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = processingDefinition });
-        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = viveiroDefinition });
+        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = processingDefinition, Direction = TransporteDirection.Delivery });
+        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = viveiroDefinition, Direction = TransporteDirection.Delivery });
+        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = processingDefinition, Direction = TransporteDirection.Collection });
+        _transporteRoutes.Add(new TransporteRoute { TargetDefinition = viveiroDefinition, Direction = TransporteDirection.Collection });
 
         var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
         visual.name = "Visual";
@@ -109,7 +111,7 @@ public class HangarDeDrones : PlacedStructure
             if (route.Timer >= Definition.droneActionIntervalSeconds)
             {
                 route.Timer = 0f;
-                TryDeliverRoute(route);
+                TryRunRoute(route);
             }
         }
     }
@@ -191,21 +193,34 @@ public class HangarDeDrones : PlacedStructure
         DroneVisual.Fly(hangarPoint, PlantioDroneColor, startCarrying: true, legs);
     }
 
-    // Entrega manual (botao "Entregar agora") ou automatica (rota com
-    // AutomaticEnabled ligado) - mesma logica, so muda quem aciona.
-    public void TryDeliverRoute(TransporteRoute route)
+    // Acionado manualmente (botao "Entregar/Coletar agora") ou
+    // automaticamente (rota com AutomaticEnabled ligado) - mesma logica,
+    // so muda quem aciona.
+    public void TryRunRoute(TransporteRoute route)
     {
         if (route.Busy)
         {
             return;
         }
 
-        var destination = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == route.TargetDefinition);
-        if (destination == null)
+        var target = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == route.TargetDefinition);
+        if (target == null)
         {
             return;
         }
 
+        if (route.Direction == TransporteDirection.Delivery)
+        {
+            TryRunDeliveryRoute(route, target);
+        }
+        else
+        {
+            TryRunCollectionRoute(route, target);
+        }
+    }
+
+    private void TryRunDeliveryRoute(TransporteRoute route, ProcessingStructure destination)
+    {
         string resourceName = destination.Definition.inputCropDefinition.displayName;
         int available = _inventory.GetAmount(resourceName);
         int toCarry = Mathf.Min(available, Definition.transporteCapacidadePorViagem);
@@ -244,6 +259,58 @@ public class HangarDeDrones : PlacedStructure
 
         // Sem Armazem, o "insumo" ja sai do Hangar (nao ha ponto intermediario de coleta).
         DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: !hasArmazem, legs);
+    }
+
+    // Traz o produto pronto de uma estrutura (Viveiro ou Processamento) de
+    // volta para o Armazem Geral/inventario - direcao oposta da entrega,
+    // fecha o ciclo sem precisar clicar manualmente na estrutura.
+    private void TryRunCollectionRoute(TransporteRoute route, ProcessingStructure source)
+    {
+        if (!source.HasOutputReady)
+        {
+            return;
+        }
+
+        int roomInInventory = _inventory.Capacity.HasValue
+            ? Mathf.Max(0, _inventory.Capacity.Value - _inventory.Total)
+            : int.MaxValue;
+
+        int toCarry = Mathf.Min(source.StoredOutput, Mathf.Min(Definition.transporteCapacidadePorViagem, roomInInventory));
+        if (toCarry <= 0)
+        {
+            return;
+        }
+
+        route.Busy = true;
+        string resourceName = source.Definition.outputResourceName;
+
+        Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
+        var legs = new List<(Vector3, Action<DroneVisual>)>
+        {
+            (source.transform.position + Vector3.up * DroneFlightHeight, drone =>
+            {
+                int collected = source.CollectOutput(toCarry);
+                if (collected > 0)
+                {
+                    _inventory.Add(resourceName, collected);
+                }
+
+                drone.SetCarrying(true);
+            })
+        };
+
+        if (ArmazemGeral.Instances.Count > 0)
+        {
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, null));
+        }
+
+        legs.Add((hangarPoint, drone =>
+        {
+            drone.SetCarrying(false);
+            route.Busy = false;
+        }));
+
+        DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: false, legs);
     }
 
     private GridTile FindFirstInRange(Func<GridTile, bool> predicate)
