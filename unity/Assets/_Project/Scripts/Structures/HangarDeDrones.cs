@@ -27,6 +27,14 @@ public class HangarDeDrones : PlacedStructure
     private static readonly Color TransporteDroneColor = new Color(0.7f, 0.7f, 0.75f);
     private const float DroneFlightHeight = 1.2f;
 
+    // Tier 1 = 3 drones fixos (Colheita, Plantio, Transporte), peso 1 cada
+    // (docs/drones/00-indice.md, tabela de peso por tier). Sem economia de
+    // aquisicao ainda, entao a contagem nao muda - so exibida como
+    // capacidade/ocupacao do pool do Hangar.
+    public const int DroneCount = 3;
+    public const int WeightPerDrone = 1;
+    public int WeightUsed => DroneCount * WeightPerDrone;
+
     public HangarDeDronesDefinition Definition { get; private set; }
     public bool PlantioEnabled { get; private set; } = true;
     public bool ColheitaEnabled { get; private set; } = true;

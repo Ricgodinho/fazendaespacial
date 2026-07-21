@@ -230,6 +230,10 @@ public class PrototypeHud : MonoBehaviour
 
     private void DrawHangarWindow(HangarDeDrones hangar)
     {
+        GUILayout.Label($"Drones: {HangarDeDrones.DroneCount} (peso {hangar.WeightUsed}/{hangar.Definition.poolCapacityWeight})");
+        GUILayout.Label("Colheita, Plantio, Transporte - Tier 1");
+        GUILayout.Space(6);
+
         string plantioLabel = hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico";
         if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
 
@@ -344,6 +348,17 @@ public class PrototypeHud : MonoBehaviour
     private void DrawArmazemContents(ArmazemGeral armazem)
     {
         GUILayout.Label($"Capacidade: {_inventory.Total}/{armazem.Definition.capacity}");
-        GUILayout.Label("Guarda todo o inventario do jogador (comida, madeira, pedra, ferramentas).");
+        GUILayout.Space(6);
+
+        if (_inventory.All.Count == 0)
+        {
+            GUILayout.Label("(vazio)");
+            return;
+        }
+
+        foreach (var pair in _inventory.All)
+        {
+            GUILayout.Label($"  {pair.Key}: {pair.Value}");
+        }
     }
 }

@@ -13,20 +13,21 @@ public static class GameBootstrap
     {
         var trigoLunar = Resources.Load<CropDefinition>("TrigoLunar");
         var cedroEstelar = Resources.Load<CropDefinition>("CedroEstelar");
+        var bagaEstelar = Resources.Load<CropDefinition>("BagaEstelar");
         var processamentoDeTrigo = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeTrigo");
         var viveiro = Resources.Load<ProcessingStructureDefinition>("Viveiro");
         var processamentoDeMadeira = Resources.Load<ProcessingStructureDefinition>("ProcessamentoDeMadeira");
         var armazemDefinition = Resources.Load<ArmazemGeralDefinition>("ArmazemGeral");
         var hangarDefinition = Resources.Load<HangarDeDronesDefinition>("HangarDeDrones");
 
-        if (trigoLunar == null || cedroEstelar == null || processamentoDeTrigo == null || viveiro == null
+        if (trigoLunar == null || cedroEstelar == null || bagaEstelar == null || processamentoDeTrigo == null || viveiro == null
             || processamentoDeMadeira == null || armazemDefinition == null || hangarDefinition == null)
         {
             Debug.LogError("GameBootstrap: definicoes nao encontradas em Resources.");
             return;
         }
 
-        var crops = new List<CropDefinition> { trigoLunar, cedroEstelar };
+        var crops = new List<CropDefinition> { trigoLunar, cedroEstelar, bagaEstelar };
         var processingStructures = new List<ProcessingStructureDefinition> { processamentoDeTrigo, viveiro, processamentoDeMadeira };
 
         var cropsByName = new Dictionary<string, CropDefinition>();
