@@ -34,8 +34,11 @@ public class GridTile : MonoBehaviour
         }
 
         var cropObject = new GameObject($"Crop_{definition.displayName}");
-        cropObject.transform.SetParent(transform, worldPositionStays: false);
-        cropObject.transform.localPosition = new Vector3(0f, 0.2f, 0f);
+        // Parenteado ao TileGrid (escala identidade), nao ao tile em si -
+        // o tile tem escala nao-uniforme (achatado no Y) que distorceria
+        // qualquer filho parenteado diretamente a ele.
+        cropObject.transform.SetParent(transform.parent, worldPositionStays: false);
+        cropObject.transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
 
         PlantedCrop = cropObject.AddComponent<CropInstance>();
         PlantedCrop.Initialize(definition);
@@ -70,8 +73,10 @@ public class GridTile : MonoBehaviour
 
         var structureObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         structureObject.name = $"Structure_{definition.displayName}";
-        structureObject.transform.SetParent(transform, worldPositionStays: false);
-        structureObject.transform.localPosition = new Vector3(0f, 0.5f, 0f);
+        // Mesmo motivo do PlantCrop: parenteado ao TileGrid, nao ao tile,
+        // para nao herdar a escala achatada do tile.
+        structureObject.transform.SetParent(transform.parent, worldPositionStays: false);
+        structureObject.transform.position = transform.position + new Vector3(0f, 0.5f, 0f);
         structureObject.transform.localScale = new Vector3(0.8f, 1f, 0.8f);
 
         // O raycast de clique deve sempre acertar o tile, nao a estrutura em cima dele.
