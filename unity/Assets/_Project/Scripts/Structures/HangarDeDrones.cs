@@ -129,11 +129,18 @@ public class HangarDeDrones : PlacedStructure
 
         if (ColheitaEnabled && !_colheitaDroneBusy && _colheitaTimer >= Definition.droneActionIntervalSeconds)
         {
+            // Zera aqui, antes de tentar - se so zerasse dentro de
+            // TryStartHarvestTrip() no caminho de sucesso, uma falha (sem
+            // alvo) deixava o timer estourado e a tentativa se repetia a
+            // cada frame (achado no log: milhares de "NoTarget" em poucos
+            // segundos) em vez de respeitar o intervalo configurado.
+            _colheitaTimer = 0f;
             TryStartHarvestTrip();
         }
 
         if (PlantioEnabled && !_plantioDroneBusy && _plantioTimer >= Definition.droneActionIntervalSeconds)
         {
+            _plantioTimer = 0f;
             TryStartPlantTrip();
         }
 
@@ -164,7 +171,6 @@ public class HangarDeDrones : PlacedStructure
             return;
         }
 
-        _colheitaTimer = 0f;
         _colheitaDroneBusy = true;
         GameLog.Log("Colheita", "TripStart", $"hangar={HangarLabel} tile=({target.Coord.x},{target.Coord.y}) cultivo={target.PlantedCrop.Definition.displayName}");
 
@@ -222,7 +228,6 @@ public class HangarDeDrones : PlacedStructure
             return;
         }
 
-        _plantioTimer = 0f;
         _plantioDroneBusy = true;
         GameLog.Log("Plantio", "TripStart", $"hangar={HangarLabel} cultivo={AutoPlantCrop.displayName} tile=({target.Coord.x},{target.Coord.y})");
 
