@@ -6,3 +6,11 @@ Tábua Estelar,Processado (madeira),1,Estrutura de Processamento (Madeira),A def
 Lenha Estelar,Processado (madeira),1,Estrutura de Processamento (Madeira),A definir,Combustível/aquecimento inicial para o Planeta 4 (gelo),Nome provisório,Cria dependência Planeta 1 -> Planeta 4
 Semente de Cedro Estelar,Semente,1,Estrutura de Processamento (Madeira) - chance média / Viveiro - sorteio de raridade / Loja - compra,"Sim, via Viveiro (ver 01-conceito.md); via processamento sai sem raridade sorteada",Replantio de árvores,Nome provisório,"Três fontes possíveis: processamento (chance média, sem raridade), Viveiro (raridade sorteada), Loja (compra garantida)"
 Carvão Estelar,Processado (madeira) - combustível,1,Estrutura de Processamento (Madeira),A definir,Combustível para a Fundição do Planeta 2,Nome provisório,Cria dependência Planeta 1 -> Planeta 2 (fluxo inverso ao usual)
+Pedra Ancestral,Matéria-prima (mineral bruto),1,Mina de Pedra,Não (matéria-prima bruta),Base para processamento de pedra,Nome provisório,
+Bloco Ancestral,Processado (pedra),1,Estrutura de Processamento (Pedra),"Sim, a partir do Nível 7 da estrutura",Construções; proposto como material genérico de referência do Planeta 1,Nome provisório,Candidato a ser o material citado nas dependências de nível de outras estruturas
+Cascalho Ancestral,Processado (pedra) - subproduto,1,Estrutura de Processamento (Pedra),A definir,Decoração; caminhos,Nome provisório,
+Pedra Polida,Processado (pedra) - avançado,1,Estrutura de Processamento (Pedra),A definir,Construção/decoração de valor premium,Nome provisório,Liberado apenas no Nível 10 da estrutura
+Pedra Ancestral,Matéria-prima (mineral bruto),1,Mina de Pedra,Não (matéria-prima bruta),Base para processamento de pedra,Nome provisório,
+Bloco Ancestral,Processado (pedra),1,Estrutura de Processamento (Pedra),"Sim, a partir do Nível 7 da estrutura",Construções; proposto como material genérico de referência do Planeta 1,Nome provisório,Candidato a ser o material citado nas dependências de nível de outras estruturas
+Cascalho Ancestral,Processado (pedra) - subproduto,1,Estrutura de Processamento (Pedra),A definir,Decoração; caminhos,Nome provisório,
+Pedra Polida,Processado (pedra) - avançado,1,Estrutura de Processamento (Pedra),A definir,Construção/decoração de valor premium,Nome provisório,Liberado apenas no Nível 10 da estrutura
