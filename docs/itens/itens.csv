@@ -1,0 +1,8 @@
+﻿nome,tipo,planeta,estrutura_origem,usa_raridade,uso,status,notas
+Trigo Lunar,Matéria-prima (cultivo),1,Campo de Cultivo,A definir,Alimento básico; venda; ingrediente de processamento,Nome provisório,Exemplo original do Protótipo 0 (loop idle)
+Fibra Estelar,Matéria-prima (cultivo avançado),1,Campo de Cultivo,A definir,Ingrediente de processamento avançado,Nome provisório,"Exemplo original do Protótipo 0 (loop idle), crescimento mais lento"
+Cedro Estelar,Matéria-prima (árvore),1,Área de Plantio de Árvores,Não (matéria-prima bruta),Base para processamento de madeira,Nome provisório,
+Tábua Estelar,Processado (madeira),1,Estrutura de Processamento (Madeira),A definir,Construções,Nome provisório,
+Lenha Estelar,Processado (madeira),1,Estrutura de Processamento (Madeira),A definir,Combustível/aquecimento inicial para o Planeta 4 (gelo),Nome provisório,Cria dependência Planeta 1 -> Planeta 4
+Semente de Cedro Estelar,Semente,1,Estrutura de Processamento (Madeira) - chance média / Viveiro - sorteio de raridade / Loja - compra,"Sim, via Viveiro (ver 01-conceito.md); via processamento sai sem raridade sorteada",Replantio de árvores,Nome provisório,"Três fontes possíveis: processamento (chance média, sem raridade), Viveiro (raridade sorteada), Loja (compra garantida)"
+Carvão Estelar,Processado (madeira) - combustível,1,Estrutura de Processamento (Madeira),A definir,Combustível para a Fundição do Planeta 2,Nome provisório,Cria dependência Planeta 1 -> Planeta 2 (fluxo inverso ao usual)
