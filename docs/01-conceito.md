@@ -138,8 +138,40 @@ Esta regra substitui e descarta uma ideia anterior (nunca formalizada em
 documento) de uma "janela deslizante" baseada no planeta do cultivo colhido
 — superada por este modelo de dois filtros.
 
-Fórmula exata de probabilidade por nível de Viveiro ainda a definir (ver
-pendências em `docs/estruturas/planeta-1/viveiro.md`).
+#### Fórmula do modificador local — decisão
+
+Modelo de 2 estágios, aplicável a qualquer estrutura que produza itens
+sujeitos a raridade (Viveiro, Estruturas de Processamento, Mina de
+Pedra/Minério — pontos de descoberta):
+
+**Estágio 1 — Chance-base, por Nível da estrutura** (ver
+`docs/estruturas/00-indice.md` para o sistema geral de níveis):
+
+| Nível | Chance-base de bônus |
+|---|---|
+| 1 | 2% |
+| 2 | 3% |
+| 3 | 4% |
+| 4 | 6% |
+| 5 | 8% |
+| 6 | 10% |
+| 7 | 15% |
+| 8 | 18% |
+| 9 | 22% |
+| 10 | 28% |
+
+**Estágio 2 — Cascata de magnitude** (se o Estágio 1 acertar, decide
+quantos níveis de raridade acima — mesmo modelo de decaimento 10x usado
+como referência de mercado, ver pesquisa citada na origem deste sistema):
+- 90% → sobe 1 nível de raridade
+- 9% → sobe 2 níveis
+- 0,9% → sobe 3 níveis
+- 0,1% → sobe 4 níveis
+
+Sempre limitado pelo teto global já liberado pelo progresso do jogador —
+a cascata nunca ultrapassa esse teto, mesmo que o sorteio indique mais.
+
+Valores de exemplo, a validar em playtest/planilha.
 
 #### Nota para fase futura (mercado entre jogadores — não decidido)
 Foi levantada a ideia de, na Fase 3 (multiplayer, ver
