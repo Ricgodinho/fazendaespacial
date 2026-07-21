@@ -37,7 +37,7 @@ Validado em planilha (`planilhas/planilha_loop_idle.xlsx`), ver
 `docs/04-prototipo-0-loop-idle.md`. Capacidade de armazenamento ajustada de
 30 para 100 unidades no Trigo Lunar após simulação de jogador casual.
 
-## Etapa 2 — Protótipo 1: loop ativo — ✅ implementado
+## Etapa 2 — Protótipo 1: loop ativo — ✅ concluído
 Ver `docs/05-prototipo-1-loop-ativo.md` para as regras completas.
 
 - Interação: ferramenta selecionada na barra de ações + clique no tile
@@ -48,12 +48,12 @@ Ver `docs/05-prototipo-1-loop-ativo.md` para as regras completas.
   derivado), alimentação/coleta manual via clique.
 - Sem árvore de tecnologia, sem decoração — conforme escopo do MVP.
 
-**Critério de conclusão:** responder as 3 perguntas de playtest do
-documento 05 (ritmo plantar→colher, clareza da seleção de ferramenta,
-propósito percebido da estrutura construída) — em aberto, depende de
-jogar mais.
+**Critério de conclusão — respondido em playtest informal (dentro do time):**
+ritmo plantar→colher aprovado, seleção de ferramenta clara, propósito da
+estrutura compreendido (alimentação/coleta manual sem confusão). Playtest
+formal com pessoas de fora do time ainda pendente (ver Etapa 5).
 
-## Etapa 3 — Protótipo 2: loop híbrido — ✅ implementado
+## Etapa 3 — Protótipo 2: loop híbrido — ✅ concluído
 Ver `docs/07-prototipo-2-loop-hibrido.md` para as regras completas.
 
 - Cálculo de produção offline por acumulador de segundos + timestamp real
@@ -69,10 +69,11 @@ Ver `docs/07-prototipo-2-loop-hibrido.md` para as regras completas.
   informando quanto tempo se passou (comunica ao jogador o que aconteceu
   na ausência, conforme `docs/04`).
 
-**Critério de conclusão:** responder as 3 perguntas de playtest do
-documento 07 (satisfação do ciclo completo, percepção do teto de 48h,
-clareza da progressão de capacidade) — em aberto, depende de jogar mais
-(inclusive testar fechando e reabrindo o Editor após um tempo real).
+**Critério de conclusão — respondido em playtest informal (dentro do time):**
+ciclo completo (plantar → parar → voltar → coletar) testado e aprovado,
+inclusive simulando ausência longa editando o timestamp do save
+manualmente. Playtest formal com pessoas de fora do time ainda pendente
+(ver Etapa 5).
 
 ## Etapa 4 — Consolidação do MVP
 - Revisar `docs/00` a `docs/07` à luz do que os protótipos revelaram.
