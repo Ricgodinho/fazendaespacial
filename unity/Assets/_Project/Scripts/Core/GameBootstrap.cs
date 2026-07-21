@@ -2,6 +2,11 @@ using UnityEngine;
 
 public static class GameBootstrap
 {
+    // Teto global de ausencia considerado para producao offline -
+    // docs/07-prototipo-2-loop-hibrido.md. Valor de partida sugerido: 48h.
+    private const float GlobalAbsenceCapSeconds = 48f * 3600f;
+    private const float AutoSaveIntervalSeconds = 30f;
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Initialize()
     {
@@ -14,10 +19,13 @@ public static class GameBootstrap
             return;
         }
 
-        TileGrid.Create(width: 8, height: 8, tileSize: 1.2f);
+        var grid = TileGrid.Create(width: 8, height: 8, tileSize: 1.2f);
         PositionCamera();
 
         var inventory = new PlayerInventory();
+        var saveSystem = new SaveSystem(Application.persistentDataPath + "/savegame.json");
+
+        string welcomeBackMessage = LoadIfAvailable(saveSystem, grid, inventory, cropDefinition, structureDefinition);
 
         var toolSelector = new GameObject("ToolSelector").AddComponent<ToolSelector>();
 
@@ -26,6 +34,61 @@ public static class GameBootstrap
 
         var hud = new GameObject("PrototypeHud").AddComponent<PrototypeHud>();
         hud.Initialize(inventory, toolSelector, cropDefinition, structureDefinition);
+        if (!string.IsNullOrEmpty(welcomeBackMessage))
+        {
+            hud.ShowMessage(welcomeBackMessage);
+        }
+
+        var saveRunner = new GameObject("SaveRunner").AddComponent<SaveRunner>();
+        saveRunner.Initialize(saveSystem, grid, inventory, AutoSaveIntervalSeconds);
+    }
+
+    private static string LoadIfAvailable(
+        SaveSystem saveSystem,
+        TileGrid grid,
+        PlayerInventory inventory,
+        CropDefinition cropDefinition,
+        ProcessingStructureDefinition structureDefinition)
+    {
+        var save = saveSystem.Load();
+        if (save == null)
+        {
+            return null;
+        }
+
+        double elapsedSinceSave = SaveSystem.CurrentUnixSeconds() - save.savedAtUnixSeconds;
+        float cappedOfflineSeconds = Mathf.Clamp((float)elapsedSinceSave, 0f, GlobalAbsenceCapSeconds);
+
+        foreach (var tileData in save.tiles)
+        {
+            var tile = grid.GetTile(tileData.x, tileData.z);
+            if (tile == null)
+            {
+                continue;
+            }
+
+            if (tileData.occupancy == (int)TileOccupancy.Crop)
+            {
+                tile.PlantCrop(cropDefinition, tileData.progressSeconds);
+                tile.PlantedCrop.ApplyOfflineElapsed(cappedOfflineSeconds);
+            }
+            else if (tileData.occupancy == (int)TileOccupancy.Structure)
+            {
+                tile.BuildStructure(structureDefinition, tileData.progressSeconds, tileData.storedInput, tileData.storedOutput);
+                tile.BuiltStructure.ApplyOfflineElapsed(cappedOfflineSeconds);
+            }
+        }
+
+        foreach (var resource in save.inventory)
+        {
+            inventory.Add(resource.name, resource.amount);
+        }
+
+        double elapsedHours = elapsedSinceSave / 3600.0;
+        bool wasCapped = elapsedSinceSave > GlobalAbsenceCapSeconds;
+        return wasCapped
+            ? $"Bem-vindo de volta! Ausente por {elapsedHours:F1}h (producao calculada ate o teto de 48h)."
+            : $"Bem-vindo de volta! Ausente por {elapsedHours:F1}h.";
     }
 
     private static void PositionCamera()

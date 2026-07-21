@@ -6,6 +6,7 @@ public class PrototypeHud : MonoBehaviour
     private ToolSelector _toolSelector;
     private CropDefinition _cropDefinition;
     private ProcessingStructureDefinition _structureDefinition;
+    private string _message;
 
     public void Initialize(
         PlayerInventory inventory,
@@ -19,10 +20,25 @@ public class PrototypeHud : MonoBehaviour
         _structureDefinition = structureDefinition;
     }
 
+    public void ShowMessage(string message)
+    {
+        _message = message;
+    }
+
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 280, 260), GUI.skin.box);
-        GUILayout.Label("Prototipo 1 - Loop Ativo (placeholder)");
+        bool hasMessage = !string.IsNullOrEmpty(_message);
+        float height = 260 + (hasMessage ? 40 : 0);
+
+        GUILayout.BeginArea(new Rect(10, 10, 320, height), GUI.skin.box);
+        GUILayout.Label("Prototipo 2 - Loop Hibrido (placeholder)");
+
+        if (hasMessage)
+        {
+            GUILayout.Space(4);
+            GUILayout.Label(_message, GUI.skin.box);
+        }
+
         GUILayout.Space(6);
 
         GUILayout.Label($"Ferramenta atual: {_toolSelector.CurrentTool}");

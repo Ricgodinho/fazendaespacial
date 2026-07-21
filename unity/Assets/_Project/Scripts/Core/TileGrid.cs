@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TileGrid : MonoBehaviour
@@ -5,6 +6,10 @@ public class TileGrid : MonoBehaviour
     public int Width { get; private set; }
     public int Height { get; private set; }
     public float TileSize { get; private set; }
+    public IReadOnlyList<GridTile> Tiles => _tiles;
+
+    private readonly List<GridTile> _tiles = new();
+    private readonly Dictionary<Vector2Int, GridTile> _tilesByCoord = new();
 
     public static TileGrid Create(int width, int height, float tileSize)
     {
@@ -15,6 +20,12 @@ public class TileGrid : MonoBehaviour
         grid.TileSize = tileSize;
         grid.BuildTiles();
         return grid;
+    }
+
+    public GridTile GetTile(int x, int z)
+    {
+        _tilesByCoord.TryGetValue(new Vector2Int(x, z), out var tile);
+        return tile;
     }
 
     private void BuildTiles()
@@ -33,7 +44,11 @@ public class TileGrid : MonoBehaviour
                 renderer.material = RendererTint.SharedUrpLitMaterial;
 
                 var tile = tileObject.AddComponent<GridTile>();
-                tile.Initialize(new Vector2Int(x, z), renderer);
+                var coord = new Vector2Int(x, z);
+                tile.Initialize(coord, renderer);
+
+                _tiles.Add(tile);
+                _tilesByCoord[coord] = tile;
             }
         }
     }

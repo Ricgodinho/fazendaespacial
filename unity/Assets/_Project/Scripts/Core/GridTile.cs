@@ -26,7 +26,7 @@ public class GridTile : MonoBehaviour
         RefreshGroundColor();
     }
 
-    public bool PlantCrop(CropDefinition definition)
+    public bool PlantCrop(CropDefinition definition, float initialAccumulatedSeconds = 0f)
     {
         if (Occupancy != TileOccupancy.Empty)
         {
@@ -41,7 +41,7 @@ public class GridTile : MonoBehaviour
         cropObject.transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
 
         PlantedCrop = cropObject.AddComponent<CropInstance>();
-        PlantedCrop.Initialize(definition);
+        PlantedCrop.Initialize(definition, initialAccumulatedSeconds);
 
         Occupancy = TileOccupancy.Crop;
         RefreshGroundColor();
@@ -64,7 +64,11 @@ public class GridTile : MonoBehaviour
         return true;
     }
 
-    public bool BuildStructure(ProcessingStructureDefinition definition)
+    public bool BuildStructure(
+        ProcessingStructureDefinition definition,
+        float initialProcessElapsedSeconds = 0f,
+        int initialStoredInput = 0,
+        int initialStoredOutput = 0)
     {
         if (Occupancy != TileOccupancy.Empty)
         {
@@ -87,7 +91,7 @@ public class GridTile : MonoBehaviour
         RendererTint.SetColor(renderer, Color.gray);
 
         BuiltStructure = structureObject.AddComponent<ProcessingStructure>();
-        BuiltStructure.Initialize(definition);
+        BuiltStructure.Initialize(definition, initialProcessElapsedSeconds, initialStoredInput, initialStoredOutput);
 
         Occupancy = TileOccupancy.Structure;
         RefreshGroundColor();

@@ -20,24 +20,28 @@ public class CropInstance : MonoBehaviour
     public CropDefinition Definition { get; private set; }
     public bool IsMature => CurrentStage == StageCount - 1;
 
+    // Acumulador de segundos de crescimento, nao timestamp - permite somar de
+    // uma vez o tempo de ausencia calculado no load (docs/07), sem depender
+    // de Time.time (que zera a cada sessao de jogo).
+    public float AccumulatedSeconds { get; private set; }
+
     private int CurrentStage
     {
         get
         {
-            float progress = Mathf.Clamp01((Time.time - _plantedAt) / Definition.growTimeSeconds);
+            float progress = Mathf.Clamp01(AccumulatedSeconds / Definition.growTimeSeconds);
             return Mathf.Clamp(Mathf.FloorToInt(progress * (StageCount - 1) + 0.0001f), 0, StageCount - 1);
         }
     }
 
-    private float _plantedAt;
     private Renderer _visualRenderer;
     private Transform _visualTransform;
     private int _lastStageShown = -1;
 
-    public void Initialize(CropDefinition definition)
+    public void Initialize(CropDefinition definition, float initialAccumulatedSeconds = 0f)
     {
         Definition = definition;
-        _plantedAt = Time.time;
+        AccumulatedSeconds = initialAccumulatedSeconds;
 
         var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
         visual.name = "Visual";
@@ -51,7 +55,14 @@ public class CropInstance : MonoBehaviour
         _visualRenderer = visual.GetComponent<Renderer>();
         _visualRenderer.material = RendererTint.SharedUrpLitMaterial;
 
-        ApplyStage(0);
+        ApplyStage(CurrentStage);
+    }
+
+    // Soma de uma vez o tempo de ausencia (ja limitado pelo teto global de
+    // 48h em GameBootstrap) durante a reconstrucao a partir de um save.
+    public void ApplyOfflineElapsed(float elapsedSeconds)
+    {
+        AccumulatedSeconds += elapsedSeconds;
     }
 
     private void Update()
@@ -60,6 +71,8 @@ public class CropInstance : MonoBehaviour
         {
             return;
         }
+
+        AccumulatedSeconds += Time.deltaTime;
 
         int stage = CurrentStage;
         if (stage != _lastStageShown)

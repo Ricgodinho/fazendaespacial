@@ -37,30 +37,42 @@ Validado em planilha (`planilhas/planilha_loop_idle.xlsx`), ver
 `docs/04-prototipo-0-loop-idle.md`. Capacidade de armazenamento ajustada de
 30 para 100 unidades no Trigo Lunar após simulação de jogador casual.
 
-## Etapa 2 — Protótipo 1: loop ativo — 🔄 em andamento
+## Etapa 2 — Protótipo 1: loop ativo — ✅ implementado
 Ver `docs/05-prototipo-1-loop-ativo.md` para as regras completas.
 
-- Interação: ferramenta selecionada na barra de ações + clique no tile.
-- 1 cultivo plantável/colhível (Trigo Lunar).
-- 1 estrutura de processamento (recebe o cultivo colhido, produz recurso derivado).
-- Sem loop idle, sem árvore de tecnologia, sem decoração.
+- Interação: ferramenta selecionada na barra de ações + clique no tile
+  (Input System novo, raycast do mouse).
+- 1 cultivo plantável/colhível (Trigo Lunar), com os 5 estágios visuais de
+  crescimento definidos em `docs/cultivos/00-indice.md`.
+- 1 estrutura de processamento (recebe o cultivo colhido, produz recurso
+  derivado), alimentação/coleta manual via clique.
+- Sem árvore de tecnologia, sem decoração — conforme escopo do MVP.
 
 **Critério de conclusão:** responder as 3 perguntas de playtest do
 documento 05 (ritmo plantar→colher, clareza da seleção de ferramenta,
-propósito percebido da estrutura construída).
+propósito percebido da estrutura construída) — em aberto, depende de
+jogar mais.
 
-## Etapa 3 — Protótipo 2: loop híbrido
+## Etapa 3 — Protótipo 2: loop híbrido — ✅ implementado
 Ver `docs/07-prototipo-2-loop-hibrido.md` para as regras completas.
 
-- Cálculo de produção offline por timestamp (salvar hora ao fechar,
-  comparar ao reabrir).
-- Capacidade por estrutura + teto global de 48h de ausência.
-- Mecanismo de save/load (sugestão de partida: arquivo JSON local — a
-  confirmar).
+- Cálculo de produção offline por acumulador de segundos + timestamp real
+  (UTC) salvo no JSON — cultivo e estrutura continuam progredindo mesmo
+  com o jogo fechado.
+- Teto global de 48h de ausência aplicado no load, antes de distribuir o
+  tempo capado entre cultivo/estrutura.
+- Capacidade por estrutura já respeitada (produção pausa ao encher, nada
+  se perde).
+- Save/load em **JSON local** (`Application.persistentDataPath`),
+  autosave a cada 30s + salva ao fechar o jogo/pausar.
+- Mensagem de "bem-vindo de volta" no HUD ao carregar um save existente,
+  informando quanto tempo se passou (comunica ao jogador o que aconteceu
+  na ausência, conforme `docs/04`).
 
 **Critério de conclusão:** responder as 3 perguntas de playtest do
 documento 07 (satisfação do ciclo completo, percepção do teto de 48h,
-clareza da progressão de capacidade).
+clareza da progressão de capacidade) — em aberto, depende de jogar mais
+(inclusive testar fechando e reabrindo o Editor após um tempo real).
 
 ## Etapa 4 — Consolidação do MVP
 - Revisar `docs/00` a `docs/07` à luz do que os protótipos revelaram.
