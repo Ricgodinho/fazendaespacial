@@ -75,10 +75,20 @@ inclusive simulando ausência longa editando o timestamp do save
 manualmente. Playtest formal com pessoas de fora do time ainda pendente
 (ver Etapa 5).
 
-## Etapa 4 — Consolidação do MVP
-- Revisar `docs/00` a `docs/07` à luz do que os protótipos revelaram.
-- UI funcional, ainda sem arte final (placeholders/assets de loja).
-- Preparar build para playtest externo.
+## Etapa 4 — Consolidação do MVP — ✅ concluído
+- Docs `04`, `05` e `06` revisados e reconciliados com o que os
+  protótipos revelaram (nota de consolidação no `04` sobre o modelo de
+  capacidade se aplicar às estruturas, não aos cultivos; decisão de
+  auto-alimentação da estrutura registrada no `05`; itens resolvidos
+  movidos de "em aberto" no `06`).
+- UI ganhou painel "Como jogar?" com instruções do fluxo completo, ainda
+  placeholder (OnGUI, sem arte final) mas suficiente para alguém de fora
+  jogar sem explicação verbal.
+- Build Windows standalone gerado com sucesso
+  (`unity/Builds/Windows/FazendaEspacial.exe`, 0 erros) — cena
+  `Assets/_Project/Scenes/Main.unity` criada só para satisfazer a Build
+  Settings; todo o conteúdo continua montado em runtime pelo
+  `GameBootstrap`.
 
 ## Etapa 5 — Playtest externo
 - Recrutar testadores fora do time.
