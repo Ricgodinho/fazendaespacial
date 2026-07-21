@@ -219,10 +219,12 @@ public class HangarDeDrones : PlacedStructure
 
         Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
         var legs = new List<(Vector3, Action<DroneVisual>)>();
+        bool hasArmazem = ArmazemGeral.Instances.Count > 0;
 
-        if (ArmazemGeral.Instances.Count > 0)
+        if (hasArmazem)
         {
-            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, null));
+            // Sai vazio do Hangar, so fica "carregado" ao pegar o insumo no Armazem.
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, drone => drone.SetCarrying(true)));
         }
 
         legs.Add((destination.transform.position + Vector3.up * DroneFlightHeight, drone =>
@@ -240,7 +242,8 @@ public class HangarDeDrones : PlacedStructure
 
         legs.Add((hangarPoint, _ => route.Busy = false));
 
-        DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: true, legs);
+        // Sem Armazem, o "insumo" ja sai do Hangar (nao ha ponto intermediario de coleta).
+        DroneVisual.Fly(hangarPoint, TransporteDroneColor, startCarrying: !hasArmazem, legs);
     }
 
     private GridTile FindFirstInRange(Func<GridTile, bool> predicate)
