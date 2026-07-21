@@ -41,8 +41,8 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível.
-- Definir a fórmula exata de probabilidade de descoberta rara no Nível 7
-  (mesma pendência já registrada para o Viveiro).
+- Fórmula de probabilidade: ver `docs/01-conceito.md`, seção Raridade
+  ("Fórmula do modificador local").
 - Detalhar o que exatamente muda entre "Camada 1", "Camada 2" e "Camada
   final" em termos de tipos de descoberta específicos.
 - Validar a curva de extração em playtest/planilha antes da

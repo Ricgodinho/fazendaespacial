@@ -35,9 +35,8 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível (hoje apenas a
   dependência de planeta está fixada, não o item específico).
-- Definir a fórmula exata de probabilidade de qualidade superior no
-  Nível 7 (mesma pendência já registrada para o Viveiro, ver
-  `docs/estruturas/planeta-1/viveiro.md`).
+- Fórmula de probabilidade: ver `docs/01-conceito.md`, seção Raridade
+  ("Fórmula do modificador local").
 - Definir qual é a "receita avançada" liberada no Nível 10.
 - Validar a curva de throughput em playtest/planilha antes da
   implementação.

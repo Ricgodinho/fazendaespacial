@@ -42,6 +42,8 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 `docs/04-prototipo-0-loop-idle.md` e `planilhas/planilha_loop_idle.xlsx`).
 
 ## Pendente
+- Fórmula de probabilidade (Nível 7): ver `docs/01-conceito.md`, seção
+  Raridade ("Fórmula do modificador local").
 - Definir os materiais exatos exigidos em cada nível (hoje apenas a
   dependência de planeta está fixada, não o item específico).
 - Confirmar se Bloco Ancestral vira de fato o material genérico

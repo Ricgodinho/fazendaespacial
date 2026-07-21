@@ -38,7 +38,7 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível.
-- Definir a fórmula exata de probabilidade por nível (% de chance de
-  subir de raridade a cada nível do Viveiro).
+- Fórmula de probabilidade: ver `docs/01-conceito.md`, seção Raridade
+  ("Fórmula do modificador local") — já definida, aplicável aqui.
 - Validar a curva de produção em playtest/planilha antes da
   implementação.

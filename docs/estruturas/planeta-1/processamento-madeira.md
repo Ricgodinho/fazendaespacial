@@ -45,8 +45,10 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível (hoje apenas a
   dependência de planeta está fixada, não o item específico).
-- Definir o valor exato da "chance média" de semente no Nível 7 e como
-  ela aumenta.
+- Chance de semente como subproduto (decisão): Nível 1 = 10%,
+  Nível 4 = 18%, Nível 7 = 30%, Nível 10 = 45% (níveis intermediários
+  interpolam suave). Mecânica separada da fórmula de raridade (ver
+  `docs/01-conceito.md`, seção Raridade).
 - Definir quantidade de Carvão Estelar produzida por ciclo no Nível 10.
 - Validar a curva de throughput em playtest/planilha antes da
   implementação.
