@@ -45,6 +45,15 @@ em `docs/01-conceito.md`), para não gerar retrabalho.
 4. **Coletar da estrutura**: clicar na estrutura para retirar o recurso
    processado (não precisa de ferramenta selecionada para esta ação).
 
+   **Decisão de implementação:** como o Protótipo 1 não tem drone de
+   Transporte ainda (ver `docs/drones/00-indice.md`), o mesmo clique que
+   coleta o output também alimenta a estrutura com insumo do inventário
+   do jogador (deposita o quanto couber na capacidade de insumo), quando
+   não há output pronto para coletar. Prioridade: coletar primeiro se
+   houver output pronto; alimentar só se não houver. Essa alimentação
+   manual deve ser substituída pelo drone de Transporte quando essa
+   categoria for implementada.
+
 ## Fora do escopo deste protótipo
 
 - Loop idle / produção passiva (já coberto no Protótipo 0 — será somado

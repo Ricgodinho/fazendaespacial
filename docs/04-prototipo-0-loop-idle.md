@@ -77,5 +77,22 @@ Preencher uma planilha com essas taxas e simular cenários de jogador:
 - Múltiplos cultivos além dos dois exemplos.
 - Qualquer interface ou notificação — isso é só a matemática crua.
 
+## Nota de consolidação (pós-Protótipo 1/2)
+
+O modelo de "produção por ciclo + capacidade + saturação" descrito acima
+para o Trigo Lunar assume um cultivo **auto-produzindo continuamente**
+(como um gerador passivo) — esse é o modelo certo para quando existir
+automação de plantio/colheita (drones, Fase 2+, ver
+`docs/drones/00-indice.md`).
+
+No MVP implementado (Protótipo 1/2), cada tile de cultivo é plantado e
+colhido **manualmente, uma vez por vez** — sem ciclo automático e sem
+capacidade de armazenamento própria do cultivo (ele simplesmente atinge
+o estágio final e espera o jogador colher, sem prazo). A mecânica de
+"capacidade + teto + produção pausa ao encher" validada aqui foi
+aplicada, na prática, às **Estruturas de Processamento**
+(`docs/05-prototipo-1-loop-ativo.md`, `docs/07-prototipo-2-loop-hibrido.md`),
+que são o elemento que de fato acumula produção de forma contínua no MVP.
+
 *Este documento deve ser atualizado com os números finais depois da
 validação em planilha, antes de iniciar o Protótipo 0 em código.*
