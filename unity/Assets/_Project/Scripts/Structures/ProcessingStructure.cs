@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProcessingStructure : PlacedStructure
 {
+    // Viveiro reaproveita esta mesma classe (so muda o Definition -
+    // insumo/produto/tempo diferentes) - ver ProcessingStructureDefinition.isViveiro.
+    public static readonly List<ProcessingStructure> Instances = new();
+
     private static readonly Color IdleColor = Color.gray;
     private static readonly Color ProcessingColorLow = new Color(0.2f, 0.4f, 0.8f);
     private static readonly Color ProcessingColorHigh = new Color(0.3f, 0.75f, 1f);
@@ -44,6 +49,9 @@ public class ProcessingStructure : PlacedStructure
 
         RefreshVisual();
     }
+
+    private void OnEnable() => Instances.Add(this);
+    private void OnDisable() => Instances.Remove(this);
 
     public int TryDepositInput(int availableFromInventory)
     {

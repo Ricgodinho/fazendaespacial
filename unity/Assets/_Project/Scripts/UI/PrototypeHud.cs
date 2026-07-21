@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class PrototypeHud : MonoBehaviour
@@ -13,7 +14,10 @@ public class PrototypeHud : MonoBehaviour
         "   dourada para coletar o resultado.\n" +
         "6. Construa o Armazem Geral para ter capacidade de estoque, e o\n" +
         "   Hangar de Drones para automatizar plantio e colheita perto dele.\n" +
-        "7. Pode fechar o jogo e voltar depois - a produção continua.";
+        "7. Construa o Viveiro para transformar Trigo Lunar em sementes.\n" +
+        "8. Use 'Transportar' para o drone levar Trigo Lunar ate uma\n" +
+        "   estrutura sem precisar clicar nela diretamente.\n" +
+        "9. Pode fechar o jogo e voltar depois - a produção continua.";
 
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
@@ -21,6 +25,7 @@ public class PrototypeHud : MonoBehaviour
     private ProcessingStructureDefinition _structureDefinition;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
+    private ProcessingStructureDefinition _viveiroDefinition;
     private string _message;
     private bool _showInstructions = true;
 
@@ -30,7 +35,8 @@ public class PrototypeHud : MonoBehaviour
         CropDefinition cropDefinition,
         ProcessingStructureDefinition structureDefinition,
         ArmazemGeralDefinition armazemDefinition,
-        HangarDeDronesDefinition hangarDefinition)
+        HangarDeDronesDefinition hangarDefinition,
+        ProcessingStructureDefinition viveiroDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
@@ -38,6 +44,7 @@ public class PrototypeHud : MonoBehaviour
         _structureDefinition = structureDefinition;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
+        _viveiroDefinition = viveiroDefinition;
     }
 
     public void ShowMessage(string message)
@@ -47,7 +54,7 @@ public class PrototypeHud : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 340, 620), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(10, 10, 360, 700), GUI.skin.box);
         GUILayout.Label("Prototipo - Planeta 1 (placeholder)");
 
         if (!string.IsNullOrEmpty(_message))
@@ -76,6 +83,7 @@ public class PrototypeHud : MonoBehaviour
         if (GUILayout.Button($"Construir {_structureDefinition.displayName}")) _toolSelector.SelectBuildProcessing();
         if (GUILayout.Button($"Construir {_armazemDefinition.displayName}")) _toolSelector.SelectBuildArmazem();
         if (GUILayout.Button($"Construir {_hangarDefinition.displayName}")) _toolSelector.SelectBuildHangar();
+        if (GUILayout.Button($"Construir {_viveiroDefinition.displayName}")) _toolSelector.SelectBuildViveiro();
 
         if (HangarDeDrones.Instances.Count > 0)
         {
@@ -91,6 +99,23 @@ public class PrototypeHud : MonoBehaviour
 
                 string colheitaLabel = prefix + (hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica");
                 if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
+
+                if (!hangar.CanDeliver)
+                {
+                    continue;
+                }
+
+                var processing = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == _structureDefinition);
+                if (processing != null && GUILayout.Button(prefix + $"Transportar {_cropDefinition.displayName} -> {_structureDefinition.displayName}"))
+                {
+                    hangar.TryDeliver(processing);
+                }
+
+                var viveiro = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == _viveiroDefinition);
+                if (viveiro != null && GUILayout.Button(prefix + $"Transportar {_cropDefinition.displayName} -> {_viveiroDefinition.displayName}"))
+                {
+                    hangar.TryDeliver(viveiro);
+                }
             }
         }
 

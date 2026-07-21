@@ -10,6 +10,7 @@ public class ClickController : MonoBehaviour
     private ProcessingStructureDefinition _structureDefinition;
     private ArmazemGeralDefinition _armazemDefinition;
     private HangarDeDronesDefinition _hangarDefinition;
+    private ProcessingStructureDefinition _viveiroDefinition;
 
     public void Initialize(
         PlayerInventory inventory,
@@ -18,7 +19,8 @@ public class ClickController : MonoBehaviour
         CropDefinition cropDefinition,
         ProcessingStructureDefinition structureDefinition,
         ArmazemGeralDefinition armazemDefinition,
-        HangarDeDronesDefinition hangarDefinition)
+        HangarDeDronesDefinition hangarDefinition,
+        ProcessingStructureDefinition viveiroDefinition)
     {
         _inventory = inventory;
         _toolSelector = toolSelector;
@@ -27,6 +29,7 @@ public class ClickController : MonoBehaviour
         _structureDefinition = structureDefinition;
         _armazemDefinition = armazemDefinition;
         _hangarDefinition = hangarDefinition;
+        _viveiroDefinition = viveiroDefinition;
     }
 
     private void Update()
@@ -90,6 +93,10 @@ public class ClickController : MonoBehaviour
 
             case ToolType.BuildHangar:
                 tile.BuildHangarDeDrones(_hangarDefinition, _grid, _inventory, _cropDefinition);
+                break;
+
+            case ToolType.BuildViveiro:
+                tile.BuildProcessingStructure(_viveiroDefinition);
                 break;
         }
     }

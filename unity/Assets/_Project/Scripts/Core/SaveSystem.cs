@@ -9,7 +9,7 @@ public class TileSaveData
     public int x;
     public int z;
     public int occupancy; // espelha TileOccupancy: 0 Empty, 1 Crop, 2 Structure
-    public int structureType; // so relevante se occupancy == Structure: 0 Processamento, 1 Armazem, 2 Hangar
+    public int structureType; // so relevante se occupancy == Structure: 0 Processamento, 1 Armazem, 2 Hangar, 3 Viveiro
     public float progressSeconds; // AccumulatedSeconds (cultivo) ou ProcessElapsedSeconds (estrutura de processamento)
     public int storedInput;
     public int storedOutput;
@@ -39,6 +39,7 @@ public class SaveSystem
     private const int StructureTypeProcessing = 0;
     private const int StructureTypeArmazem = 1;
     private const int StructureTypeHangar = 2;
+    private const int StructureTypeViveiro = 3;
 
     private static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -80,7 +81,7 @@ public class SaveSystem
                     x = tile.Coord.x,
                     z = tile.Coord.y,
                     occupancy = (int)TileOccupancy.Structure,
-                    structureType = StructureTypeProcessing,
+                    structureType = processing.Definition.isViveiro ? StructureTypeViveiro : StructureTypeProcessing,
                     progressSeconds = processing.ProcessElapsedSeconds,
                     storedInput = processing.StoredInput,
                     storedOutput = processing.StoredOutput
@@ -129,4 +130,5 @@ public class SaveSystem
     public static bool IsProcessingStructure(TileSaveData tileData) => tileData.structureType == StructureTypeProcessing;
     public static bool IsArmazem(TileSaveData tileData) => tileData.structureType == StructureTypeArmazem;
     public static bool IsHangar(TileSaveData tileData) => tileData.structureType == StructureTypeHangar;
+    public static bool IsViveiro(TileSaveData tileData) => tileData.structureType == StructureTypeViveiro;
 }

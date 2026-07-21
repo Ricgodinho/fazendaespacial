@@ -5,5 +5,6 @@ public enum ToolType
     Harvest,
     BuildProcessing,
     BuildArmazem,
-    BuildHangar
+    BuildHangar,
+    BuildViveiro
 }

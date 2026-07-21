@@ -13,4 +13,7 @@ public class HangarDeDronesDefinition : ScriptableObject
 
     [Tooltip("Raio (em tiles) dentro do qual o drone Tier 1 consegue operar - 'precisa estar proximo da estrutura' (docs/drones/colheita.md e plantio.md).")]
     public int droneRangeInTiles = 3;
+
+    [Tooltip("Drone de Transporte Tier 1 (docs/drones/transporte.md): 'carrega quantidade pequena por viagem'. Viagem e manual (jogador aciona), nao automatica.")]
+    public int transporteCapacidadePorViagem = 10;
 }

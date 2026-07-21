@@ -23,6 +23,7 @@ public class HangarDeDrones : PlacedStructure
     private static readonly Color VisualColor = new Color(0.35f, 0.4f, 0.45f);
     private static readonly Color PlantioDroneColor = new Color(0.3f, 0.8f, 0.3f);
     private static readonly Color ColheitaDroneColor = new Color(0.9f, 0.6f, 0.15f);
+    private static readonly Color TransporteDroneColor = new Color(0.7f, 0.7f, 0.75f);
     private const float DroneFlightHeight = 1.2f;
 
     public HangarDeDronesDefinition Definition { get; private set; }
@@ -38,6 +39,7 @@ public class HangarDeDrones : PlacedStructure
     private float _colheitaTimer;
     private bool _plantioDroneBusy;
     private bool _colheitaDroneBusy;
+    private bool _transporteDroneBusy;
 
     public void Initialize(
         HangarDeDronesDefinition definition,
@@ -144,6 +146,54 @@ public class HangarDeDrones : PlacedStructure
         };
 
         DroneVisual.Fly(hangarPoint, PlantioDroneColor, legs);
+    }
+
+    // Drone de Transporte Tier 1 (docs/drones/transporte.md): "viagem manual -
+    // jogador aciona cada entrega", carga pequena por viagem. Leva o insumo do
+    // Armazem Geral (inventario) ate a estrutura de destino, passando
+    // visualmente pelo Armazem se um existir.
+    public bool CanDeliver => !_transporteDroneBusy;
+
+    public void TryDeliver(ProcessingStructure destination)
+    {
+        if (_transporteDroneBusy || destination == null)
+        {
+            return;
+        }
+
+        string resourceName = destination.Definition.inputCropDefinition.displayName;
+        int available = _inventory.GetAmount(resourceName);
+        int toCarry = Mathf.Min(available, Definition.transporteCapacidadePorViagem);
+        if (toCarry <= 0)
+        {
+            return;
+        }
+
+        _transporteDroneBusy = true;
+        _inventory.TryRemove(resourceName, toCarry);
+
+        Vector3 hangarPoint = transform.position + Vector3.up * DroneFlightHeight;
+        var legs = new List<(Vector3, Action)>();
+
+        if (ArmazemGeral.Instances.Count > 0)
+        {
+            legs.Add((ArmazemGeral.Instances[0].transform.position + Vector3.up * DroneFlightHeight, null));
+        }
+
+        legs.Add((destination.transform.position + Vector3.up * DroneFlightHeight, () =>
+        {
+            int deposited = destination.TryDepositInput(toCarry);
+            int leftover = toCarry - deposited;
+            if (leftover > 0)
+            {
+                // Nao coube tudo no destino - devolve o resto ao inventario, nada se perde.
+                _inventory.Add(resourceName, leftover);
+            }
+        }));
+
+        legs.Add((hangarPoint, () => _transporteDroneBusy = false));
+
+        DroneVisual.Fly(hangarPoint, TransporteDroneColor, legs);
     }
 
     private GridTile FindFirstInRange(Func<GridTile, bool> predicate)

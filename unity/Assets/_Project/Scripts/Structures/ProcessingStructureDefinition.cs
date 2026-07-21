@@ -15,4 +15,7 @@ public class ProcessingStructureDefinition : ScriptableObject
     public float processTimeSeconds = 8f;
 
     public int outputStorageCapacity = 30;
+
+    [Tooltip("Marca esta definicao como o Viveiro (docs/estruturas/planeta-1/viveiro.md) - mesma classe, so muda o insumo/produto. Usado pelo save/load para reconstruir o tipo certo.")]
+    public bool isViveiro;
 }
