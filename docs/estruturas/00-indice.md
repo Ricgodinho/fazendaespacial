@@ -137,6 +137,38 @@ claramente o resultado do tempo passivo, já central ao loop híbrido
   `docs/01-conceito.md`) — o protótipo técnico usa cor + rotação como
   placeholder, não como especificação de arte definitiva.
 
+## Progressão visual por nível (regra geral) — decisão
+
+Aplica-se a **toda estrutura**, em qualquer planeta, para evitar custo de
+arte proporcional aos 10 níveis definidos em "Sistema de Níveis de
+Estrutura" (acima).
+
+**5 variações visuais** cobrem os 10 níveis, em pares:
+
+| Variação visual | Níveis cobertos |
+|---|---|
+| A | 1–2 |
+| B | 3–4 |
+| C | 5–6 |
+| D | 7–8 |
+| E | 9–10 |
+
+Cada uma das 5 variações precisa das 3 artes dos "Estados visuais de
+processamento" (acima) — **15 assets de arte por estrutura**, não 30
+(5 variações × 3 estados, em vez de 10 níveis × 3 estados).
+
+### Motivo
+Reforça a mesma lógica de "nem todo nível precisa ser um evento visual
+próprio" já usada nos breakpoints de capacidade (acima) — a maioria dos
+níveis dentro de um par só muda número (capacidade/velocidade), a
+aparência do modelo só muda ao subir de par.
+
+### Pendente
+- Confirmar se os pares de nível (1–2, 3–4, etc.) devem coincidir com os
+  níveis-marco (breakpoints) de cada estrutura específica, ou se são
+  independentes — a começar pelo Planeta 1, junto do próximo passo já
+  registrado em "Sistema de Níveis de Estrutura".
+
 ## Pendências gerais
 - Todos os 5 planetas do jogo base têm lista de estruturas fechada.
 - Regra geral de níveis de estrutura definida (acima).

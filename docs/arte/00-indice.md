@@ -46,6 +46,10 @@ arte final, são a especificação do que a arte final precisa comunicar):
   para coleta" deve compartilhar a mesma linguagem visual do estágio
   final de crescimento dos cultivos — uma única convenção de "isso
   brilha/destaca quando dá pra clicar", não uma por sistema.
+- **Estruturas — progressão visual por nível**: 5 variações visuais
+  cobrindo os 10 níveis em pares (1–2, 3–4, 5–6, 7–8, 9–10), cada uma
+  com os 3 estados acima — 15 assets por estrutura, não 30. Ver seção
+  "Progressão visual por nível" em `docs/estruturas/00-indice.md`.
 
 ## Pendente
 - Levantamento de orçamento do estilo 2D estilizado (custo de produção)
