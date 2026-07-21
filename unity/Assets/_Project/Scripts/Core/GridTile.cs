@@ -104,7 +104,9 @@ public class GridTile : MonoBehaviour
         HangarDeDronesDefinition definition,
         TileGrid grid,
         PlayerInventory inventory,
-        CropDefinition cropToAutoPlant)
+        CropDefinition cropToAutoPlant,
+        ProcessingStructureDefinition processingDefinition,
+        ProcessingStructureDefinition viveiroDefinition)
     {
         if (Occupancy != TileOccupancy.Empty)
         {
@@ -112,12 +114,31 @@ public class GridTile : MonoBehaviour
         }
 
         var hangar = CreateStructureAnchor(definition.displayName).AddComponent<HangarDeDrones>();
-        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant);
+        hangar.Initialize(definition, grid, Coord, inventory, cropToAutoPlant, processingDefinition, viveiroDefinition);
         BuiltStructure = hangar;
 
         Occupancy = TileOccupancy.Structure;
         RefreshGroundColor();
         return true;
+    }
+
+    // Remove o que estiver no tile (cultivo ou estrutura), sem gerar
+    // nenhum recurso de volta - e uma demolicao, nao uma colheita.
+    public void Demolish()
+    {
+        if (Occupancy == TileOccupancy.Crop && PlantedCrop != null)
+        {
+            Destroy(PlantedCrop.gameObject);
+            PlantedCrop = null;
+        }
+        else if (Occupancy == TileOccupancy.Structure && BuiltStructure != null)
+        {
+            Destroy(BuiltStructure.gameObject);
+            BuiltStructure = null;
+        }
+
+        Occupancy = TileOccupancy.Empty;
+        RefreshGroundColor();
     }
 
     // Parenteado ao TileGrid (escala identidade), nao ao tile em si - o

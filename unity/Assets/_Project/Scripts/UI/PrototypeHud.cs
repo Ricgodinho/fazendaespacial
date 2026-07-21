@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class PrototypeHud : MonoBehaviour
@@ -14,10 +13,12 @@ public class PrototypeHud : MonoBehaviour
         "   dourada para coletar o resultado.\n" +
         "6. Construa o Armazem Geral para ter capacidade de estoque, e o\n" +
         "   Hangar de Drones para automatizar plantio e colheita perto dele.\n" +
-        "7. Construa o Viveiro para transformar Trigo Lunar em sementes.\n" +
-        "8. Use 'Transportar' para o drone levar Trigo Lunar ate uma\n" +
-        "   estrutura sem precisar clicar nela diretamente.\n" +
-        "9. Pode fechar o jogo e voltar depois - a produção continua.";
+        "7. Construa o Viveiro para transformar Trigo Lunar em sementes -\n" +
+        "   sem semente, o drone de Plantio nao planta sozinho.\n" +
+        "8. Configure o Transporte no Hangar para entregar Trigo Lunar em\n" +
+        "   outra estrutura, manual ou automaticamente.\n" +
+        "9. Use 'Demolir' pra remover cultivo ou estrutura de um tile.\n" +
+        "10. Pode fechar o jogo e voltar depois - a produção continua.";
 
     private PlayerInventory _inventory;
     private ToolSelector _toolSelector;
@@ -28,6 +29,7 @@ public class PrototypeHud : MonoBehaviour
     private ProcessingStructureDefinition _viveiroDefinition;
     private string _message;
     private bool _showInstructions = true;
+    private Vector2 _scroll;
 
     public void Initialize(
         PlayerInventory inventory,
@@ -54,7 +56,7 @@ public class PrototypeHud : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 360, 700), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(10, 10, 380, 720), GUI.skin.box);
         GUILayout.Label("Prototipo - Planeta 1 (placeholder)");
 
         if (!string.IsNullOrEmpty(_message))
@@ -84,39 +86,20 @@ public class PrototypeHud : MonoBehaviour
         if (GUILayout.Button($"Construir {_armazemDefinition.displayName}")) _toolSelector.SelectBuildArmazem();
         if (GUILayout.Button($"Construir {_hangarDefinition.displayName}")) _toolSelector.SelectBuildHangar();
         if (GUILayout.Button($"Construir {_viveiroDefinition.displayName}")) _toolSelector.SelectBuildViveiro();
+        if (GUILayout.Button("Demolir")) _toolSelector.SelectDemolish();
 
         if (HangarDeDrones.Instances.Count > 0)
         {
             GUILayout.Space(10);
             GUILayout.Label("Automacao (Hangar de Drones):");
+
+            _scroll = GUILayout.BeginScrollView(_scroll, GUILayout.Height(260));
             for (int i = 0; i < HangarDeDrones.Instances.Count; i++)
             {
-                var hangar = HangarDeDrones.Instances[i];
-                string prefix = HangarDeDrones.Instances.Count > 1 ? $"[Hangar {i + 1}] " : "";
-
-                string plantioLabel = prefix + (hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico");
-                if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
-
-                string colheitaLabel = prefix + (hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica");
-                if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
-
-                if (!hangar.CanDeliver)
-                {
-                    continue;
-                }
-
-                var processing = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == _structureDefinition);
-                if (processing != null && GUILayout.Button(prefix + $"Transportar {_cropDefinition.displayName} -> {_structureDefinition.displayName}"))
-                {
-                    hangar.TryDeliver(processing);
-                }
-
-                var viveiro = ProcessingStructure.Instances.FirstOrDefault(s => s.Definition == _viveiroDefinition);
-                if (viveiro != null && GUILayout.Button(prefix + $"Transportar {_cropDefinition.displayName} -> {_viveiroDefinition.displayName}"))
-                {
-                    hangar.TryDeliver(viveiro);
-                }
+                DrawHangarPanel(HangarDeDrones.Instances[i], HangarDeDrones.Instances.Count > 1 ? $"[Hangar {i + 1}] " : "");
             }
+
+            GUILayout.EndScrollView();
         }
 
         GUILayout.Space(10);
@@ -130,5 +113,50 @@ public class PrototypeHud : MonoBehaviour
         }
 
         GUILayout.EndArea();
+    }
+
+    private void DrawHangarPanel(HangarDeDrones hangar, string prefix)
+    {
+        string plantioLabel = prefix + (hangar.PlantioEnabled ? "Pausar Plantio automatico" : "Retomar Plantio automatico");
+        if (GUILayout.Button(plantioLabel)) hangar.SetPlantioEnabled(!hangar.PlantioEnabled);
+
+        string colheitaLabel = prefix + (hangar.ColheitaEnabled ? "Pausar Colheita automatica" : "Retomar Colheita automatica");
+        if (GUILayout.Button(colheitaLabel)) hangar.SetColheitaEnabled(!hangar.ColheitaEnabled);
+
+        string configLabel = hangar.ShowTransporteConfig ? "Fechar configuracao de Transporte" : "Configurar Transporte";
+        if (GUILayout.Button(prefix + configLabel))
+        {
+            hangar.ShowTransporteConfig = !hangar.ShowTransporteConfig;
+        }
+
+        if (!hangar.ShowTransporteConfig)
+        {
+            return;
+        }
+
+        GUILayout.BeginVertical(GUI.skin.box);
+        foreach (var route in hangar.TransporteRoutes)
+        {
+            GUILayout.Label($"Rota: Armazem -> {route.TargetDefinition.displayName}");
+
+            GUILayout.BeginHorizontal();
+            GUI.enabled = !route.Busy;
+            if (GUILayout.Button("Entregar agora"))
+            {
+                hangar.TryDeliverRoute(route);
+            }
+
+            GUI.enabled = true;
+            string autoLabel = route.AutomaticEnabled ? "Automatico: LIGADO" : "Automatico: DESLIGADO";
+            if (GUILayout.Button(autoLabel))
+            {
+                route.AutomaticEnabled = !route.AutomaticEnabled;
+            }
+
+            GUILayout.EndHorizontal();
+            GUILayout.Space(4);
+        }
+
+        GUILayout.EndVertical();
     }
 }

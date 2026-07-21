@@ -61,6 +61,13 @@ public class ClickController : MonoBehaviour
 
     private void HandleClick(GridTile tile)
     {
+        // Demolir tem prioridade sobre qualquer outra interacao do tile.
+        if (_toolSelector.CurrentTool == ToolType.Demolish)
+        {
+            tile.Demolish();
+            return;
+        }
+
         // Clicar numa Estrutura de Processamento sempre coleta/alimenta primeiro,
         // independente da ferramenta selecionada (docs/05-prototipo-1-loop-ativo.md).
         // Armazem Geral e Hangar de Drones nao tem interacao manual nesta versao.
@@ -92,7 +99,7 @@ public class ClickController : MonoBehaviour
                 break;
 
             case ToolType.BuildHangar:
-                tile.BuildHangarDeDrones(_hangarDefinition, _grid, _inventory, _cropDefinition);
+                tile.BuildHangarDeDrones(_hangarDefinition, _grid, _inventory, _cropDefinition, _structureDefinition, _viveiroDefinition);
                 break;
 
             case ToolType.BuildViveiro:

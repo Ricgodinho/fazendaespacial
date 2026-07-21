@@ -6,5 +6,6 @@ public enum ToolType
     BuildProcessing,
     BuildArmazem,
     BuildHangar,
-    BuildViveiro
+    BuildViveiro,
+    Demolish
 }

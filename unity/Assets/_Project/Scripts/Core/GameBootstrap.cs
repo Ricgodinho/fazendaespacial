@@ -101,7 +101,7 @@ public static class GameBootstrap
             {
                 // Simplificacao: a automacao do Hangar nao simula catch-up
                 // offline (retoma o tick normalmente a partir da reabertura).
-                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropDefinition);
+                tile.BuildHangarDeDrones(hangarDefinition, grid, inventory, cropDefinition, structureDefinition, viveiroDefinition);
             }
         }
 
