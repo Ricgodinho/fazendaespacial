@@ -61,11 +61,37 @@ seção Porte da estrutura).
 Ver `docs/itens/requisitos_niveis.csv` para os valores exatos de cada
 estrutura e nível.
 
+## Taxa de coleta manual — decisão
+
+| Recurso | Sem ferramenta | Com ferramenta (Picareta/Machado) |
+|---|---|---|
+| Pedra Ancestral | 1 unidade por ação | 2 unidades por ação |
+| Cedro Estelar | 1 unidade por ação | 2 unidades por ação |
+
+## Custo de craft das ferramentas — decisão
+
+| Ferramenta | Custo |
+|---|---|
+| Picareta | 5 Pedra Ancestral + 5 Graveto |
+| Machado | 5 Pedra Ancestral + 5 Graveto |
+
+Ver `docs/itens/requisitos_niveis.csv` (linhas com `nivel = craft`).
+
+## Sem trava dura entre as estruturas de bootstrap — decisão
+
+Não existe verificação de pré-requisito obrigatório entre Mina de Pedra,
+Processamento de Pedra e Área de Plantio de Árvores — um jogador pode,
+tecnicamente, coletar Pedra Ancestral à mão indefinidamente sem nunca
+construir a Mina. Isso é **intencional, não uma lacuna**: a taxa de
+coleta manual (1 unidade, 2 com ferramenta) é propositalmente lenta o
+suficiente para tornar essa escolha irracional na prática frente à
+produção em volume e passiva das estruturas — um "soft gate" econômico,
+não uma trava de regra dura. Mantém a filosofia de decisões na mão do
+jogador (ver `docs/01-conceito.md`) sem forçar uma ordem artificial.
+
 ## Pendente
-- Definir quantidade exata de Pedra Ancestral/Graveto/Cedro Estelar
-  coletável à mão por ação (antes de qualquer ferramenta).
-- Definir o quanto a Picareta e o Machado aumentam a velocidade/volume
-  de coleta (ex: +50%, +100%).
 - Validar em playtest se o período de bootstrap (antes de ter as 3
   estruturas) tem duração agradável — nem rápido demais (sem sensação de
   progresso) nem lento demais (frustrante).
+- Validar se a taxa 1/2 realmente desincentiva a coleta manual prolongada
+  na prática, ou se precisa ser ainda mais lenta.
