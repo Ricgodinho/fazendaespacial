@@ -174,3 +174,20 @@ aparência do modelo só muda ao subir de par.
 - Regra geral de níveis de estrutura definida (acima).
 - Detalhar os níveis específicos de cada estrutura, uma por uma,
   começando pelo Planeta 1.
+
+## Porte da estrutura (regra geral) — decisão
+
+Cada estrutura possui um **Porte**: Pequeno, Médio ou Grande — usado para
+diferenciar a quantidade de material exigida por nível (ver
+`docs/itens/requisitos_niveis.csv`), em vez de toda estrutura pedir a
+mesma quantidade.
+
+| Porte | Exemplo (Planeta 1) |
+|---|---|
+| Pequeno | Viveiro |
+| Médio | Campo de Cultivo, Área de Plantio de Árvores, Estruturas de Processamento |
+| Grande | Mina de Pedra, Armazém Geral, Hangar de Drones |
+
+Quantidade de material por nível escala com o porte (Grande > Médio >
+Pequeno), mantendo a mesma progressão exponencial por nível já definida
+para todas.

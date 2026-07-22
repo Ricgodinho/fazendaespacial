@@ -2,6 +2,7 @@
 
 **Cadeia:** Sementes
 **Planeta:** 1
+**Porte:** Pequeno
 
 Ver `docs/estruturas/00-indice.md` para a regra geral do sistema de
 níveis (10 níveis, crescimento exponencial, breakpoints de capacidade,
