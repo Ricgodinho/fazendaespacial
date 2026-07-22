@@ -1,0 +1,36 @@
+﻿planeta,estrutura,nivel,material,quantidade,tipo
+1,Mina de Pedra,1,Pedra Ancestral,15,excecao_bootstrap
+1,Mina de Pedra,1,Graveto,10,excecao_bootstrap
+1,Mina de Pedra,2,Cascalho Ancestral,50,base
+1,Mina de Pedra,2,Tábua Estelar,25,especifico
+1,Estrutura de Processamento (Pedra),1,Pedra Ancestral,10,excecao_bootstrap
+1,Estrutura de Processamento (Pedra),2,Cascalho Ancestral,35,base
+1,Estrutura de Processamento (Pedra),2,Carvão Estelar,18,especifico
+1,Área de Plantio de Árvores,1,Cedro Estelar,10,excecao_bootstrap
+1,Área de Plantio de Árvores,1,Graveto,10,excecao_bootstrap
+1,Área de Plantio de Árvores,2,Cascalho Ancestral,35,base
+1,Área de Plantio de Árvores,2,Cedro Estelar,18,especifico
+1,Campo de Cultivo,1,Cascalho Ancestral,20,base
+1,Campo de Cultivo,1,Trigo Lunar,10,especifico
+1,Campo de Cultivo,2,Cascalho Ancestral,35,base
+1,Campo de Cultivo,2,Trigo Lunar,18,especifico
+1,Estrutura de Processamento (Comida),1,Cascalho Ancestral,20,base
+1,Estrutura de Processamento (Comida),1,Tábua Estelar,10,especifico
+1,Estrutura de Processamento (Comida),2,Cascalho Ancestral,35,base
+1,Estrutura de Processamento (Comida),2,Tábua Estelar,18,especifico
+1,Estrutura de Processamento (Madeira),1,Cascalho Ancestral,20,base
+1,Estrutura de Processamento (Madeira),1,Bloco Ancestral,10,especifico
+1,Estrutura de Processamento (Madeira),2,Cascalho Ancestral,35,base
+1,Estrutura de Processamento (Madeira),2,Bloco Ancestral,18,especifico
+1,Viveiro,1,Cascalho Ancestral,15,base
+1,Viveiro,1,Bloco Ancestral,8,especifico
+1,Viveiro,2,Cascalho Ancestral,25,base
+1,Viveiro,2,Bloco Ancestral,14,especifico
+1,Armazém Geral,1,Cascalho Ancestral,30,base
+1,Armazém Geral,1,Bloco Ancestral,15,especifico
+1,Armazém Geral,2,Cascalho Ancestral,50,base
+1,Armazém Geral,2,Bloco Ancestral,25,especifico
+1,Hangar de Drones,1,Cascalho Ancestral,30,base
+1,Hangar de Drones,1,Carvão Estelar,15,especifico
+1,Hangar de Drones,2,Cascalho Ancestral,50,base
+1,Hangar de Drones,2,Carvão Estelar,25,especifico
