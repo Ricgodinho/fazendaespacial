@@ -45,7 +45,7 @@ ferramentas (ver `docs/itens/itens.csv`):
 ## Ordem de construção (Nível 1 apenas — exceção)
 
 As 4 estruturas abaixo têm custo de **Nível 1 excepcional** (matéria-prima
-crua, sem Cascalho). A partir do **Nível 2**, todas as três retomam o
+crua, sem Cascalho). A partir do **Nível 2**, todas as quatro retomam o
 padrão normal (ver `docs/itens/requisitos_niveis.csv`, coluna `tipo`).
 
 1. **Mina de Pedra (Nível 1)** — custo: Pedra Ancestral + Graveto (coletados
@@ -104,7 +104,7 @@ não uma trava de regra dura. Mantém a filosofia de decisões na mão do
 jogador (ver `docs/01-conceito.md`) sem forçar uma ordem artificial.
 
 ## Pendente
-- Validar em playtest se o período de bootstrap (antes de ter as 3
+- Validar em playtest se o período de bootstrap (antes de ter as 4
   estruturas) tem duração agradável — nem rápido demais (sem sensação de
   progresso) nem lento demais (frustrante).
 - Validar se a taxa 1/2 realmente desincentiva a coleta manual prolongada
