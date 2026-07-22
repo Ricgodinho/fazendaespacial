@@ -40,12 +40,14 @@ Valores são exemplo (progressão ~1,5x por nível) — a validar em
 playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 `docs/04-prototipo-0-loop-idle.md` e `planilhas/planilha_loop_idle.xlsx`).
 
+## Mecânica de descoberta — decisão adiada
+A mecânica de descoberta/raridade (achados, itens raros, diferenciação
+entre Camada 1/2/final) fica para uma **fase futura** — não bloqueia a
+implementação atual da extração contínua de Pedra Ancestral, que já
+funciona de forma independente.
+
 ## Pendente
 - Definir os materiais exatos exigidos em cada nível.
-- Fórmula de probabilidade: ver `docs/01-conceito.md`, seção Raridade
-  ("Fórmula do modificador local").
-- Detalhar o que exatamente muda entre "Camada 1", "Camada 2" e "Camada
-  final" em termos de tipos de descoberta específicos.
 - Validar a curva de extração em playtest/planilha antes da
   implementação.
 

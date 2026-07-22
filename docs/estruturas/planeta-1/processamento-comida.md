@@ -8,7 +8,12 @@ Ver `docs/estruturas/00-indice.md` para a regra geral do sistema de
 níveis (10 níveis, crescimento exponencial, breakpoints de capacidade,
 dependência de materiais de outros planetas nos níveis mais altos,
 incluindo a regra de que o Nível 10 sempre exige o planeta mais avançado
-disponível).
+disponível) e a regra de agrupamento por categoria.
+
+## Escopo — decisão
+Esta estrutura processa **todo cultivo de comida** do Planeta 1 — Trigo
+Lunar e Fibra Estelar (ver `docs/itens/itens.csv`) — não apenas Trigo
+Lunar. Não é necessária uma estrutura própria para Fibra Estelar.
 
 ## Níveis — decisão
 

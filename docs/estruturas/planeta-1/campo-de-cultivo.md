@@ -8,6 +8,15 @@ Ver `docs/estruturas/00-indice.md` para a regra geral do sistema de
 níveis (10 níveis, crescimento exponencial, breakpoints de capacidade,
 dependência de materiais de outros planetas nos níveis mais altos).
 
+## Estrutura-âncora — decisão
+Fisicamente, esta estrutura é uma **âncora modesta** (marco físico
+simples, não um prédio fechado com paredes). O número de tiles de
+plantio simultâneos que cresce por nível (tabela acima) representa a
+**área plantável ao redor desta âncora**, não uma capacidade abstrata.
+Esta âncora tem posição própria no mapa, **independente da posição do
+Hangar de Drones** — a área de plantio não fica necessariamente perto de
+onde os drones estão guardados.
+
 ## Níveis — decisão
 
 Métrica numérica principal: quantidade de tiles de plantio simultâneos

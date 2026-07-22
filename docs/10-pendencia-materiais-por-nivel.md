@@ -1,5 +1,16 @@
 # Pendência para a equipe de desenvolvimento: materiais por nível
 
+> ## ⚠️ SUPERADO — ver `docs/itens/requisitos_niveis.csv`
+> Este documento foi escrito antes de uma sessão de design que já
+> resolveu completamente esta pendência, incluindo 4 circularidades que
+> este documento não havia identificado (Mina de Pedra, Processamento de
+> Pedra, Área de Plantio de Árvores, Campo de Cultivo). A resposta real
+> está em `docs/itens/requisitos_niveis.csv` (Níveis 1-2, todas as 9
+> estruturas) e `docs/estruturas/planeta-1/00-guia-bootstrap.md`.
+> **Material-base é Cascalho Ancestral, não Bloco Ancestral** (candidato
+> citado abaixo está desatualizado). Conteúdo abaixo mantido como
+> registro histórico da pergunta original, não como resposta válida.
+
 **Status: aguardando decisão de design.** Bloqueia a implementação do
 sistema de níveis (ver `docs/estruturas/00-indice.md` e
 `docs/09-questoes-abertas-implementacao.md`, item 4).

@@ -7,7 +7,13 @@ especificam e o que existe hoje no jogo. Objetivo: dar visibilidade pra
 quem cuida do design, sem travar o desenvolvimento — cada item tem uma
 sugestão de encaminhamento, não é bloqueante por si só.
 
-## 1. Fibra Estelar sem estrutura de uso definida
+## 1. Fibra Estelar sem estrutura de uso definida — ✅ RESOLVIDO
+
+**Decisão:** processa na Estrutura de Processamento (Comida) já existente, junto com Trigo Lunar (regra geral de agrupamento por categoria, ver `docs/estruturas/00-indice.md`). Sem estrutura nova.
+
+---
+
+### Contexto original (mantido como registro)
 
 `docs/itens/itens.csv` já lista Fibra Estelar como cultivo do Planeta 1
 ("Matéria-prima (cultivo avançado)"), mas:
@@ -22,7 +28,13 @@ sugestão de encaminhamento, não é bloqueante por si só.
 antes de implementar - hoje não dá pra seguir o mesmo padrão dos outros
 cultivos sem inventar essa peça.
 
-## 2. Mina de Pedra: só a extração foi implementada, não a descoberta
+## 2. Mina de Pedra: só a extração foi implementada, não a descoberta — ✅ RESOLVIDO
+
+**Decisão:** mecânica de descoberta adiada para fase futura — não bloqueia a extração já implementada. Ver `docs/estruturas/planeta-1/mina-de-pedra.md`.
+
+---
+
+### Contexto original (mantido como registro)
 
 `docs/estruturas/planeta-1/mina-de-pedra.md`, seção "Função dupla",
 define que a Mina de Pedra também funciona como ponto de
@@ -36,7 +48,13 @@ muda entre Camada 1/2/final em termos de tipos de descoberta").
 "Mina de Pedra pronta" - a extração já está funcional e testável
 isoladamente.
 
-## 3. Campo de Cultivo e Área de Plantio de Árvores não existem como estruturas construíveis
+## 3. Campo de Cultivo e Área de Plantio de Árvores não existem como estruturas construíveis — ✅ RESOLVIDO
+
+**Decisão:** ambas existem como **estrutura-âncora** (marco físico simples, não prédio fechado) — a área de tiles/árvores que já cresce por nível é o raio plantável ao redor da âncora, independente da posição do Hangar de Drones. Ver notas em `docs/estruturas/planeta-1/campo-de-cultivo.md` e `area-plantio-arvores.md`.
+
+---
+
+### Contexto original (mantido como registro)
 
 Este é o ponto mais relevante antes de começar o sistema de níveis (ver
 pergunta abaixo).

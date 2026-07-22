@@ -215,3 +215,19 @@ seção "Escala e formato do terreno".
 Quantidade de material por nível escala com o porte (Grande > Médio >
 Pequeno), mantendo a mesma progressão exponencial por nível já definida
 para todas.
+
+## Agrupamento por categoria, não por item (regra geral) — decisão
+
+Toda estrutura de processamento atende **uma categoria inteira** de
+matéria-prima, nunca um item específico isolado. Ex: Estrutura de
+Processamento (Comida) processa todo cultivo de comida (Trigo Lunar,
+Fibra Estelar, e futuros), não só um deles — mesmo princípio para
+Processamento de Pedra (toda matéria-prima de pedra).
+
+**Exceção confirmada — Planeta 2:** Pedra e Metal/Mineral permanecem
+categorias **separadas**, mesmo estando no mesmo planeta. Pedra extraída
+no Planeta 2 é enviada ao Processamento de Pedra do Planeta 1 (decisão
+de teste já registrada em `docs/estruturas/planeta-2/00-indice.md`);
+Metal/Mineral processa localmente na Fundição. Não fundir as duas
+categorias em uma só.
+
