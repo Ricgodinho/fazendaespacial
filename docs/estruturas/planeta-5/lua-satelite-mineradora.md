@@ -2,6 +2,7 @@
 
 **Cadeia:** Mineral (fonte local para a Fundição Central)
 **Planeta:** 5 (planeta-origem / núcleo da rede)
+**Porte:** Grande
 
 ## Função — decisão
 
