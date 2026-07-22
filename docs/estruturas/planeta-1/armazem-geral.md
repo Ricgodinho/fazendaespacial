@@ -55,7 +55,7 @@ Métrica numérica principal: capacidade total de armazenamento.
 | 7 | 1.100 | Planeta 2 | **Recebimento automático de outros planetas** — passa a receber entregas do Drone de Transporte vindas de outros planetas sem coleta manual |
 | 8 | 1.650 | Planeta 2 + 3 | — |
 | 9 | 2.500 | Planeta 3 + 4 | — |
-| 10 | 3.800 | Planetas 3, 4 e 5 | **Overflow automático a valor mínimo**: o que exceder a capacidade é convertido em dinheiro pelo preço mais baixo possível (rede de segurança, não estratégia de venda) — só desbloqueado neste nível |
+| 10 | 3.800 | Planetas 3, 4 e 5 | **Overflow automático a valor mínimo**: o que exceder a capacidade é convertido em Ecos pelo preço mais baixo possível (rede de segurança, não estratégia de venda) — só desbloqueado neste nível |
 
 Valores são exemplo (progressão ~1,5x por nível) — a validar em
 playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
