@@ -37,7 +37,7 @@ Métrica numérica principal: unidades processadas por ciclo.
 | 7 | 60 | Planeta 2 | **Chance média de semente aumenta** — a chance de sair Semente de Cedro Estelar como subproduto melhora neste nível |
 | 8 | 90 | Planeta 2 + 3 | — |
 | 9 | 135 | Planeta 3 + 4 | — |
-| 10 | 200 | Planetas 3, 4 e 5 | **Libera Carvão Estelar** — antes deste nível, a estrutura só produz Tábua/Lenha/Semente |
+| 10 | 200 | Planetas 3, 4 e 5 | **Libera combustível avançado (a definir)** — Carvão Estelar já está disponível desde o Nível 1; este nível libera um combustível ainda mais eficiente para tiers futuros |
 
 Valores são exemplo (progressão ~1,5x por nível) — a validar em
 playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
@@ -50,6 +50,9 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
   Nível 4 = 18%, Nível 7 = 30%, Nível 10 = 45% (níveis intermediários
   interpolam suave). Mecânica separada da fórmula de raridade (ver
   `docs/01-conceito.md`, seção Raridade).
-- Definir quantidade de Carvão Estelar produzida por ciclo no Nível 10.
+- Definir quantidade de Carvão Estelar produzida por ciclo (agora
+  disponível desde o Nível 1).
+- Definir o combustível avançado liberado no Nível 10 (mais eficiente
+  que Carvão Estelar) — debate futuro.
 - Validar a curva de throughput em playtest/planilha antes da
   implementação.

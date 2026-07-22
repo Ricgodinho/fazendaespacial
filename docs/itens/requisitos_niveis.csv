@@ -10,8 +10,6 @@
 1,Área de Plantio de Árvores,1,Graveto,10,excecao_bootstrap
 1,Área de Plantio de Árvores,2,Cascalho Ancestral,35,base
 1,Área de Plantio de Árvores,2,Cedro Estelar,18,especifico
-1,Campo de Cultivo,1,Cascalho Ancestral,20,base
-1,Campo de Cultivo,1,Trigo Lunar,10,especifico
 1,Campo de Cultivo,2,Cascalho Ancestral,35,base
 1,Campo de Cultivo,2,Trigo Lunar,18,especifico
 1,Estrutura de Processamento (Comida),1,Cascalho Ancestral,20,base
@@ -38,3 +36,7 @@
 1,Picareta,craft,Graveto,5,craft_ferramenta
 1,Machado,craft,Pedra Ancestral,5,craft_ferramenta
 1,Machado,craft,Graveto,5,craft_ferramenta
+1,Campo de Cultivo,1,Trigo Lunar,10,excecao_bootstrap
+1,Campo de Cultivo,1,Graveto,10,excecao_bootstrap
+1,Foice de Pedra,craft,Pedra Ancestral,5,craft_ferramenta
+1,Foice de Pedra,craft,Graveto,5,craft_ferramenta

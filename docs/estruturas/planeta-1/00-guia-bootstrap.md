@@ -16,6 +16,9 @@ simples, depois construção das primeiras estruturas com custo reduzido.
   normalmente pediria o próprio Cascalho para ser construída — circular.
 - **Área de Plantio de Árvores** produz Cedro Estelar, mas normalmente
   pediria Cedro Estelar para ser construída — circular.
+- **Campo de Cultivo** produz Trigo Lunar, mas normalmente pediria Trigo
+  Lunar para ser construído — circular (mesma categoria de problema,
+  identificada em revisão posterior às 3 primeiras).
 
 ## A solução: coleta manual + ferramentas de bootstrap
 
@@ -27,16 +30,21 @@ direto do terreno, sem custo:
 - **Cedro Estelar** — de árvores selvagens já existentes no terreno
   inicial (remanescentes da fazenda antes do abandono, ver
   `docs/01-conceito.md`), sem precisar plantar.
+- **Trigo Lunar** — de plantações selvagens já crescendo perto da
+  fazenda inicial (re-semeadas sozinhas após o abandono), sem precisar
+  plantar.
 
 Com Pedra Ancestral + Graveto coletados à mão, o jogador crafta 2
 ferramentas (ver `docs/itens/itens.csv`):
 
 - **Picareta** — aumenta velocidade/volume de coleta de Pedra Ancestral.
 - **Machado** — aumenta velocidade/volume de coleta de Cedro Estelar.
+- **Foice de Pedra** — aumenta velocidade/volume de coleta de Trigo Lunar
+  selvagem.
 
 ## Ordem de construção (Nível 1 apenas — exceção)
 
-As 3 estruturas abaixo têm custo de **Nível 1 excepcional** (matéria-prima
+As 4 estruturas abaixo têm custo de **Nível 1 excepcional** (matéria-prima
 crua, sem Cascalho). A partir do **Nível 2**, todas as três retomam o
 padrão normal (ver `docs/itens/requisitos_niveis.csv`, coluna `tipo`).
 
@@ -48,6 +56,9 @@ padrão normal (ver `docs/itens/requisitos_niveis.csv`, coluna `tipo`).
 3. **Área de Plantio de Árvores (Nível 1)** — custo: Cedro Estelar
    (cortado de árvores selvagens) + Graveto. Após construída, assume o
    ciclo de plantio contínuo de árvores.
+4. **Campo de Cultivo (Nível 1)** — custo: Trigo Lunar (colhido de
+   plantações selvagens) + Graveto. Após construído, assume o ciclo de
+   plantio contínuo de cultivos.
 
 ## A partir daqui: padrão normal
 
@@ -63,10 +74,11 @@ estrutura e nível.
 
 ## Taxa de coleta manual — decisão
 
-| Recurso | Sem ferramenta | Com ferramenta (Picareta/Machado) |
+| Recurso | Sem ferramenta | Com ferramenta |
 |---|---|---|
-| Pedra Ancestral | 1 unidade por ação | 2 unidades por ação |
-| Cedro Estelar | 1 unidade por ação | 2 unidades por ação |
+| Pedra Ancestral | 1 unidade por ação | 2 unidades por ação (Picareta) |
+| Cedro Estelar | 1 unidade por ação | 2 unidades por ação (Machado) |
+| Trigo Lunar | 1 unidade por ação | 2 unidades por ação (Foice de Pedra) |
 
 ## Custo de craft das ferramentas — decisão
 
@@ -74,13 +86,15 @@ estrutura e nível.
 |---|---|
 | Picareta | 5 Pedra Ancestral + 5 Graveto |
 | Machado | 5 Pedra Ancestral + 5 Graveto |
+| Foice de Pedra | 5 Pedra Ancestral + 5 Graveto |
 
 Ver `docs/itens/requisitos_niveis.csv` (linhas com `nivel = craft`).
 
 ## Sem trava dura entre as estruturas de bootstrap — decisão
 
 Não existe verificação de pré-requisito obrigatório entre Mina de Pedra,
-Processamento de Pedra e Área de Plantio de Árvores — um jogador pode,
+Processamento de Pedra, Área de Plantio de Árvores e Campo de Cultivo —
+um jogador pode,
 tecnicamente, coletar Pedra Ancestral à mão indefinidamente sem nunca
 construir a Mina. Isso é **intencional, não uma lacuna**: a taxa de
 coleta manual (1 unidade, 2 com ferramenta) é propositalmente lenta o
