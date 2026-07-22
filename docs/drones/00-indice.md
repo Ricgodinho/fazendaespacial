@@ -183,8 +183,16 @@ tiers além de capacidade/velocidade.
 
 Valores de exemplo, a validar em playtest/planilha.
 
+### Custo de reparo — Tier 1 (Planeta 1) — decisão
+| Tier | Material | Ecos |
+|---|---|---|
+| 1 | 10 Cascalho Ancestral | 20 |
+
+Custo de reparo de Tiers 2+ e de outros planetas ainda a definir.
+
 ### Pendente
-- Definir custo exato de cada reparo (material/moeda).
+- Definir custo de reparo dos Tiers 2 a 5 e de drones fabricados em
+  outros planetas.
 - Definir se manutenção automática (configurável no Armazém Geral, ver
   `docs/estruturas/planeta-1/armazem-geral.md`) tem custo adicional além
   do reparo em si.
