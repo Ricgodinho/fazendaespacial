@@ -178,15 +178,20 @@ aparência do modelo só muda ao subir de par.
 ## Porte da estrutura (regra geral) — decisão
 
 Cada estrutura possui um **Porte**: Pequeno, Médio ou Grande — usado para
-diferenciar a quantidade de material exigida por nível (ver
-`docs/itens/requisitos_niveis.csv`), em vez de toda estrutura pedir a
-mesma quantidade.
+diferenciar (a) a quantidade de material exigida por nível (ver
+`docs/itens/requisitos_niveis.csv`) e (b) o **footprint físico** (espaço
+ocupado no terreno), em vez de toda estrutura pedir a mesma quantidade ou
+ocupar o mesmo espaço.
 
-| Porte | Exemplo (Planeta 1) |
-|---|---|
-| Pequeno | Viveiro |
-| Médio | Campo de Cultivo, Área de Plantio de Árvores, Estruturas de Processamento |
-| Grande | Mina de Pedra, Armazém Geral, Hangar de Drones |
+| Porte | Exemplo (Planeta 1) | Footprint (tiles) |
+|---|---|---|
+| Pequeno | Viveiro | 5×5 = 25 |
+| Médio | Campo de Cultivo, Área de Plantio de Árvores, Estruturas de Processamento | 8×8 = 64 |
+| Grande | Mina de Pedra, Armazém Geral, Hangar de Drones | 12×12 = 144 |
+
+Footprint usado para calcular escala de terreno por planeta — ver
+exemplo aplicado em `docs/estruturas/planeta-1/00-guia-estilo-visual.md`,
+seção "Escala e formato do terreno".
 
 Quantidade de material por nível escala com o porte (Grande > Médio >
 Pequeno), mantendo a mesma progressão exponencial por nível já definida

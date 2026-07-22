@@ -48,3 +48,10 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
   final" em termos de tipos de descoberta específicos.
 - Validar a curva de extração em playtest/planilha antes da
   implementação.
+
+## Espaço físico das camadas
+As "camadas de escavação" mencionadas acima correspondem a um espaço
+físico real, não apenas efeito numérico — ver
+`docs/estruturas/planeta-1/00-guia-estilo-visual.md`, seção "Escala e
+formato do terreno", para a Camada 2 (Subterrâneo/Mina) como disco
+separado de 40 tiles de diâmetro.
