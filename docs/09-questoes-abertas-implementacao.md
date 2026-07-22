@@ -118,3 +118,35 @@ planeta), respeitando o item 3 acima (decidir o que fazer com Campo de
 Cultivo/Área de Plantio de Árvores primeiro). Níveis 5+ ficam
 bloqueados até existir Planeta 2 e os materiais específicos serem
 definidos.
+
+## 5. Capacidade do Armazém será observada sem limitar o protótipo
+
+A capacidade total por nível continua sendo uma regra de design, mas sua
+aplicação efetiva ainda está aberta para playtest. Bloquear coleta e produção
+agora pode impedir a avaliação de outras partes do loop e confundir um problema
+de balanceamento com um problema de interação.
+
+**Decisão experimental:** durante o protótipo, a capacidade será nominal. O
+inventário pode ultrapassá-la sem perder ou recusar recursos, enquanto o jogo
+registra quanto teria excedido e quais ações teriam sido bloqueadas. A
+especificação dos eventos e métricas está em
+`docs/estruturas/planeta-1/armazem-geral.md`, seção "Regra experimental no
+protótipo — capacidade observacional".
+
+Essa decisão também cobre o caso em que o jogador acumula mais de 100 unidades
+antes de construir o primeiro Armazém: o estado é válido para o experimento e
+deve ser registrado, não corrigido ou truncado automaticamente.
+
+**Perguntas para o playtest:**
+
+- O jogador precisa de uma capacidade pessoal antes do Armazém?
+- O Armazém deve impor o primeiro limite ou ampliar um limite já existente?
+- A capacidade nominal de 100 cria uma decisão interessante ou interromperia
+  cedo demais o aprendizado?
+- Com que frequência e por quanto tempo o inventário ultrapassa o limite?
+- Construir o Armazém cedo parece uma escolha útil ou apenas burocrática?
+
+**Critério de encerramento:** só ativar um limite real depois de analisar os
+logs e registrar a decisão de design. Independentemente do resultado, nenhum
+excedente pode desaparecer silenciosamente; bloqueio, buffer, tolerância ou
+overflow precisam ter comportamento explícito.

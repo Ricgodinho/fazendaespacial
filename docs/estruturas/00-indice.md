@@ -109,18 +109,18 @@ de arte a levar para o setor de arte (ver `docs/arte/00-indice.md`).
 
 3 estados, com prioridade visual nesta ordem:
 
-1. **Processando** (prioridade mais alta): a estrutura tem insumo
+1. **Produzindo** (prioridade mais alta): a estrutura tem insumo
    suficiente e espaço de saída disponível, processando ativamente.
    Deve comunicar "trabalho em andamento" e, se possível, o progresso
    do ciclo atual (ex: intensidade de cor, animação contínua).
-2. **Pronto para coleta**: não está mais processando (por falta de
-   insumo ou por ter enchido a capacidade de saída), mas tem produto
-   acumulado esperando o jogador coletar. Deve usar a **mesma
+2. **Concluído/cheio**: não está mais produzindo (por falta de insumo
+   para outro ciclo ou por ter enchido a capacidade de saída), mas tem
+   produto acumulado esperando o jogador coletar. Deve usar a **mesma
    linguagem visual de "pronto para interagir"** usada no estágio final
    de crescimento dos cultivos (ver `docs/cultivos/00-indice.md`) —
    reforça uma convenção única de "isso aqui brilha/destaca-se quando
    dá pra clicar", em vez de uma convenção por sistema.
-3. **Parado/ocioso**: sem insumo suficiente para iniciar um ciclo e sem
+3. **Vazio/ocioso**: sem insumo suficiente para iniciar um ciclo e sem
    produto pendente. Visual neutro, discreto — não deve competir com os
    outros dois estados, que exigem atenção do jogador.
 
@@ -133,8 +133,8 @@ claramente o resultado do tempo passivo, já central ao loop híbrido
 
 ### Pendente
 - Referência visual concreta (cor exata, tipo de animação, silhueta)
-  depende da direção de arte final (2D estilizado vs. low-poly 3D,
-  `docs/01-conceito.md`) — o protótipo técnico usa cor + rotação como
+  será definida na prova do 3D estilizado low-poly refinado
+  (`docs/01-conceito.md`) — o protótipo técnico usa cor + rotação como
   placeholder, não como especificação de arte definitiva.
 
 ## Progressão visual por nível (regra geral) — decisão
@@ -153,9 +153,17 @@ Estrutura" (acima).
 | D | 7–8 |
 | E | 9–10 |
 
-Cada uma das 5 variações precisa das 3 artes dos "Estados visuais de
-processamento" (acima) — **15 assets de arte por estrutura**, não 30
-(5 variações × 3 estados, em vez de 10 níveis × 3 estados).
+Cada uma das 5 variações deve ser definida e apresentada nos 3 "Estados
+visuais de processamento" (acima) — **15 combinações visuais por
+estrutura**, não 30 (5 variações × 3 estados, em vez de 10 níveis × 3
+estados).
+
+Isso não obriga a produzir 15 modelos 3D completos e independentes. A
+prova de arte técnica deve definir o reaproveitamento adequado entre
+modelo-base, peças ativadas por nível, animação, material, emissivo e
+efeitos. Para geração conceitual por IA, porém, cada ficha deve mostrar
+explicitamente as 15 combinações para evitar que um estado ou faixa de
+nível fique sem direção visual.
 
 ### Motivo
 Reforça a mesma lógica de "nem todo nível precisa ser um evento visual
@@ -164,10 +172,21 @@ níveis dentro de um par só muda número (capacidade/velocidade), a
 aparência do modelo só muda ao subir de par.
 
 ### Pendente
-- Confirmar se os pares de nível (1–2, 3–4, etc.) devem coincidir com os
-  níveis-marco (breakpoints) de cada estrutura específica, ou se são
-  independentes — a começar pelo Planeta 1, junto do próximo passo já
-  registrado em "Sistema de Níveis de Estrutura".
+- Definir, na prova de cada estrutura, quais peças, animações ou efeitos
+  comunicam os breakpoints sem exigir um sexto modelo-base.
+
+### Relação com breakpoints — decisão
+
+As 5 variações de modelo e os breakpoints funcionais são **independentes**.
+A base visual muda ao entrar em uma nova faixa (níveis 3, 5, 7 e 9),
+preservando a regra fechada dos pares. Quando uma capacidade nova é
+desbloqueada dentro da mesma faixa — por exemplo, um breakpoint no nível
+4 ou 10 — ela deve aparecer por peça modular, conteúdo visível, animação,
+efeito ou sinal funcional, sem exigir outra variação completa do edifício.
+
+Assim, todo breakpoint importante continua visível, mas o orçamento
+permanece em 5 modelos-base por estrutura e 15 combinações conceituais de
+faixa × estado.
 
 ## Pendências gerais
 - Todos os 5 planetas do jogo base têm lista de estruturas fechada.

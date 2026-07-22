@@ -280,20 +280,28 @@ minimalista.
 - Objetivo de longo prazo e encerramento da jornada.
 ## Direção visual — decisão
 
-**Estilo escolhido: 2D estilizado** (visual ilustrativo, tipo Spiritfarer/Cozy
-Grove), com **low-poly 3D como plano B** caso o custo de produção do 2D
-estilizado se mostre inviável para o orçamento do projeto.
+**Estilo escolhido para a prova visual: 3D estilizado low-poly refinado,
+com materiais/texturas pintados à mão e acabamento ilustrado.** A
+direção combina formas e custo controlado do low-poly com cor,
+aconchego e personalidade inspirados em referências ilustrativas como
+Spiritfarer e Cozy Grove, sem usar esses jogos como referência de
+pipeline ou copiar seus designs.
 
 ### Requisito técnico decorrente
-A câmera do jogo deve permitir **rotação e zoom livres** ao redor da cena.
-Isso significa que, na prática, a arte precisa ser implementada como
-**modelos 3D com textura/shader pintado à mão** (não ilustração 2D
-tradicional nem imagens pré-renderizadas) — só assim a câmera pode
-girar livremente mantendo a aparência ilustrativa desejada. Referências de
-mercado nesse pipeline: Genshin Impact, Ni no Kuni, World of Warcraft.
+A câmera do jogo permite rotação horizontal de 360°, zoom contínuo e
+inclinação controlada, conforme os parâmetros iniciais de
+`docs/estruturas/planeta-1/00-guia-estilo-visual.md`. A arte é
+implementada como **modelos 3D com materiais/texturas pintados à mão**,
+não como ilustração 2D tradicional ou imagem pré-renderizada. Só assim a
+câmera pode girar mantendo aparência coerente. Referências de execução:
+Ni no Kuni, World of Warcraft e cenários estilizados de Genshin Impact,
+adaptados ao orçamento indie.
 
 ### Nível de detalhe
-Alto nível de detalhe visual (não um estilo minimalista/vetorial simples).
+Detalhe moderado e hierárquico: silhueta e leitura primeiro,
+microdetalhes apenas em pontos importantes e no zoom próximo. Não usar
+estilo minimalista/vetorial, mas também não perseguir densidade de jogo
+AAA.
 
 ### Validação realizada
 Testes visuais comparativos confirmaram que a diferenciação entre biomas
@@ -302,8 +310,8 @@ estilos avaliados, reforçando que a escolha pode ser feita com base em
 custo/qualidade sem prejuízo à identidade visual de cada planeta.
 
 ### Próximo passo
-Levantar orçamento/viabilidade de produção do 2D estilizado (3D com
-shader pintado) junto à fábrica antes de comprometer definitivamente.
-Caso o custo não seja viável, migrar para low-poly 3D como estilo
-definitivo — decisão de fallback já pré-aprovada, sem necessidade de nova
-rodada de debate.
+Executar a prova vertical começando pelo mapa do Planeta 1, seguindo
+`docs/arte/02-prova-vertical-mapa-planeta-1.md`. O resultado deve validar
+câmera, escala, consistência entre ângulos e custo de transformação dos
+conceitos gerados pelo ChatGPT em assets 3D para Unity antes da produção
+em escala.

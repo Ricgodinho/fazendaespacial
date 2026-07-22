@@ -40,6 +40,50 @@ Protótipo 0 (ex: Trigo Lunar com teto próprio no campo), o Armazém Geral
 é uma segunda camada de capacidade — o destino de tudo depois de sair do
 campo/mina, antes de processar, vender, ou embarcar.
 
+### Regra experimental no protótipo — capacidade observacional
+
+Durante a fase atual de protótipo e playtest, a capacidade do Armazém Geral
+será **nominal e observacional**: o jogo registra quando o inventário teria
+ultrapassado o limite, mas não bloqueia coleta, produção ou recebimento de
+recursos. O objetivo é medir o efeito da capacidade antes de transformá-la em
+uma restrição que possa interromper outros testes do loop.
+
+Essa regra não altera a capacidade definida por nível. O Nível 1 continua com
+capacidade nominal de 100 unidades; apenas a aplicação do bloqueio fica adiada
+até a análise dos playtests.
+
+O log deve distinguir:
+
+- **total real:** quantidade efetivamente mantida no inventário durante o
+  experimento;
+- **capacidade nominal:** limite que seria aplicado pela regra em avaliação;
+- **excedente nominal:** quantidade acima do limite, sem descarte ou bloqueio;
+- **ação observada:** coleta, produção, entrega ou construção que causou ou
+  ampliou o excedente.
+
+Eventos mínimos sugeridos:
+
+- `Warehouse_Built`: capacidade nominal, total real, excedente nominal e tempo
+  de sessão no momento da construção;
+- `Inventory_CapacityExceeded`: capacidade nominal, total antes/depois,
+  excedente e origem do recurso;
+- `Warehouse_Full`: primeira vez em que o limite nominal é alcançado;
+- `Session_End`: maior total real, maior excedente e existência de Armazém na
+  sessão.
+
+Métricas a consolidar por sessão:
+
+1. maior inventário atingido antes da construção do primeiro Armazém;
+2. tempo até a construção do primeiro Armazém;
+3. quantidade de ações que teriam sido bloqueadas pelo limite nominal;
+4. tempo acumulado acima da capacidade nominal;
+5. maior excedente nominal alcançado.
+
+Depois do playtest, esses dados devem apoiar a decisão entre aplicar o limite,
+ajustar o valor inicial, oferecer capacidade pessoal antes do Armazém ou manter
+alguma forma de tolerância a excedente. Até essa decisão, nenhum recurso deve
+ser perdido por causa da capacidade nominal.
+
 ## Níveis — decisão
 
 Métrica numérica principal: capacidade total de armazenamento.
@@ -66,5 +110,5 @@ playtest/planilha, mesmo princípio já aplicado ao loop idle (ver
 - Definir o valor exato de venda mínima do overflow automático (Nível 10).
 - Definir se drones aguardando manutenção ocupam a capacidade geral do
   Armazém ou um espaço próprio reservado.
-- Validar a curva de capacidade em playtest/planilha antes da
-  implementação.
+- Validar a curva e a aplicação efetiva da capacidade com os logs do
+  experimento antes de ativar bloqueio, descarte ou overflow.

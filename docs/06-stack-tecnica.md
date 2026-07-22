@@ -41,8 +41,8 @@ PC (Steam), conforme definido em `docs/01-conceito.md`.
   recente no momento da criação do projeto, considerada production-ready
   pelo modelo de release atual da Unity.
 - **URP (Universal Render Pipeline)**, com Renderer próprio configurado —
-  necessário para o pipeline de arte 2D estilizado (modelos 3D com shader
-  pintado à mão, câmera livre), conforme `docs/01-conceito.md`.
+  usado pelo pipeline 3D estilizado low-poly refinado, com materiais
+  pintados à mão e câmera giratória, conforme `docs/01-conceito.md`.
 - **Input System novo** (`com.unity.inputsystem`), Input Manager legado
   desativado desde o início do MVP técnico.
 
@@ -61,9 +61,9 @@ periódico e ao fechar o jogo. Ver `docs/07-prototipo-2-loop-hibrido.md`
 para o modelo de cálculo de produção offline que usa esse save.
 
 ## Em aberto para debate
-- Pipeline de arte final: 2D estilizado (decisão principal) vs. low-poly
-  3D (fallback pré-aprovado) — depende de levantamento de orçamento,
-  ver `docs/01-conceito.md`.
+- Parâmetros técnicos finais de arte (orçamento de polígonos, texturas,
+  materiais, LOD e animação), a fechar depois da prova vertical do mapa;
+  a direção visual já está definida em `docs/01-conceito.md`.
 - Solução de rede específica para multiplayer (Fase 3 — ainda não é
   prioridade).
 - Ferramenta de localização (Unity Localization package ou solução
